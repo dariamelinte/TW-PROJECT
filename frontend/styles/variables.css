@@ -1,0 +1,29 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montagu+Slab:wght@700&display=swap');
+
+:root {
+  --purple-200: #F6EAFF;
+  --purple-400: #BEACD3;
+  --purple-500: #BA94D1;
+  --purple-700: #7F669D;
+  --purple-900: #2F075F;
+
+  --yellow-200: #FFFEE2;
+  --yellow-500: #E3C730;
+
+  --red-200: #FEE6E6;
+  --red-500: #EC6E5D; 
+
+  --blue-200: #c6cffb;
+  --blue-500: #4447ff; 
+
+  --green-200: #F0FFD0;
+  --green-500: #6C9A09;
+
+  --white: #fff;
+  --gray-400: #A59EA7;
+  --black: #000;
+
+}
