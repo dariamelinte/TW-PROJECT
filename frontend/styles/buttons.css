@@ -1,0 +1,12 @@
+button.secondary {
+  background-color: var(--yellow-200);
+  padding: var(--2) var(--3);
+  border-radius: 20px;
+
+  color: var(--purple-900);
+  text-align: center;
+}
+
+button.shadow {
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.3);
+}

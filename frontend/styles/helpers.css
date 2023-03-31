@@ -1,108 +1,6 @@
-.flex {
-  display: flex;
-}
-
-.flex-1 {
-  flex: 1;
-}
-
 .full-screen {
   width: 100vw;
   height: 100vh;
-}
-
-.column {
-  display: flex;
-  flex-direction: column;
-}
-
-.row {
-  display: flex;
-  flex-direction: row;
-}
-
-.flex-wrap {
-  flex-wrap: wrap;
-}
-
-.justify-between {
-  justify-content: space-between;
-}
-
-.justify-evenly {
-  justify-content: space-evenly;
-}
-
-.items-center {
-  align-items: center;
-}
-
-.px-3 {
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-}
-
-.py-3 {
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
-}
-
-.pt-3 {
-  padding-top: 1.25rem;
-}
-
-.pb-3 {
-  padding-bottom: 1.25rem;
-}
-
-.px-6{
-  padding-left: 2.50rem;
-  padding-right: 2.50rem;
-}
-
-.py-6 {
-  padding-top: 2.50rem;
-  padding-bottom: 2.50rem;
-}
-
-.px-9{
-  padding-left: 3.75rem;
-  padding-right: 3.75rem;
-}
-
-.py-9 {
-  padding-top: 3.75rem;
-  padding-bottom: 3.75rem;
-}
-
-.mx-3 {
-  margin-left: 1.25rem;
-  margin-right: 1.25rem;
-}
-
-.my-3 {
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
-}
-
-.mx-6 {
-  margin-left: 2.50rem;
-  margin-right: 2.50rem;
-}
-
-.my-6 {
-  margin-top: 2.50rem;
-  margin-bottom: 2.50rem;
-}
-
-.mx-9 {
-  margin-left: 3.75rem;
-  margin-right: 3.75rem;
-}
-
-.my-9 {
-  margin-top: 3.75rem;
-  margin-bottom: 3.75rem;
 }
 
 .uppercase {
@@ -113,6 +11,14 @@
   width: 100%;
 }
 
+.h-full {
+  height: 100%;
+}
+
+.h-auto {
+  height: auto;
+}
+
 .relative {
   position: relative;
 }
@@ -121,18 +27,10 @@
   position: absolute;
 }
 
-.center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.rounded {
+  border-radius: 8px;
 }
 
-.centerY{
-  display: flex;
-  align-items: center;
-}
-
-.centerX{
-  display: flex;
-  justify-content: center;
+.rounded-full {
+  border-radius: 100px;
 }

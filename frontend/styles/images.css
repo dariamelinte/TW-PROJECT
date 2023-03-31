@@ -1,0 +1,23 @@
+img.small {
+  width: var(--3);
+}
+
+img.medium {
+  width: var(--6);
+}
+
+img.large {
+  width: var(--9);
+}
+
+img.small.square {
+  height: var(--3);
+}
+
+img.medium {
+  height: var(--6);
+}
+
+img.large {
+  height: var(--9);
+}
