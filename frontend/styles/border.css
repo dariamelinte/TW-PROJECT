@@ -1,0 +1,7 @@
+.border-t-3 {
+  border-top: 3px solid;
+}
+
+.border-purple-700 {
+  border-color: var(--purple-700);
+}
