@@ -204,6 +204,14 @@ img {
   grid-gap: 1rem;
 }
 
+.rounded-xl {
+  border-radius: 15px;
+}
+
+.rounded-full {
+  border-radius: 50%;
+}
+
 @media screen and (max-width: 420px) {
   .grid {
     grid-gap: 1.5rem;
