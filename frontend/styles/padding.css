@@ -1,3 +1,33 @@
+.px-1 {
+  padding-left: var(--1);
+  padding-right: var(--1);
+}
+
+.py-1 {
+  padding-top: var(--1);
+  padding-bottom: var(--1);
+}
+
+.pt-1 {
+  padding-top: var(--1);
+}
+
+.pb-1 {
+  padding-bottom: var(--1);
+}
+
+.pl-1 {
+  padding-left: var(--1);
+}
+
+.pr-1 {
+  padding-right: var(--1);
+}
+
+.p-1 {
+  padding: var(--1);
+}
+
 
 .px-2 {
   padding-left: var(--2);
