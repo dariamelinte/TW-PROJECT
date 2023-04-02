@@ -90,6 +90,38 @@
   padding: var(--3);
 }
 
+
+.px-4 {
+  padding-left: var(--4);
+  padding-right: var(--4);
+}
+
+.py-4 {
+  padding-top: var(--4);
+  padding-bottom: var(--4);
+}
+
+.pt-4 {
+  padding-top: var(--4);
+}
+
+.pb-4 {
+  padding-bottom: var(--4);
+}
+
+.pl-4 {
+  padding-left: var(--4);
+}
+
+.pr-4 {
+  padding-right: var(--4);
+}
+
+.p-4 {
+  padding: var(--4);
+}
+
+
 .px-6{
   padding-left: var(--6);
   padding-right: var(--6);

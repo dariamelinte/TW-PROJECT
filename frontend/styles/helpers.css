@@ -23,6 +23,10 @@
   width: 5em;
 }
 
+.w-20 {
+  width: 20em;
+}
+
 .h-full {
   height: 100%;
 }
