@@ -10,14 +10,23 @@ img.large {
   width: var(--9);
 }
 
+img.xl {
+  width: var(--12);
+}
+
 img.small.square {
   height: var(--3);
 }
 
-img.medium {
+img.medium.square {
   height: var(--6);
 }
 
-img.large {
+img.large.square {
   height: var(--9);
 }
+
+img.xl.square {
+  height: var(--12);
+}
+
