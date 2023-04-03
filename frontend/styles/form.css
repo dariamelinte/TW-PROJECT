@@ -43,3 +43,10 @@ form button {
   font-weight: 400;
   font-size: 1.2rem;
 }
+
+form p {
+  color: var(--white);
+  font-size: 0.9rem;
+  font-weight: 300;
+  margin-top: 1rem;
+}
