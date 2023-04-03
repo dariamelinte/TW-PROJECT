@@ -1,6 +1,20 @@
 export default function RegisterForm() {
   const form = document.createElement('form');
 
+  const register = ((event) => {
+    event.preventDefault();
+
+    const form = document.querySelector('form');
+    const formData = new FormData(form);
+
+    //TODO: send the data to the server
+    console.log(formData.get('email'));
+    console.log(formData.get('password'));
+    console.log(formData.get('firstName'));
+    console.log(formData.get('lastName'));
+    console.log(formData.get('dateOfBirth'));
+  ;;}).toString().replace('(event) => {', '').replace(';;}', '');
+
   form.innerHTML = `
     <div class="flex row justify-center">
       <div class="flex column justify-center mr-2">
@@ -40,7 +54,7 @@ export default function RegisterForm() {
 
     <a class="mt-2" href="/login">Already have an account?</a>
 
-    <button class="mt-3">Register</button>
+    <button class="mt-3" onclick="${register}">Register</button>
     `;
   return form;
 }
