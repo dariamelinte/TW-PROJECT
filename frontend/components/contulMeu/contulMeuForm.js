@@ -16,7 +16,7 @@ export default function contulMeuForm() {
       console.log(formData.get('nationalitate'));
     ;;}).toString().replace('(event) => {', '').replace(';;}', '');
   
-    form.innerHTML = `
+    contulMeuForm.innerHTML = `
       <div class="flex row justify-center">
         <div class="flex column justify-center mr-2">
             <div class="flex column justify-center">
@@ -36,15 +36,15 @@ export default function contulMeuForm() {
         </div>
   
         <div class="flex column justify-center ml-2">
-            <div class="flex column justify-center">
-                <label for="dateOfBirth">Birth Date</label>
-                <input type="date" name="dateOfBirth" id="dateOfBirth" placeholder="Birth Date" />
-            </div>
+          <div class="flex column justify-center">
+              <label for="dateOfBirth">Birth Date</label>
+              <input type="date" name="dateOfBirth" id="dateOfBirth" placeholder="Birth Date" />
+          </div>
   
           <div class="flex column justify-center">
             <label for="sex">Sex</label>
-
-            <select name="sex" id="sex" placeholder="Sex">
+            <select class="bg-white rounded" name="sex" id="sex">
+                <option value="sex" selected disabled>Sex</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
                 <option value="nonBinary">Non-Binary</option>

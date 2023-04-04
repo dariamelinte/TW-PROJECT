@@ -13,7 +13,7 @@ export default function Header(title) {
     
     <div class="flex">
         <a class="w-3 h-3 bg-yellow-200 rounded-xl p-1 mr-3" href="/" >
-          <img src="../assets/img/user.png" alt="logo" />
+          <img src="../assets/img/user.png" alt="user" />
         </a>
         <button class="w-5 h-3 bg-yellow-200 rounded-xl p-1 ml-2 light-bold-text">
           Log Out
