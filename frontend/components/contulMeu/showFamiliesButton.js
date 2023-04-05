@@ -9,10 +9,10 @@ export default function showFamiliesButton() {
       console.log("view child");
     };
   
-    showFamiliesButton.className = 'w-15 h-15 bg-purple-400 p-3 m-6 rounded shadow-small center column';
+    showFamiliesButton.className = 'w-15 h-15 bg-purple-400 p-3 m-6 rounded center column';
   
     showFamiliesButton.innerHTML = `
-      <img class="medium square mb-3" src="../assets/img/user.png" alt="families" />
+      <img class="w-10 mb-3" src="../../assets/img/family-logo.png" alt="families" />
       <p class="text-purple-900">Vizualizeaza familiile tale</p>
       `;
     

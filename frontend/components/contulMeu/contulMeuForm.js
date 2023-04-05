@@ -16,6 +16,7 @@ export default function contulMeuForm() {
       console.log(formData.get('nationalitate'));
     ;;}).toString().replace('(event) => {', '').replace(';;}', '');
   
+    contulMeuForm.className="rounded";
     contulMeuForm.innerHTML = `
       <div class="flex row justify-center">
         <div class="flex column justify-center mr-2">
@@ -43,7 +44,7 @@ export default function contulMeuForm() {
   
           <div class="flex column justify-center">
             <label for="sex">Sex</label>
-            <select class="bg-white rounded" name="sex" id="sex">
+            <select class="bg-white rounded pb-2 pt-2 px-1" name="sex" id="sex">
                 <option value="sex" selected disabled>Sex</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
@@ -52,7 +53,7 @@ export default function contulMeuForm() {
             </select> 
           </div>
   
-          <div class="flex column justify-center">
+          <div class="flex column justify-center pt-3">
             <label for="nationalitate">Nationalitate</label>
             <input type="text" name="nationalitate" id="nationalitate" placeholder="Nationalitate" />
           </div>
