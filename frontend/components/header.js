@@ -6,6 +6,7 @@ export default function Header({ iconPath, title }) {
     <div class="w-5 h-5 bg-yellow-200 rounded-xl">
       <a class="w-full h-full" href="/" >
         <img src="${iconPath}/img/logo.png" alt="logo" />
+
       </a>
     </div>
     
