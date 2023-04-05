@@ -1,5 +1,5 @@
-export default function contulMeuForm() {
-    const contulMeuForm = document.createElement('form');
+export default function myAccountForm() {
+    const myAccountForm = document.createElement('form');
   
     const edit = ((event) => {
       event.preventDefault();
@@ -16,8 +16,8 @@ export default function contulMeuForm() {
       console.log(formData.get('nationalitate'));
     ;;}).toString().replace('(event) => {', '').replace(';;}', '');
   
-    contulMeuForm.className="rounded";
-    contulMeuForm.innerHTML = `
+    myAccountForm.className="rounded";
+    myAccountForm.innerHTML = `
       <div class="flex row justify-center">
         <div class="flex column justify-center mr-2">
             <div class="flex column justify-center">
@@ -62,5 +62,5 @@ export default function contulMeuForm() {
   
       <button class="mt-3" onclick="${edit}">Save</button>
       `;
-    return contulMeuForm;
+    return myAccountForm;
   }

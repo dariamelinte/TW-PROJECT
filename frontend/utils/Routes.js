@@ -1,5 +1,6 @@
 export default class Routes {
-  static root = '/pages'
+  static root = '/pages';
+  
   static home = {
     path: () => Routes.root + '/',
     title: 'Acasă'
@@ -26,7 +27,7 @@ export default class Routes {
   }
   
   static child = {
-    path: (childId) => Routes.root + `/child?childId=${childId}`,
+    path: (childId) => Routes.root + `/?childId=${childId}`,
     title: 'Copil'
   }
 
