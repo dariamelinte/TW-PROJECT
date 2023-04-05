@@ -51,6 +51,18 @@
   height: 5em;
 }
 
+.h-10 {
+  height: 10em;
+}
+
+.h-15 {
+  height: 15em;
+}
+
+.h-20 {
+  height: 20em;
+}
+
 .relative {
   position: relative;
 }
