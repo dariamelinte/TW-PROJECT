@@ -1,13 +1,6 @@
 import Header from '../components/header.js';
-import LoginForm from '../components/loginForm.js';
+import VerticalList from '../components/verticalList.js';
+import Routes from '../utils/Routes.js';
 
 document.body.appendChild(Header({ iconPath: '../assets' }));
-document.body.appendChild(LoginForm());
-
-function login(e){
-  e.preventDefault();
-  console.log('login');
-}
-
-const loginForm = document.querySelector('form');
-loginForm.addEventListener('submit', login);  
+document.body.appendChild(VerticalList(Object.values(Routes.children)));

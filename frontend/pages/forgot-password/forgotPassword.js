@@ -1,3 +1,3 @@
-import ForgotPasswordForm from "../../components/forgotPasswordForm.js";
+import ForgotPasswordForm from "../../components/forms/forgotPasswordForm.js";
 
 document.body.appendChild(ForgotPasswordForm());
