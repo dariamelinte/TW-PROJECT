@@ -1,3 +1,3 @@
-import RegisterForm from "../../components/registerForm.js";
+import RegisterForm from "../../components/forms/registerForm.js";
 
 document.body.appendChild(RegisterForm());

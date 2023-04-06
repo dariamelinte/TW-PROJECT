@@ -18,7 +18,7 @@ body {
   height: 100%;
   align-items: center;
   scroll-behavior: smooth;
-  background-color: var(--blue-800);
+  background-color: var(--yellow-200);
 }
 
 
@@ -212,12 +212,24 @@ img {
   grid-gap: 1rem;
 }
 
+.rounded-sm {
+  border-radius: 5px;
+}
+
+.rounded-lg {
+  border-radius: 10px;
+}
+
 .rounded-xl {
   border-radius: 15px;
 }
 
 .rounded-full {
   border-radius: 50%;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 420px) {

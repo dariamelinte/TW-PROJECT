@@ -1,3 +1,5 @@
+import Routes from '../../utils/Routes.js';
+
 export default function ForgotPasswordForm() {
   const form = document.createElement('form');
 
@@ -18,8 +20,9 @@ export default function ForgotPasswordForm() {
     const button = document.createElement('button');
     button.classList.add('mt-3');
     button.innerText = 'Login';
-    button.onclick = () => {
-      window.location.href = '/login';
+    button.onclick = (e) => {
+      e.preventDefault();
+      window.location.href = Routes.login();;
     };
     form.appendChild(button);
     
