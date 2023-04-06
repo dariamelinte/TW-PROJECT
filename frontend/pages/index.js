@@ -3,7 +3,7 @@ import VerticalList from '../components/verticalList.js';
 import Routes from '../utils/Routes.js';
 import ChildrenList from '../components/children/childrenList.js';
 
-document.body.appendChild(Header({ iconPath: '../assets' }));
+document.body.appendChild(Header());
 
 // if the childId param is present, then the user is on a child page
 const childId = new URLSearchParams(window.location.search).get('childId');
@@ -31,7 +31,7 @@ const mock = [
   }
 ]
 
-if (childId) {
+if (!childId) {
   document.body.appendChild(ChildrenList(mock));
 } else {
   document.body.appendChild(VerticalList(Object.values(Routes.children)));

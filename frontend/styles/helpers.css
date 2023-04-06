@@ -35,6 +35,10 @@
   width: 20em;
 }
 
+.w-30 {
+  width: 30em;
+}
+
 .h-full {
   height: 100%;
 }

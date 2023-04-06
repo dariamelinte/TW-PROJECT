@@ -1,13 +1,8 @@
-export default function ChildCard({ iconPath, name, add }) {
-  const childCard = document.createElement('button');
-  childCard.onclick = () => {
-    if (add) {
-      console.log("add new child");
-      return;
-    }
+import Routes from '../../utils/Routes.js';
 
-    console.log("view child");
-  };
+export default function ChildCard({ iconPath, name, add, id }) {
+  const childCard = document.createElement('button');
+  childCard.onclick = () => window.location.href = Routes.child.path(id);
 
   childCard.className = 'w-15 h-15 bg-purple-400 p-3 m-6 rounded shadow-small center column';
 
