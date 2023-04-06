@@ -16,7 +16,7 @@ form label {
   font-weight: 300;
 }
 
-form input {
+form input, form textarea {
   width: 15rem;
   height: 3rem;
   border-radius: 0.5rem;
@@ -24,6 +24,7 @@ form input {
   padding: 0.5rem;
   margin-bottom: 1rem;
   font-weight: 400;
+  resize: none;
 }
 
 form a{

@@ -1,7 +1,9 @@
+import Routes from "../../utils/Routes.js";
+
 export default function LoginForm() {
   const form = document.createElement('form');
 
-  const login = ((event) => {
+  function login(event) {
     event.preventDefault();
 
     
@@ -11,8 +13,9 @@ export default function LoginForm() {
     //TODO: send the data to the server
     console.log(formData.get('email'));
     console.log(formData.get('password'));
-  ;;}).toString().replace('(event) => {', '').replace(';;}', '');
 
+    window.location.href = Routes.home.path();
+  }
 
   form.innerHTML = `
     <div class="flex column justify-center">
@@ -28,7 +31,10 @@ export default function LoginForm() {
     <a class="mt-2" href="/register">Add your family</a>
     <a href="/forgot-password">Forgot password?</a>
 
-    <button class="mt-3" onclick="${login}">Login</button>
-    `;
+    <button id="login" class="mt-3">Login</button>
+  `;
+
+    form.querySelector('button').addEventListener('click', login);
+
   return form;
 }
