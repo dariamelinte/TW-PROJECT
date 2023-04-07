@@ -16,7 +16,7 @@ form label {
   font-weight: 300;
 }
 
-form input, form textarea {
+form input, form textarea, form select {
   width: 15rem;
   height: 3rem;
   border-radius: 0.5rem;
