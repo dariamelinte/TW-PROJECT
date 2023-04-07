@@ -88,6 +88,10 @@ img {
   font-weight: 600;
 }
 
+.text-size-big {
+  font-size: 140px;
+}
+
 .text-white {
   color: var(--white);
 }

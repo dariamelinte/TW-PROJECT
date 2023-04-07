@@ -30,3 +30,15 @@ img.xl.square {
   height: var(--12);
 }
 
+.img-cover {
+  object-fit: cover;
+}
+
+.img-contain {
+  object-fit: contain;
+}
+
+.img-fill {
+  object-fit: fill;
+}
+
