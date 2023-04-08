@@ -10,6 +10,7 @@ const iconPath = "../assets/";
 document.body.appendChild(Header(null, iconPath));
 
 // if the childId param is present, then the user is on a child page
+console.log(window.location.search);
 const childId = new URLSearchParams(window.location.search).get('childId');
 
 if (!childId) {

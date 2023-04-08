@@ -8,9 +8,8 @@ export default function ChildrenList({ children, iconPath }) {
   
   childrenList.appendChild(ChildCard({ iconPath, add: true }))
 
-  children.forEach(({ name, id }) => {
-    // console.l
-    childrenList.appendChild(ChildCard({ iconPath, name, id }));
+  children.forEach(({ firstName, id }) => {
+    childrenList.appendChild(ChildCard({ iconPath, firstName, id }));
   });
 
   return childrenList;

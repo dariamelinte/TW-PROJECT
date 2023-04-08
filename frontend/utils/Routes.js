@@ -27,7 +27,7 @@ export default class Routes {
   }
   
   static child = {
-    path: (childId) => Routes.root + `?childId=${childId}`,
+    path: (childId) => Routes.root + `/?childId=${childId}`,
     title: 'Copil'
   }
 

@@ -1,7 +1,8 @@
-import Header from '../../components/header.js';
-import AddChildForm from '../../components/forms/addChildForm.js';
-import Routes from '../../utils/Routes.js';
+import Header from '/frontend/components/header.js';
+import ChildForm from '/frontend/components/forms/childForm.js';
+import Routes from '/frontend/utils/Routes.js';
+import { INITIAL_CHILD } from '/frontend/utils/initialValues.js';
 
-document.body.appendChild(Header(Routes.addChild.title, "../../assets"));
+document.body.appendChild(Header(Routes.addChild.title, "/frontend/assets"));
 
-document.body.appendChild(AddChildForm());
+document.body.appendChild(ChildForm({ child: INITIAL_CHILD, add: true }));
