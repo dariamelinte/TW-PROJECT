@@ -7,7 +7,7 @@ import mocked_children from './__mock__children.json' assert { type: 'json' };
 
 const iconPath = "../assets/";
 
-document.body.appendChild(Header(null, iconPath));
+document.body.appendChild(Header());
 
 // if the childId param is present, then the user is on a child page
 console.log(window.location.search);

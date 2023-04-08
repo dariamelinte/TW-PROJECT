@@ -11,6 +11,6 @@ const child = mocked_children.find((child) => child.id === parseInt(childId));
 
 console.log(mocked_children, childId, child)
 
-document.body.appendChild(Header(Routes.addChild.title, "/frontend/assets"));
+document.body.appendChild(Header(Routes.addChild.title));
 
 document.body.appendChild(ChildForm({ child }));
