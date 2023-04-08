@@ -56,7 +56,7 @@ export default function RegisterForm() {
       </div>
     </div>
 
-    <a class="mt-2" href="/login">Already have an account?</a>
+    <a class="mt-2" href="${Routes.login.path()}">Already have an account?</a>
 
     <button id="register" class="mt-3">Register</button>
   `;

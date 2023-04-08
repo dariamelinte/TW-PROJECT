@@ -18,21 +18,21 @@ export default function LoginForm() {
   }
 
   form.innerHTML = `
-    <div class="flex column justify-center">
-      <label for="email">Email</label>
-      <input type="email" name="email" id="email" placeholder="Email" />
-    </div>
-    
-    <div class="flex column justify-center">
-      <label for="password">Password</label>
-      <input name="password" id="password" placeholder="Password" type="password" />
-    </div>
+      <div class="flex column justify-center">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" placeholder="Email" />
+      </div>
+      
+      <div class="flex column justify-center">
+        <label for="password">Password</label>
+        <input name="password" id="password" placeholder="Password" type="password" />
+      </div>
 
-    <a class="mt-2" href="/register">Add your family</a>
-    <a href="/forgot-password">Forgot password?</a>
+      <a class="mt-2" href="${Routes.register.path()}">Add your family</a>
+      <a href="${Routes.forgotPassword.path()}">Forgot password?</a>
 
-    <button id="login" class="mt-3">Login</button>
-  `;
+      <button id="login" class="mt-3">Login</button>
+    `;
 
     form.querySelector('button').addEventListener('click', login);
 
