@@ -1,7 +1,7 @@
-import { sleepTypes } from "/frontend/utils/selectsOptions.js";
+import { sleepTypes, sleepPeriodTypes } from "/frontend/utils/selectsOptions.js";
 
 export default function SleepEntry({ entry = {}, add, onClick }) {
-  const { id, hours = [], info, sleepType } = entry;
+  const { id, hours = [], sleepPeriod, sleepType } = entry;
   const [startHour, endHour] = hours;
 
   const entryComponent = document.createElement('button');
@@ -13,7 +13,7 @@ export default function SleepEntry({ entry = {}, add, onClick }) {
     <img class="small square" src="/frontend/assets/img/plus-symbol.png" alt="add sleep" />
   ` : `
     <p class="text-purple-500">${startHour} - ${endHour}</p>
-    <h2 class="text-yellow-500">${info}</h2>
+    <h2 class="text-yellow-500">${sleepPeriodTypes[sleepPeriod]}</h2>
     <p class="text-purple-700">${sleepTypes[sleepType]}</p>
   `;
   

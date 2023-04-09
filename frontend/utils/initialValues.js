@@ -27,3 +27,10 @@ export const INITIAL_FEEDING_NOTE = {
   "hour": "",
   "info": ""
 }
+
+export const INITIAL_SLEEPING_NOTE = {
+  "firstHour": "",
+  "secondHour": "",
+  "sleepPeriod": "",
+  "sleepType": ""
+}

@@ -30,6 +30,11 @@ export const weekTypes = {
   "sunday": "Duminica",
 };
 
+export const sleepPeriodTypes = {
+  "night": "Somn de noapte",
+  "noon": "Somn de amiaza"
+};
+
 export const sleepTypes = {
   "peacefully": "Linistit",
   "troubled": "Somn agitat",

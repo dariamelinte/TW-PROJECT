@@ -3,19 +3,19 @@
     {
       "id": 1,
       "hours": ["00:00", "09:45"],
-      "info": "Somn de noapte",
+      "sleepPeriod": "night",
       "sleepType": "troubled"
     },
     {
       "id": 2,
       "hours": ["13:20", "14:40"],
-      "info": "Somn de amiaza",
+      "sleepPeriod": "noon",
       "sleepType": "peacefully"
     },
     {
       "id": 3,
       "hours": ["19:50", "20:20"],
-      "info": "Somn de seara",
+      "sleepPeriod": "night",
       "sleepType": "peacefully"
     }
   ],
@@ -23,13 +23,13 @@
     {
       "id": 1,
       "hours": ["00:00", "09:45"],
-      "info": "Somn de noapte",
+      "sleepPeriod": "night",
       "sleepType": "troubled"
     },
     {
       "id": 2,
       "hours": ["13:20", "14:40"],
-      "info": "Somn de amiaza",
+      "sleepPeriod": "noon",
       "sleepType": "peacefully"
     }
   ],
@@ -37,13 +37,13 @@
     {
       "id": 1,
       "hours": ["00:00", "09:45"],
-      "info": "Somn de noapte",
+      "sleepPeriod": "night",
       "sleepType": "troubled"
     },
     {
       "id": 2,
       "hours": ["13:20", "14:40"],
-      "info": "Somn de amiaza",
+      "sleepPeriod": "noon",
       "sleepType": "peacefully"
     }
   ],
@@ -51,13 +51,13 @@
     {
       "id": 1,
       "hours": ["00:00", "09:45"],
-      "info": "Somn de noapte",
+      "sleepPeriod": "night",
       "sleepType": "troubled"
     },
     {
       "id": 2,
       "hours": ["13:20", "14:40"],
-      "info": "Somn de amiaza",
+      "sleepPeriod": "noon",
       "sleepType": "peacefully"
     }
   ],
