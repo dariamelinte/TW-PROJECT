@@ -35,3 +35,8 @@ export const sleepTypes = {
   "troubled": "Somn agitat",
   "nightmare": "Cosmar",
 };
+
+export const entryTypes = {
+  "sleep": "sleep",
+  "food": "food",
+};

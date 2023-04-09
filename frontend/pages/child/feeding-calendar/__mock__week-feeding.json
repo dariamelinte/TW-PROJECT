@@ -1,0 +1,58 @@
+{
+  "monday": [
+    {
+      "id": 1,
+      "hour": "09:45",
+      "info": "Paine, lapte, oua"
+    },
+    {
+      "id": 2,
+      "hour": "14:40",
+      "info": "Gustare"
+    },
+    {
+      "id": 3,
+      "hour": "20:15",
+      "info": "Friptura, cartofi"
+    }
+  ],
+  "tuesday": [
+    {
+      "id": 4,
+      "hour": "09:45",
+      "info": "Paine, lapte, oua"
+    },
+    {
+      "id": 5,
+      "hour": "16:40",
+      "info": "Orez, cartofi, lapte cu gris"
+    }
+  ],
+  "wednesday": [
+    {
+      "id": 6,
+      "hour": "09:45",
+      "info": "Paine, lapte, oua"
+    },
+    {
+      "id": 7,
+      "hour": "14:40",
+      "info": "Gustare"
+    },
+    {
+      "id": 8,
+      "hour": "20:15",
+      "info": "Friptura, cartofi"
+    }
+  ],
+  "thursday": [
+    {
+      "id": 9,
+      "hour": "09:45",
+      "info": "Paine, lapte, oua"
+    }
+  ],
+  "friday": [],
+  "saturday": [],
+  "sunday": []
+}

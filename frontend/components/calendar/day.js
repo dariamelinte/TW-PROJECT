@@ -2,7 +2,7 @@ import { weekTypes } from "/frontend/utils/selectsOptions.js";
 
 import Entry from "./entry.js";
 
-export default function Day({ weekDay, entries }) {
+export default function Day({ weekDay, entries, entryType }) {
     const day = document.createElement('div');
     day.className = "mx-3 my-6 w-20 rounded-xl";
 
@@ -15,10 +15,10 @@ export default function Day({ weekDay, entries }) {
     day.appendChild(dayName);
 
     entries.forEach(entry => {
-      day.appendChild(Entry({ entry }))
+      day.appendChild(Entry({ entryType, entry }))
     });
   
-    day.appendChild(Entry({ add: true }))
+    day.appendChild(Entry({ entryType, add: true }))
     
     return day;
   }
