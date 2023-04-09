@@ -1,4 +1,5 @@
 import Routes from "/frontend/utils/Routes.js";
+import { friendshipTypes } from "/frontend/utils/friendshipTypes.js";
 
 export default function AddFriendForm() {
   const childId = new URLSearchParams(window.location.search).get('childId');
@@ -19,6 +20,12 @@ export default function AddFriendForm() {
   
     window.location.href = Routes.children.friendships.path(childId);
   }
+
+
+  const friendshipOptions = Object.entries(friendshipTypes).map(([key, value]) => (
+    `<option value="${key}">${value}</option>`
+  ))
+
 
   const form = document.createElement('form');
   form.className = 'mt-9';
@@ -70,11 +77,7 @@ export default function AddFriendForm() {
       <label for="friendshipLevel">Nivel de prietenie</label>
       <select class="bg-yellow-200 rounded p-1" name="friendshipLevel" id="friendshipLevel">
         <option value="friendshipLevel" selected disabled>Nivel de prietenie</option>
-        <option value="enemy">Dusman</option>
-        <option value="relative">Cunostinta</option>
-        <option value="friends">Prieteni</option>
-        <option value="closeFriends">Prieteni apropiati</option>
-        <option value="bestFriends">Cei mai buni prieteni</option>
+        ${friendshipOptions.join("")}
       </select> 
     </div>
 
