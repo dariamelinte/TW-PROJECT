@@ -18,7 +18,6 @@ export default function Calendar({iconPath , feed , luni , marti , miercuri , jo
     calendar.body.appendChild(Coloana({ iconPath, day: "Vineri" , vineri , feed}));
     calendar.body.appendChild(Coloana({ iconPath, day: "Sambata" , sambata , feed}));
     calendar.body.appendChild(Coloana({ iconPath, day: "Duminica" , duminica , feed}));
-
   
     return calendar;
   }
