@@ -82,6 +82,10 @@ export default class Routes {
         card: {
           path: (childId, friendId, cardId) => Routes.root + `/child/friendships/friend/card/?childId=${childId}&friendId=${friendId}&cardId=${cardId}`,
           title: 'Card'
+        },
+        add: {
+          path: (childId) => Routes.root + `/child/friendships/friend/add/?childId=${childId}`,
+          title: 'Adauga prieten'
         }
       }
     }
