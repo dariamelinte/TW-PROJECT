@@ -81,11 +81,19 @@ export default class Routes {
         title: 'Prieten',
         card: {
           path: (childId, friendId, cardId) => Routes.root + `/child/friendships/friend/card/?childId=${childId}&friendId=${friendId}&cardId=${cardId}`,
-          title: 'Card'
+          title: 'Activitate',
+          add: {
+            path: (childId, friendId) => Routes.root + `/child/friendships/friend/card/add/?childId=${childId}&friendId=${friendId}`,
+            title: 'Adauga activitate'
+          }
         },
         add: {
           path: (childId) => Routes.root + `/child/friendships/friend/add/?childId=${childId}`,
           title: 'Adauga prieten'
+        },
+        edit: {
+          path: (childId, friendId) => Routes.root + `/child/friendships/friend/edit/?childId=${childId}&friendId=${friendId}`,
+          title: 'Editeaza prieten'
         }
       }
     }

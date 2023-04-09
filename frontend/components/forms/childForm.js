@@ -1,4 +1,5 @@
 import Routes from "/frontend/utils/Routes.js";
+import { sexTypes } from "/frontend/utils/selectsOptions.js";
 
 export default function ChildForm({ child = {}, add = false }) {
   const saveData = (e) => {
@@ -24,6 +25,11 @@ export default function ChildForm({ child = {}, add = false }) {
   }
 
   const { lastName, firstName, dateOfBirth, sex = "sex", nationality, weight, height } = child;
+
+  const sexOptions = Object.entries(sexTypes).map(([key, value]) => (
+    `<option value="${key}" selected=${sex === key}>${value}</option>`
+  ))
+
 
   const form = document.createElement('form');
   form.className = 'mt-9';
@@ -58,10 +64,7 @@ export default function ChildForm({ child = {}, add = false }) {
         <label for="sex">Sex</label>
         <select class="bg-yellow-200 rounded p-1" name="sex" id="sex">
             <option value="sex" selected=${"sex" === sex} disabled>Sex</option>
-            <option value="male" selected=${"male" === sex}>Male</option>
-            <option value="female" selected=${"female" === sex}>Female</option>
-            <option value="nonBinary" selected=${"nonBinary" === sex}>Non-Binary</option>
-            <option value="preferNotToSay" selected=${"preferNotToSay" === sex}>Prefer not to say</option>
+            ${sexOptions.join("")}
         </select> 
       </div>
     </div>

@@ -1,9 +1,11 @@
 export const INITIAL_CHILD = {
   "firstName": "",
   "lastName": "",
-  "dateOfBirth": null,
-  "sex": null,
+  "dateOfBirth": "",
+  "sex": "",
   "nationality": "",
   "weight": "",
-  "height": ""
+  "height": "",
+  "mother": "",
+  "father": ""
 }

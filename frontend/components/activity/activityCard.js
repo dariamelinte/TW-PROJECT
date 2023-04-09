@@ -8,6 +8,7 @@ export default function ActivityCard({ activity = {}, add, onClick }) {
 
   activityCard.innerHTML = add ? `
     <img class="large square mb-3" src="/frontend/assets/img/plus-symbol.png" alt="add activity" />
+    <h1 class="text-purple-900 pb-2">Adauga activitate</h1>
   ` : `
     <h1 class="text-purple-900 pb-2">${date}</h1>
     <h1 class="text-purple-900">${title}</h1>

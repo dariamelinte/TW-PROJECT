@@ -3,7 +3,7 @@
     "id": 1,
     "childIds": [1, 2],
     "howTheyMet": "cresa",
-    "friendshipLevel": "bestFriends",
+    "friendshipLevel": "friends",
     "activities": [
       {
         "id": 1,

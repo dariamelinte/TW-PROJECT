@@ -1,12 +1,16 @@
+import Routes from '/frontend/utils/Routes.js';
 import { getAge } from '/frontend/utils/getAge.js';
-import { friendshipTypes } from '/frontend/utils/friendshipTypes.js';
+import { friendshipTypes } from '/frontend/utils/selectsOptions.js';
 
-export default function Friend({ friend = {}, howTheyMet, friendshipLevel, onClick }) {
-  console.log(friend);
+export default function Friend({ friend = {}, howTheyMet, friendshipLevel }) {
   const { id, firstName, lastName, dateOfBirth, mother, father } = friend;
 
+  const childId = parseInt(new URLSearchParams(window.location.search).get('childId'));
+
   const friendCard = document.createElement('button');
-  friendCard.onclick = () => onClick(id);
+  friendCard.onclick = () => {
+    window.location.href = Routes.children.friendships.friend.edit.path(childId, id);
+  };
 
   friendCard.className = 'bg-purple-400 p-3 my-2 mx-1 rounded shadow-small center column';
 
