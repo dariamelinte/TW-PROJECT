@@ -2,6 +2,7 @@ import Routes from '../../utils/Routes.js';
 
 export default function ForgotPasswordForm() {
   const form = document.createElement('form');
+  form.className = "w-20";
 
   function submit(event) {
     event.preventDefault();
@@ -26,7 +27,7 @@ export default function ForgotPasswordForm() {
   }
 
   form.innerHTML = `
-    <div class="flex column justify-center">
+    <div class="flex column justify-center w-full">
       <label for="email" id="email_label">Email</label>
       <input type="email" name="email" id="email" placeholder="Email" />
     </div>

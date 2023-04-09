@@ -181,3 +181,10 @@
 .p-9 {
   padding: var(--9);
 }
+
+
+@media screen and (min-width: 400px) {
+  /* .sm-pr-6 {
+    padding-right: var(--6);
+  } */
+}

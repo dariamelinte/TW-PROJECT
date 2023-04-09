@@ -47,6 +47,10 @@ export default class Routes {
       card: {
         path: (childId, cardId) => Routes.root + `/child/feeding-calendar/card/?childId=${childId}&cardId=${cardId}`,
         title: 'Card'
+      },
+      add: {
+        path: (childId) => Routes.root + `/child/feeding-calendar/add/?childId=${childId}`,
+        title: 'Adauga o noua masa'
       }
     },
     sleepingCalendar: {
@@ -55,6 +59,10 @@ export default class Routes {
       card: {
         path: (childId, cardId) => Routes.root + `/child/sleeping-calendar/card/?childId=${childId}&cardId=${cardId}`,
         title: 'Card'
+      },
+      add: {
+        path: (childId) => Routes.root + `/child/sleeping-calendar/add/?childId=${childId}`,
+        title: 'Adauga un nou somn'
       }
     },
     multimediaResources: {

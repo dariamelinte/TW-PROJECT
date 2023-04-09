@@ -2,6 +2,7 @@ import Routes from "../../utils/Routes.js";
 
 export default function LoginForm() {
   const form = document.createElement('form');
+  form.className = "w-20"
 
   function login(event) {
     event.preventDefault();
@@ -18,12 +19,12 @@ export default function LoginForm() {
   }
 
   form.innerHTML = `
-      <div class="flex column justify-center">
+      <div class="flex column w-full justify-center">
         <label for="email">Email</label>
         <input type="email" name="email" id="email" placeholder="Email" />
       </div>
       
-      <div class="flex column justify-center">
+      <div class="flex column w-full justify-center">
         <label for="password">Password</label>
         <input name="password" id="password" placeholder="Password" type="password" />
       </div>
