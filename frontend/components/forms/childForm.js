@@ -2,7 +2,16 @@ import Routes from "/frontend/utils/Routes.js";
 
 export default function ChildForm({ child = {}, add = false }) {
   const saveData = (e) => {
-    console.log(e);
+    e.preventDefault();
+
+    //TODO: send the data to the server
+    console.log("lastName: ", formData.get("lastName"));
+    console.log("firstName: ", formData.get("firstName"));
+    console.log("dateOfBirth: ", formData.get("dateOfBirth"));
+    console.log("sex: ", formData.get("sex"));
+    console.log("nationality: ", formData.get("nationality"));
+    console.log("weight: ", formData.get("weight"));
+    console.log("height: ", formData.get("height"));
 
     if (add) {
       window.location.href = Routes.root;
@@ -10,8 +19,6 @@ export default function ChildForm({ child = {}, add = false }) {
       window.location.href = Routes.child.path(child.id);
     }
   }
-
-  console.log(child);
 
   const { lastName, firstName, dateOfBirth, sex = "sex", nationality, weight, height } = child;
 
