@@ -5,10 +5,15 @@ import Routes from '/frontend/utils/Routes.js';
 
 import { INITIAL_ACTIVITY } from '/frontend/utils/initialValues.js';
 
-const { title } = Routes.children.friendships.friend.card.add;
+const { card, path } = Routes.children.friendships.friend;
 
 const childId = parseInt(new URLSearchParams(window.location.search).get('childId'));
 const friendId = parseInt(new URLSearchParams(window.location.search).get('friendId'));
 
-document.body.appendChild(Header(title));
-document.body.appendChild(ActivityForm({ childId, friendId, activity: INITIAL_ACTIVITY }));
+const onSave = () => {
+  // TO DO: api call
+  window.location.href = path(childId, friendId);
+} 
+
+document.body.appendChild(Header(card.add.title));
+document.body.appendChild(ActivityForm({ activity: INITIAL_ACTIVITY, onSave }));

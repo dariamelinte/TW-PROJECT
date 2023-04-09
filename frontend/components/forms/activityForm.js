@@ -1,6 +1,6 @@
 import { INITIAL_ACTIVITY } from '/frontend/utils/initialValues.js';
 
-export default function ActivityForm({ childId, friendId, activity = INITIAL_ACTIVITY}) {
+export default function ActivityForm({ activity = INITIAL_ACTIVITY, onSave }) {
   const { date, title, description } = activity;
 
   const saveData = (e) => {
@@ -13,6 +13,8 @@ export default function ActivityForm({ childId, friendId, activity = INITIAL_ACT
     console.log("date: ", formData.get("date"));
     console.log("title: ", formData.get("title"));
     console.log("description: ", formData.get("description"));
+
+    onSave();
   }
 
   const form = document.createElement('form');
