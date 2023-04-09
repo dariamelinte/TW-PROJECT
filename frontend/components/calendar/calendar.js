@@ -1,23 +1,23 @@
-import Event from "./event.js";
-import Coloana from "./coloana.js";
+import Day from "./day.js";
 
-const iconPath = '../../assets';
 
-export default function Calendar({iconPath , feed , luni , marti , miercuri , joi , vineri , sambata , duminica }) {
+export default function Calendar({ week }) {
     const calendar = document.createElement('div');
-    calendar.className = "center flex-wrap mx-9 my-6 bg-purple-400";
+    calendar.className = "w-full bg-purple-400 m-6 p-3 rounded shadow-small center column";
 
-    const week = document.createElement('h1');
-    week.innerText = '3 aprilie - 9 aprilie';
-    calendar.appendChild(week);
+    const timePeriod = document.createElement('h1');
+    timePeriod.className = "mb-2";
+    timePeriod.innerText = '3 aprilie - 9 aprilie';
+    calendar.appendChild(timePeriod);
 
-    calendar.body.appendChild(Coloana({ iconPath, day: "Luni" , luni , feed}));
-    calendar.body.appendChild(Coloana({ iconPath, day: "Marti" , marti , feed}));
-    calendar.body.appendChild(Coloana({ iconPath, day: "Miercuri" , miercuri , feed}));
-    calendar.body.appendChild(Coloana({ iconPath, day: "Joi" , joi , feed}));
-    calendar.body.appendChild(Coloana({ iconPath, day: "Vineri" , vineri , feed}));
-    calendar.body.appendChild(Coloana({ iconPath, day: "Sambata" , sambata , feed}));
-    calendar.body.appendChild(Coloana({ iconPath, day: "Duminica" , duminica , feed}));
+    const daysContainer = document.createElement('div');
+    daysContainer.className = "w-full flex justify-evenly flex-wrap";
+  
+    Object.entries(week).forEach(([weekDay, entries]) => {
+      daysContainer.appendChild(Day({ weekDay, entries }));
+    });
+
+    calendar.appendChild(daysContainer);
   
     return calendar;
   }

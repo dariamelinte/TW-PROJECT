@@ -60,6 +60,11 @@
   width: 100%;
 }
 
+.w-50 {
+  max-width: 30em;
+  width: 100%;
+}
+
 .w-1_2 {
   width: 50%;
 }
