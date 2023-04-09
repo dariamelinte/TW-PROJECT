@@ -47,6 +47,10 @@ export default class Routes {
       card: {
         path: (childId, cardId) => Routes.root + `/child/feeding-calendar/card/?childId=${childId}&cardId=${cardId}`,
         title: 'Card'
+      },
+      add: {
+        path: (childId) => Routes.root + `/child/feeding-calendar/card/add/?childId=${childId}`,
+        title: 'Adauga o noua masa'
       }
     },
     sleepingCalendar: {
