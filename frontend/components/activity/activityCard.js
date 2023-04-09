@@ -1,5 +1,4 @@
 export default function ActivityCard({ activity = {}, add, onClick }) {
-  console.log(activity);
   const { id, title, date } = activity;
 
   const activityCard = document.createElement('button');

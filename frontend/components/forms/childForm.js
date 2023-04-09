@@ -4,6 +4,9 @@ export default function ChildForm({ child = {}, add = false }) {
   const saveData = (e) => {
     e.preventDefault();
 
+    const form = document.querySelector('form');
+    const formData = new FormData(form);
+
     //TODO: send the data to the server
     console.log("lastName: ", formData.get("lastName"));
     console.log("firstName: ", formData.get("firstName"));
