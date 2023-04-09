@@ -1,0 +1,20 @@
+[
+    {
+      "id": 1,
+      "ora": "00:00-09:45",
+      "info": "Somn de noapte",
+      "tipSomn": "Agitat"
+    },
+    {
+      "id": 2,
+      "ora": "13:20-14:40",
+      "info": "Somn de amiaza",
+      "tipSomn": "Linistit"
+    },
+    {
+      "id": 3,
+      "ora": "13:20-14:40",
+      "info": "Somn de amiaza",
+      "tipSomn": "Linistit"
+    }
+  ]
