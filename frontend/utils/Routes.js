@@ -49,7 +49,7 @@ export default class Routes {
         title: 'Card'
       },
       add: {
-        path: (childId) => Routes.root + `/child/feeding-calendar/card/add/?childId=${childId}`,
+        path: (childId) => Routes.root + `/child/feeding-calendar/add/?childId=${childId}`,
         title: 'Adauga o noua masa'
       }
     },

@@ -24,6 +24,6 @@ export const INITIAL_MEDICAL_ENTRY = {
 }
 
 export const INITIAL_FEEDING_NOTE = {
-  "date": "",
-  "description": ""
+  "hour": "",
+  "info": ""
 }
