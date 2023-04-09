@@ -1,15 +1,13 @@
 import ChildCard from "./childCard.js";
 
-export default function ChildrenList({ children, iconPath }) {
+export default function ChildrenList({ children, onClick }) {
   const childrenList = document.createElement('div');
   childrenList.className = "center flex-wrap mx-9 my-6'";
-
-  iconPath = iconPath || '../../assets';
   
-  childrenList.appendChild(ChildCard({ iconPath, add: true }))
+  childrenList.appendChild(ChildCard({ add: true, onClick }))
 
   children.forEach(({ firstName, id }) => {
-    childrenList.appendChild(ChildCard({ iconPath, firstName, id }));
+    childrenList.appendChild(ChildCard({ firstName, id, onClick }));
   });
 
   return childrenList;
