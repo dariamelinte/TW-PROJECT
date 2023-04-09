@@ -12,7 +12,7 @@ export default function Header(title) {
       </a>
     </div>
     
-    ${title ? `<h1 class="text-2xl text-white">${title}</h1>` : ''}
+    ${title ? `<h2 class="text-2xl text-white">${title}</h2>` : ''}
     
     <div class="flex" id='right_side_header'>
         <a class="w-3 h-3 bg-yellow-200 rounded-xl p-1 mr-3" href="${Routes.myAccount.path()}" >

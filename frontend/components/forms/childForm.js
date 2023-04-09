@@ -32,58 +32,51 @@ export default function ChildForm({ child = {}, add = false }) {
 
 
   const form = document.createElement('form');
-  form.className = 'mt-9';
+  form.className = 'mt-9 w-20';
 
   form.innerHTML = `
-    <div class="flex w-full items-center flex-wrap">
-      <div class="flex flex-1 column justify-center pr-6">
-        <label for="lastName">Nume</label>
-        <input type="text" name="lastName" id="lastName" value="${lastName}" class="bg-yellow-200" />
-      </div>
-
-      <div class="flex flex-1 column justify-center">
-        <label for="firstName">Prenume</label>
-        <input type="text" name="firstName" id="firstName" value="${firstName}" class="bg-yellow-200" />
-      </div>
-    </div>
-    
-    <div class="flex w-full items-center flex-wrap">
-      <div class="flex flex-1 column justify-center pr-6">
-        <label for="dateOfBirth">Data de Nastere</label>
-        <input
-          id="dateOfBirth"
-          type="date"
-          name="dateOfBirth"
-          value=${dateOfBirth}
-          placeholder="Data de Nastere"
-          class="bg-yellow-200"
-        />
-      </div>
-
-      <div class="flex flex-1 column justify-center ">
-        <label for="gender">gender</label>
-        <select class="bg-yellow-200 rounded p-1" name="gender" id="gender">
-            <option value="gender" selected=${"gender" === gender} disabled>Gen</option>
-            ${genderOptions.join("")}
-        </select> 
-      </div>
+    <div class="flex flex-1 w-full column justify-center">
+      <label for="lastName">Nume</label>
+      <input type="text" name="lastName" id="lastName" value="${lastName}" class="bg-yellow-200" />
     </div>
 
-    <div class="flex items-center w-full flex-wrap">
-      <div class="flex flex-1 column justify-center pr-6">
-        <label for="nationality">Nationalitate</label>
-        <input type="text" name="nationality" id="nationality" value="${nationality}" class="bg-yellow-200" />
-      </div>
+    <div class="flex flex-1 w-full column justify-center">
+      <label for="firstName">Prenume</label>
+      <input type="text" name="firstName" id="firstName" value="${firstName}" class="bg-yellow-200" />
+    </div>
+  
+    <div class="flex flex-1 w-full column justify-center">
+      <label for="dateOfBirth">Data de Nastere</label>
+      <input
+        id="dateOfBirth"
+        type="date"
+        name="dateOfBirth"
+        value=${dateOfBirth}
+        placeholder="Data de Nastere"
+        class="bg-yellow-200"
+      />
+    </div>
 
-      <div class="flex flex-1 items-center justify-between flex-wrap">
-        <div class="flex column justify-center">
-          <label for="weight">W</label>
-          <input type="text" name="weight" id="weight" value="${weight}" class="bg-yellow-200 w-5" />
-        </div>
-        <div class="flex column justify-center">
-          <label for="height">H</label>
-          <input type="text" name="height" id="height" value="${height}" class="bg-yellow-200 w-5" />
-        </div>
+    <div class="flex flex-1 w-full column justify-center">
+      <label for="gender">gender</label>
+      <select class="bg-yellow-200 rounded p-1" name="gender" id="gender">
+          <option value="gender" selected=${"gender" === gender} disabled>Gen</option>
+          ${genderOptions.join("")}
+      </select> 
+    </div>
+    <div class="flex flex-1 w-full column justify-center">
+      <label for="nationality">Nationalitate</label>
+      <input type="text" name="nationality" id="nationality" value="${nationality}" class="bg-yellow-200" />
+    </div>
+
+    <div class="flex flex-1 w-full items-center justify-between flex-wrap">
+      <div class="flex column justify-center">
+        <label for="weight">W</label>
+        <input type="text" name="weight" id="weight" value="${weight}" class="bg-yellow-200 w-8" />
+      </div>
+      <div class="flex column justify-center">
+        <label for="height">H</label>
+        <input type="text" name="height" id="height" value="${height}" class="bg-yellow-200 w-8" />
       </div>
     </div>
 

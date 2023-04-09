@@ -6,14 +6,14 @@ export default function MultimediaList(resources) {
   const childId = new URLSearchParams(window.location.search).get('childId');
 
   const addResource = document.createElement('div');
-  addResource.className = 'center bg-purple-400 m-3 p-3 h-20 p-3 rounded-xl cursor-pointer';
+  addResource.className = 'center bg-purple-400 m-3 p-3 w-15 h-15 p-3 rounded-xl cursor-pointer';
   addResource.id = 'add-resource';
   addResource.innerHTML = '<div class="w-15 center"><h1 class="text-white text-size-big bold-text">+</h1></div>'
   list.appendChild(addResource);
 
   list.innerHTML = list.innerHTML + `
     ${resources.map(resource => `
-      <div class="h-20 flex column bg-purple-400 m-3 p-3 rounded-xl cursor-pointer" id="resource_id_${resource.id}">
+      <div class="w-15 flex column bg-purple-400 m-3 p-3 rounded-xl cursor-pointer" id="resource_id_${resource.id}">
         <img class="img-cover w-15 h-10 mb-3 rounded-xl" src="${resource.image ? resource.image : '../../../assets/profile-picture.jpg'}" />
         <p class="text-white light-bold-texst">${resource.date}</p>
         <p class="text-white">${resource.description}</p>
