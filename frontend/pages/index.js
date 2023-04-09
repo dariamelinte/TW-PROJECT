@@ -3,36 +3,20 @@ import VerticalList from '../components/verticalList.js';
 import Routes from '../utils/Routes.js';
 import ChildrenList from '../components/children/childrenList.js';
 
-document.body.appendChild(Header({ iconPath: '../assets' }));
+import mocked_children from '/frontend/utils/__mock__children.json' assert { type: 'json' };
+
 
 // if the childId param is present, then the user is on a child page
 const childId = new URLSearchParams(window.location.search).get('childId');
 
-const mock = [
-  {
-    "id": 1,
-    "name": "Eva Maria"
-  },
-  {
-    "id": 2,
-    "name": "Marco"
-  },
-  {
-    "id": 3,
-    "name": "Felix"
-  },
-  {
-    "id": 4,
-    "name": "Lulu"
-  },
-  {
-    "id": 5,
-    "name": "Roger"
-  }
-]
+const onClickCard = (id, add) => {
+  window.location.href = add ? Routes.addChild.path() : Routes.child.path(id)
+}
 
-if (childId) {
-  document.body.appendChild(ChildrenList(mock));
+document.body.appendChild(Header());
+
+if (!childId) {
+  document.body.appendChild(ChildrenList({ children: mocked_children, onClick: onClickCard }));
 } else {
   document.body.appendChild(VerticalList(Object.values(Routes.children)));
 }

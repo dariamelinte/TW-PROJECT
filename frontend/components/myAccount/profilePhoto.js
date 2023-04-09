@@ -5,6 +5,7 @@ export default function profilePhoto() {
   
     profilePhoto.innerHTML = `
         <img class="2xl square rounded" src="../../assets/img/profile-picture.jpg" alt="profile picture" />
+
       `;
     return profilePhoto;
   }

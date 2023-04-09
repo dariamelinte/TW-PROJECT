@@ -1,7 +1,9 @@
+import Routes from "../../utils/Routes.js";
+
 export default function RegisterForm() {
   const form = document.createElement('form');
 
-  const register = ((event) => {
+  function register(event) {
     event.preventDefault();
 
     const form = document.querySelector('form');
@@ -13,7 +15,9 @@ export default function RegisterForm() {
     console.log(formData.get('firstName'));
     console.log(formData.get('lastName'));
     console.log(formData.get('dateOfBirth'));
-  ;;}).toString().replace('(event) => {', '').replace(';;}', '');
+
+    window.location.href = Routes.login.path();
+  }
 
   form.innerHTML = `
     <div class="flex row justify-center">
@@ -52,9 +56,12 @@ export default function RegisterForm() {
       </div>
     </div>
 
-    <a class="mt-2" href="/login">Already have an account?</a>
+    <a class="mt-2" href="${Routes.login.path()}">Already have an account?</a>
 
-    <button class="mt-3" onclick="${register}">Register</button>
-    `;
+    <button id="register" class="mt-3">Register</button>
+  `;
+
+  form.querySelector('button').addEventListener('click', register);
+
   return form;
 }

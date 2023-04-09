@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "firstName": "Eva Maria",
+    "lastName": "Melinte",
+    "dateOfBirth": "2006-02-20",
+    "gender": "female",
+    "nationality": "Franceza",
+    "weight": 40.3,
+    "height": 176,
+    "mother": "Alina",
+    "father": "Gabi"
+  },
+  {
+    "id": 2,
+    "firstName": "Marco",
+    "lastName": "Melinte",
+    "dateOfBirth": "2004-03-05",
+    "gender": "male",
+    "nationality": "Romana",
+    "weight": 45.3,
+    "height": 140,
+    "mother": "Gabi",
+    "father": "Titi"
+  },
+  {
+    "id": 3,
+    "firstName": "Felix",
+    "lastName": "Melinte",
+    "dateOfBirth": "2010-10-20",
+    "gender": "male",
+    "nationality": "Romana",
+    "weight": 30.3,
+    "height": 136,
+    "mother": "Frasina",
+    "father": "Stefan"
+  },
+  {
+    "id": 4,
+    "firstName": "Lulu",
+    "lastName": "Melinte",
+    "dateOfBirth": "2003-05-28",
+    "gender": "female",
+    "nationality": "Romana",
+    "weight": 3.1,
+    "height": 80,
+    "mother": "Daria",
+    "father": "Petrisor"
+  },
+  {
+    "id": 5,
+    "firstName": "Roger",
+    "lastName": "Melinte",
+    "dateOfBirth": "2016-08-03",
+    "gender": "male",
+    "nationality": "Romana",
+    "weight": 23.6,
+    "height": 120,
+    "mother": "Daria",
+    "father": "Petrisor"
+  }
+]

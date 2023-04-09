@@ -12,7 +12,7 @@ export default function myAccountForm() {
       console.log(formData.get('lastName'));
       console.log(formData.get('email'));
       console.log(formData.get('dateOfBirth'));
-      console.log(formData.get('sex'));
+      console.log(formData.get('gender'));
       console.log(formData.get('nationalitate'));
     ;;}).toString().replace('(event) => {', '').replace(';;}', '');
   
@@ -43,9 +43,9 @@ export default function myAccountForm() {
           </div>
   
           <div class="flex column justify-center">
-            <label for="sex">Sex</label>
-            <select class="bg-white rounded pb-2 pt-2 px-1" name="sex" id="sex">
-                <option value="sex" selected disabled>Sex</option>
+            <label for="gender">Gen</label>
+            <select class="bg-white rounded pb-2 pt-2 px-1" name="gender" id="gender">
+                <option value="gender" selected disabled>Gen</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
                 <option value="nonBinary">Non-Binary</option>
