@@ -6,7 +6,7 @@ export const friendshipTypes = {
   "bestFriends": "Cei mai buni prieteni"
 };
 
-export const sexTypes = {
+export const genderTypes = {
   "male": "Masculin",
   "female": "Feminin",
   "friends": "Prieteni",
