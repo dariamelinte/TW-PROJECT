@@ -9,3 +9,9 @@ export const INITIAL_CHILD = {
   "mother": "",
   "father": ""
 }
+
+export const INITIAL_ACTIVITY = {
+  "date": "",
+  "title": "",
+  "description": ""
+}
