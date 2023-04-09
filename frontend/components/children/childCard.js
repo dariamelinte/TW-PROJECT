@@ -1,5 +1,3 @@
-import Routes from '../../utils/Routes.js';
-
 export default function ChildCard({ firstName, add, id, onClick }) {
   const childCard = document.createElement('button');
   childCard.onclick = () => onClick(id, add);
