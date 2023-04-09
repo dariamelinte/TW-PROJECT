@@ -70,7 +70,11 @@ export default class Routes {
       title: 'Istoric medical',
       card: {
         path: (childId, cardId) => Routes.root + `/child/medical-history/card/?childId=${childId}&cardId=${cardId}`,
-        title: 'Card'
+        title: 'Card',
+      },
+      add: {
+        path: (childId) => Routes.root + `/child/medical-history/add/?childId=${childId}`,
+        title: 'Adauga examinare'
       }
     },
     friendships: {

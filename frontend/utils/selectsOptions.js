@@ -13,3 +13,9 @@ export const sexTypes = {
   "nonBinary": "Non-Binar",
   "preferNotToSay": "Prefer sa nu spun"
 };
+
+export const severityTypes = {
+  "weak": "Slaba",
+  "severe": "Severa",
+  "verySevere": "Foarte Severa"
+};
