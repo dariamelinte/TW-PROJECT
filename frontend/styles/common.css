@@ -210,12 +210,6 @@ img {
   text-align: center;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 1rem;
-}
-
 .rounded-sm {
   border-radius: 5px;
 }
@@ -234,13 +228,6 @@ img {
 
 .cursor-pointer {
   cursor: pointer;
-}
-
-@media screen and (max-width: 420px) {
-  .grid {
-    grid-gap: 1.5rem;
-    grid-template-columns: 1fr 1fr;
-  }
 }
 
 @media screen and (max-width: 360px) {
