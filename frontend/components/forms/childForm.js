@@ -1,5 +1,5 @@
 import Routes from "/frontend/utils/Routes.js";
-import { sexTypes } from "/frontend/utils/selectsOptions.js";
+import { genderTypes } from "/frontend/utils/selectsOptions.js";
 
 export default function ChildForm({ child = {}, add = false }) {
   const saveData = (e) => {
@@ -12,7 +12,7 @@ export default function ChildForm({ child = {}, add = false }) {
     console.log("lastName: ", formData.get("lastName"));
     console.log("firstName: ", formData.get("firstName"));
     console.log("dateOfBirth: ", formData.get("dateOfBirth"));
-    console.log("sex: ", formData.get("sex"));
+    console.log("gender: ", formData.get("gender"));
     console.log("nationality: ", formData.get("nationality"));
     console.log("weight: ", formData.get("weight"));
     console.log("height: ", formData.get("height"));
@@ -24,10 +24,10 @@ export default function ChildForm({ child = {}, add = false }) {
     }
   }
 
-  const { lastName, firstName, dateOfBirth, sex = "sex", nationality, weight, height } = child;
+  const { lastName, firstName, dateOfBirth, gender = "gender", nationality, weight, height } = child;
 
-  const sexOptions = Object.entries(sexTypes).map(([key, value]) => (
-    `<option value="${key}" selected=${sex === key}>${value}</option>`
+  const genderOptions = Object.entries(genderTypes).map(([key, value]) => (
+    `<option value="${key}" selected=${gender === key}>${value}</option>`
   ))
 
 
@@ -61,10 +61,10 @@ export default function ChildForm({ child = {}, add = false }) {
       </div>
 
       <div class="flex flex-1 column justify-center ">
-        <label for="sex">Sex</label>
-        <select class="bg-yellow-200 rounded p-1" name="sex" id="sex">
-            <option value="sex" selected=${"sex" === sex} disabled>Sex</option>
-            ${sexOptions.join("")}
+        <label for="gender">gender</label>
+        <select class="bg-yellow-200 rounded p-1" name="gender" id="gender">
+            <option value="gender" selected=${"gender" === gender} disabled>Gen</option>
+            ${genderOptions.join("")}
         </select> 
       </div>
     </div>

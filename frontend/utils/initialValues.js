@@ -2,7 +2,7 @@ export const INITIAL_CHILD = {
   "firstName": "",
   "lastName": "",
   "dateOfBirth": "",
-  "sex": "",
+  "gender": "",
   "nationality": "",
   "weight": "",
   "height": "",
@@ -13,5 +13,12 @@ export const INITIAL_CHILD = {
 export const INITIAL_ACTIVITY = {
   "date": "",
   "title": "",
+  "description": ""
+}
+
+export const INITIAL_MEDICAL_ENTRY = {
+  "date": "",
+  "title": "",
+  "severity": "",
   "description": ""
 }
