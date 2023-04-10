@@ -1,10 +1,4 @@
-# TW-PROJECT
-
-## Auth
-
-- npm install
-- npm install -g ts-node
-- ask for .env info
+# BaIn
 
 Figma: https://www.figma.com/file/3BcGqrUShRWRBMDB5NptO7/Untitled?node-id=0%3A1&t=UhqdV2L6mVAyKiFx-1
 
