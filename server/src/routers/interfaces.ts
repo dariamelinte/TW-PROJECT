@@ -1,11 +1,10 @@
-export interface IRequestData {
-  url?: string;
-  method?: string;
-  body?: JSON;
-}
+import { IncomingMessage, ServerResponse } from "http";
 
-export interface IRouterResponse {
-  statusCode: number;
-  headers: { [key: string]: string };
-  body: string;
+export interface IResponseData extends ServerResponse<IncomingMessage> {
+  locals: {
+    body: any;
+    url: string | undefined;
+    method: string | undefined;
+    userId: string | undefined;
+  }
 }

@@ -2,8 +2,10 @@ import dotenv from 'dotenv';
 import http from 'http';
 import { Pool } from 'pg';
 
-import userRouter from './routers/user';
-import { IRequestData } from './routers/interfaces';
+import { IResponseData } from './routers/interfaces';
+import destructureRequestMiddleware from './middlewares/destructureRequest';
+import authRouter from './routers/auth';
+import authorizationMiddleware from './middlewares/authorization';
 
 dotenv.config();
 
@@ -17,31 +19,41 @@ const pool = new Pool({
 });
 
 const server = http.createServer((req, res) => {
-  // Get the body of the request if there is one
-  let body
-  if (req.method === 'POST' || req.method === 'PUT') {
-    let body = '';
-    req.on('data', (chunk) => {
-      body += chunk.toString();
-    });
-    req.on('end', () => {
-      body = body;
-    });
+  // Format the request body and important metadata inside the res.locals object
+  const destructuredData = destructureRequestMiddleware(req, res as IResponseData);
+  
+  let request = destructuredData.req;
+  let response = destructuredData.res;
+  let continueRequest = destructuredData.continue; 
+
+  if(!continueRequest) {
+    response.writeHead(500, { 'Content-Type': 'application/json' });
+    return response.end(JSON.stringify({ message: 'Server error' }));
   }
 
-  // Create the request data object
-  const requestData: IRequestData = {
-    url: req.url,
-    method: req.method,
-    body: body ? JSON.parse(body) : null,
-  };
-
-  // Route the request to the appropriate router
-  if (req.url?.startsWith('/user')) {
-    return userRouter(requestData, res, pool);
+  // Check if the request is for the auth router
+  if (request.url?.startsWith('/auth')) {
+    return authRouter(response, pool);
   } else {
-    res.writeHead(404, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ message: 'Route not found' }));
+    // If the request is not for the auth router, check if the user is authorized
+    const authorized = authorizationMiddleware(request, response);
+    
+    request = authorized.req;
+    response = authorized.res;
+    continueRequest = authorized.continue;
+
+    if(!continueRequest) {
+      response.writeHead(401, { 'Content-Type': 'application/json' });
+      return response.end(JSON.stringify({ message: 'Unauthorized' }));
+    }
+
+    // If the user is authorized, check if the request is for each of the routers
+    if(request.url?.startsWith('/user')) {
+      return authRouter(response, pool);
+    }
+
+    response.writeHead(404, { 'Content-Type': 'application/json' });
+    return response.end(JSON.stringify({ message: 'Not found' }));
   }
 });
 
