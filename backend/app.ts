@@ -9,6 +9,13 @@ const server = http.createServer((req: any, res: any) => {
   res.end('Hello World');
 });
 
+async function startServer() {
+  const server = new ApolloServer({ schema });
+  await server.start();
+  server.applyMiddleware({ app });
+}
+startServer();
+
 server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
