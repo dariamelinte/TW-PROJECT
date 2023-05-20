@@ -1,8 +1,4 @@
-import { IncomingMessage, ServerResponse } from "http";
-import { Pool } from "pg";
-import { IResponseData } from "./interfaces";
-
-async function userRouter (res: IResponseData, pool: Pool): Promise<ServerResponse<IncomingMessage>> {
+async function userRouter (res, pool) {
   try{
     // TODO: Implement user router
     

@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 import http from 'http';
 import { Pool } from 'pg';
 
-import { IResponseData } from './routers/interfaces';
 import destructureRequestMiddleware from './middlewares/destructureRequest';
 import authRouter from './routers/auth';
 import authorizationMiddleware from './middlewares/authorization';
@@ -20,11 +19,7 @@ const pool = new Pool({
 
 const server = http.createServer((req, res) => {
   // Format the request body and important metadata inside the res.locals object
-  const destructuredData = destructureRequestMiddleware(req, res as IResponseData);
-  
-  let request = destructuredData.req;
-  let response = destructuredData.res;
-  let continueRequest = destructuredData.continue; 
+  let { req: request, res: response, continue: continueRequest } = destructureRequestMiddleware(req, res);
 
   if(!continueRequest) {
     response.writeHead(500, { 'Content-Type': 'application/json' });
@@ -34,27 +29,27 @@ const server = http.createServer((req, res) => {
   // Check if the request is for the auth router
   if (request.url?.startsWith('/auth')) {
     return authRouter(response, pool);
-  } else {
-    // If the request is not for the auth router, check if the user is authorized
-    const authorized = authorizationMiddleware(request, response);
-    
-    request = authorized.req;
-    response = authorized.res;
-    continueRequest = authorized.continue;
-
-    if(!continueRequest) {
-      response.writeHead(401, { 'Content-Type': 'application/json' });
-      return response.end(JSON.stringify({ message: 'Unauthorized' }));
-    }
-
-    // If the user is authorized, check if the request is for each of the routers
-    if(request.url?.startsWith('/user')) {
-      return authRouter(response, pool);
-    }
-
-    response.writeHead(404, { 'Content-Type': 'application/json' });
-    return response.end(JSON.stringify({ message: 'Not found' }));
   }
+  
+  // If the request is not for the auth router, check if the user is authorized
+  const authorized = authorizationMiddleware(request, response);
+  
+  request = authorized.req;
+  response = authorized.res;
+  continueRequest = authorized.continue;
+
+  if(!continueRequest) {
+    response.writeHead(401, { 'Content-Type': 'application/json' });
+    return response.end(JSON.stringify({ message: 'Unauthorized' }));
+  }
+
+  // If the user is authorized, check if the request is for each of the routers
+  if(request.url?.startsWith('/user')) {
+    return authRouter(response, pool);
+  }
+
+  response.writeHead(404, { 'Content-Type': 'application/json' });
+  return response.end(JSON.stringify({ message: 'Not found' }));
 });
 
 const PORT = process.env.PORT || 3000;

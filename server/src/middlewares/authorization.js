@@ -1,10 +1,6 @@
-import { IncomingMessage, ServerResponse } from "http";
 import jwt from 'jsonwebtoken';
-import { IResponseData } from "../routers/interfaces";
 
-const authorizationMiddleware = 
-(req: IncomingMessage, res: IResponseData): 
-{ req: IncomingMessage, res: IResponseData, continue: boolean } => {
+const authorizationMiddleware = (req, res) => {
   // Get the token from the cookie
   const token = req.headers.cookie?.split('=')[1];
 
@@ -17,13 +13,14 @@ const authorizationMiddleware =
 
   // Verify the token
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || '') as { userId: string };
-    res.locals.userId = decoded.userId;
+    const { userId } = jwt.verify(token, process.env.JWT_SECRET || '');
+    res.locals.userId = userId;
 
     return { req, res, continue: true };
   } catch (err) {
+    console.log(err);
     res.writeHead(401, { 'Content-Type': 'application/json' });
-    return { req, res, continue: false};
+    return { req, res, continue: false };
   }
 }
 

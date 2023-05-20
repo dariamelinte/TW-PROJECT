@@ -1,8 +1,4 @@
-import { IncomingMessage, ServerResponse } from "http";
-import { Pool } from "pg";
-import { IResponseData } from "./interfaces";
-
-async function authRouter (res: IResponseData, pool: Pool): Promise<ServerResponse<IncomingMessage>> {
+async function authRouter (res, pool) {
   try {
     // TODO: Implement auth router
 
