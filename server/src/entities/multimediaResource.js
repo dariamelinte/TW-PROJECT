@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
 
-export const saveMultimediaResource = async (multimediaResource, pool) => {
+exports.saveMultimediaResource = async (multimediaResource, pool) => {
   try {
     const { childId, date, note, path } = multimediaResource;
     const result = await pool.query(
@@ -27,7 +27,7 @@ export const saveMultimediaResource = async (multimediaResource, pool) => {
   }
 };
 
-export const updateMultimediaResource = async (multimediaResource, pool) => {
+exports.updateMultimediaResource = async (multimediaResource, pool) => {
   try {
     const { childId, date, note, path, id } = multimediaResource;
     const result = await pool.query(
@@ -58,7 +58,7 @@ export const updateMultimediaResource = async (multimediaResource, pool) => {
   }
 };
 
-export const deleteMultimediaResource = async (id, pool) => {
+exports.deleteMultimediaResource = async (id, pool) => {
   try {
     const result = await pool.query(
       `
@@ -82,7 +82,7 @@ export const deleteMultimediaResource = async (id, pool) => {
   }
 };
 
-export const getMultimediaResourceById = async (id, pool) => {
+exports.getMultimediaResourceById = async (id, pool) => {
   try {
     const result = await pool.query(
       `
@@ -106,7 +106,7 @@ export const getMultimediaResourceById = async (id, pool) => {
   }
 };
 
-export const findMultimediaResourceByChildId = async (childId, pool) => {
+exports.findMultimediaResourceByChildId = async (childId, pool) => {
   try {
     const result = await pool.query(
       `

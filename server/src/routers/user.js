@@ -16,4 +16,4 @@ async function userRouter (res, pool) {
   }
 }
 
-export default userRouter;
+module.exports = userRouter;

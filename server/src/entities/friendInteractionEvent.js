@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
 
-export const saveFriendInteractionEvent = async (friendInteractionEvent = {}, pool) => {
+exports.saveFriendInteractionEvent = async (friendInteractionEvent = {}, pool) => {
   try {
     const { childId, friendId, date, title, note } = friendInteractionEvent;
     const result = await pool.query(
@@ -27,7 +27,7 @@ export const saveFriendInteractionEvent = async (friendInteractionEvent = {}, po
   }
 };
 
-export const updateFriendInteractionEvent = async (friendInteractionEvent = {}, pool) => {
+exports.updateFriendInteractionEvent = async (friendInteractionEvent = {}, pool) => {
   try {
     const { childId, friendId, date, title, note, id } = friendInteractionEvent;
     const result = await pool.query(
@@ -59,7 +59,7 @@ export const updateFriendInteractionEvent = async (friendInteractionEvent = {}, 
   }
 };
 
-export const deleteFriendInteractionEvent = async (id, pool) => {
+exports.deleteFriendInteractionEvent = async (id, pool) => {
   try {
     await pool.query(
       `
@@ -84,7 +84,7 @@ export const deleteFriendInteractionEvent = async (id, pool) => {
   }
 };
 
-export const findFriendInteractionEventById = async (id, pool) => {
+exports.findFriendInteractionEventById = async (id, pool) => {
   try {
     const result = await pool.query(
       `
@@ -108,7 +108,7 @@ export const findFriendInteractionEventById = async (id, pool) => {
   }
 };
 
-export const findFriendInteractionEventByChildId = async (childId, pool) => {
+exports.findFriendInteractionEventByChildId = async (childId, pool) => {
   try {
     const result = await pool.query(
       `

@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
 
-export const createFeedingEvent = async (feedingEvent, pool) => {
+exports.createFeedingEvent = async (feedingEvent, pool) => {
   try {
     const { childId, dateTime, note } = feedingEvent;
 
@@ -28,7 +28,7 @@ export const createFeedingEvent = async (feedingEvent, pool) => {
   }
 };
 
-export const updateFeedingEvent = async (feedingEvent, pool) => {
+exports.updateFeedingEvent = async (feedingEvent, pool) => {
   try {
     const { id, childId, dateTime, note } = feedingEvent;
     const result = await pool.query(
@@ -53,7 +53,7 @@ export const updateFeedingEvent = async (feedingEvent, pool) => {
   }
 };
 
-export const getFeedingEvent = async (childId, pool) => {
+exports.getFeedingEvent = async (childId, pool) => {
   try {
     const result = await pool.query(
       `
@@ -77,7 +77,7 @@ export const getFeedingEvent = async (childId, pool) => {
   }
 };
 
-export const deleteFeedingEvent = async (id, pool) => {
+exports.deleteFeedingEvent = async (id, pool) => {
   try {
     const result = await pool.query(
       `

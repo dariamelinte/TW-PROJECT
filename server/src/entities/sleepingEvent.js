@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
 
-export const saveSleepingEvent = async (sleepingEvent, pool) => {
+exports.saveSleepingEvent = async (sleepingEvent, pool) => {
   try {
     const { childId, dateTime, sleepType, note } = sleepingEvent;
     const result = await pool.query(
@@ -27,7 +27,7 @@ export const saveSleepingEvent = async (sleepingEvent, pool) => {
   }
 };
 
-export const updateSleepingEvent = async (sleepingEvent, pool) => {
+exports.updateSleepingEvent = async (sleepingEvent, pool) => {
   try {
     const { childId, dateTime, sleepType, note, id } = sleepingEvent;
     const result = await pool.query(
@@ -58,7 +58,7 @@ export const updateSleepingEvent = async (sleepingEvent, pool) => {
   }
 };
 
-export const deleteSleepingEvent = async (id, pool) => {
+exports.deleteSleepingEvent = async (id, pool) => {
   try {
     const result = await pool.query(
       `
@@ -82,7 +82,7 @@ export const deleteSleepingEvent = async (id, pool) => {
   }
 };
 
-export const getSleepingEventById = async (id, pool) => {
+exports.getSleepingEventById = async (id, pool) => {
   try {
     const result = await pool.query(
       `
@@ -106,7 +106,7 @@ export const getSleepingEventById = async (id, pool) => {
   }
 };
 
-export const findSleepingEventByChildId = async (childId, pool) => {
+exports.findSleepingEventByChildId = async (childId, pool) => {
   try {
     const result = await pool.query(
       `

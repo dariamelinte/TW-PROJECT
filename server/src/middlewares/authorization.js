@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+const jwt = require('jsonwebtoken');
 
 const authorizationMiddleware = (req, res) => {
   // Get the token from the cookie
@@ -24,5 +24,4 @@ const authorizationMiddleware = (req, res) => {
   }
 }
 
-export default authorizationMiddleware;
-
+module.exports = authorizationMiddleware;

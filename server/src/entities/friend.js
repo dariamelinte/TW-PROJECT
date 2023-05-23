@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
 
-export const createFriend = async (friend = {}, pool) => {
+exports.createFriend = async (friend = {}, pool) => {
   try {
     const {
       firstName,
@@ -45,7 +45,7 @@ export const createFriend = async (friend = {}, pool) => {
   }
 };
 
-export const updateFriend = async (friend = {}, pool) => {
+exports.updateFriend = async (friend = {}, pool) => {
   try {
     const {
       id,
@@ -88,7 +88,7 @@ export const updateFriend = async (friend = {}, pool) => {
   }
 };
 
-export const deleteFriend = async (id, pool) => {
+exports.deleteFriend = async (id, pool) => {
   try {
     const result = await pool.query(
       `
@@ -112,7 +112,7 @@ export const deleteFriend = async (id, pool) => {
   }
 };
 
-export const findFriendById = async (id, pool) => {
+exports.findFriendById = async (id, pool) => {
   try {
     const result = await pool.query(
       `
@@ -136,7 +136,7 @@ export const findFriendById = async (id, pool) => {
   }
 };
 
-export const findAllFriends = async (childId, pool) => {
+exports.findAllFriends = async (childId, pool) => {
   try {
     const result = await pool.query(
       `

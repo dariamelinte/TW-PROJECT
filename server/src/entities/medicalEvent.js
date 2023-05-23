@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
 
-export const saveMedicalEvent = async (medicalEvent, pool) => {
+exports.saveMedicalEvent = async (medicalEvent, pool) => {
   try {
     const { childId, title, note, date, severity } = medicalEvent;
     const result = await pool.query(
@@ -27,7 +27,7 @@ export const saveMedicalEvent = async (medicalEvent, pool) => {
   }
 };
 
-export const updateMedicalEvent = async (medicalEvent, pool) => {
+exports.updateMedicalEvent = async (medicalEvent, pool) => {
   try {
     const { childId, title, note, date, severity } = medicalEvent;
     const result = await pool.query(
@@ -59,7 +59,7 @@ export const updateMedicalEvent = async (medicalEvent, pool) => {
   }
 };
 
-export const deleteMedicalEvent = async (id, pool) => {
+exports.deleteMedicalEvent = async (id, pool) => {
   try {
     const result = await pool.query(
       `
@@ -83,7 +83,7 @@ export const deleteMedicalEvent = async (id, pool) => {
   }
 };
 
-export const getMedicalEventById = async (id, pool) => {
+exports.getMedicalEventById = async (id, pool) => {
   try {
     const result = await pool.query(
       `
@@ -107,7 +107,7 @@ export const getMedicalEventById = async (id, pool) => {
   }
 };
 
-export const findMedicalEventByChildId = async (childId, pool) => {
+exports.findMedicalEventByChildId = async (childId, pool) => {
   try {
     const result = await pool.query(
       `

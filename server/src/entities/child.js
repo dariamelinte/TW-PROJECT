@@ -1,6 +1,6 @@
-import { randomUUID } from 'crypto';
+const { randomUUID } = require('crypto');
 
-export const createChild = async (child = {}, pool) => {
+exports.createChild = async (child = {}, pool) => {
   try {
     const { familyId, firstName, lastName, dateOfBirth, gender, nationality, weight, height } =
       child;
@@ -33,7 +33,7 @@ export const createChild = async (child = {}, pool) => {
   }
 };
 
-export const updateChild = async (child = {}, pool) => {
+exports.updateChild = async (child = {}, pool) => {
   try {
     const { id, firstName, lastName, dateOfBirth, gender, nationality, weight, height } = child;
     const result = await pool.query(
@@ -68,7 +68,7 @@ export const updateChild = async (child = {}, pool) => {
   }
 };
 
-export const deleteChild = async (id, pool) => {
+exports.deleteChild = async (id, pool) => {
   try {
     const result = await pool.query(
       `
@@ -93,7 +93,7 @@ export const deleteChild = async (id, pool) => {
   }
 };
 
-export const getChildById = async (id, pool) => {
+exports.getChildById = async (id, pool) => {
   try {
     const result = await pool.query(
       `
@@ -119,7 +119,7 @@ export const getChildById = async (id, pool) => {
   }
 };
 
-export const getChildrenByFamilyId = async (familyId, pool) => {
+exports.getChildrenByFamilyId = async (familyId, pool) => {
   try {
     const result = await pool.query(
       `
@@ -143,3 +143,4 @@ export const getChildrenByFamilyId = async (familyId, pool) => {
     };
   }
 };
+

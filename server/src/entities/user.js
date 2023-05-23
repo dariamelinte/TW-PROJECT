@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
 
-export const createUser = async (user = {}, pool) => {
+exports.createUser = async (user = {}, pool) => {
   try {
     const { email, password, firstName, lastName, dateOfBirth, gender, nationality } = user;
 
@@ -41,7 +41,7 @@ export const createUser = async (user = {}, pool) => {
   }
 };
 
-export const updateUser = async (user = {}, pool) => {
+exports.updateUser = async (user = {}, pool) => {
   try {
     const { firstName, lastName, dateOfBirth, gender, nationality, familyId, id } = user;
     const result = await pool.query(
@@ -73,7 +73,7 @@ export const updateUser = async (user = {}, pool) => {
   }
 };
 
-export const deleteUser = async (id, pool) => {
+exports.deleteUser = async (id, pool) => {
   try {
     const result = await pool.query(
       `
@@ -98,7 +98,7 @@ export const deleteUser = async (id, pool) => {
   }
 };
 
-export const getUserById = async (id, pool) => {
+exports.getUserById = async (id, pool) => {
   try {
     const result = await pool.query(
       `
@@ -124,7 +124,7 @@ export const getUserById = async (id, pool) => {
   }
 };
 
-export const getUserByFamilyId = async (familyId, pool) => {
+exports.getUserByFamilyId = async (familyId, pool) => {
   try {
     const result = await pool.query(
       `
@@ -149,7 +149,7 @@ export const getUserByFamilyId = async (familyId, pool) => {
   }
 };
 
-export const getUserByEmail = async (email, pool) => {
+exports.getUserByEmail = async (email, pool) => {
   try {
     const result = await pool.query(
       `

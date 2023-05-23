@@ -16,4 +16,4 @@ async function authRouter (res, pool) {
   }
 }
 
-export default authRouter;
+module.exports = authRouter;

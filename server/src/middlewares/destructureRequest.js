@@ -22,4 +22,4 @@ const destructureRequestMiddleware = (req, res) => {
   return { req, res, continue: true };
 };
 
-export default destructureRequestMiddleware;
+module.exports = destructureRequestMiddleware;
