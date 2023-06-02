@@ -12,6 +12,10 @@ const routes = {
   createChild: {
     url: () => '/child',
     method: methods.POST,
+    validate: (url, method) => (
+      url === routes.createChild.url() &&
+      method === routes.createChild.method
+    )
   },
   updateChild: {
     url: () => '/child',
@@ -23,26 +27,24 @@ const routes = {
   },
   getChildById: {
     url: (childId) => `/child?id=${childId}`,
-    method: methods.GET
-  },
-  getChildrenByFamilyId: {
-    url: (familyId) => `/child?familyId=${familyId}`,
-    method: methods.GET
-  },
-  getChildren: {
-    url: () => "/children",
-    method: methods.GET
-  },
-
-  isGetChildById: (url, method, childId) => {
-    console.log(url === routes.getChildById.url(childId), method === routes.getChildById.method)
-    return (
+    method: methods.GET,
+    validate: (url, method, childId) => (
       url === routes.getChildById.url(childId) &&
       method === routes.getChildById.method
     )
   },
-  isGetChildren: (url, method) => {
-    return (
+  getChildrenByFamilyId: {
+    url: (familyId) => `/child?familyId=${familyId}`,
+    method: methods.GET,
+    validate: (url, method, familyId) => (
+      url === routes.getChildrenByFamilyId.url(familyId) &&
+      method === routes.getChildrenByFamilyId.method
+    )
+  },
+  getChildren: {
+    url: () => "/children",
+    method: methods.GET,
+    validate: (url, method) => (
       url === routes.getChildren.url() &&
       method === routes.getChildren.method
     )

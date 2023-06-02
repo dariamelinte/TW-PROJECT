@@ -1,7 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
 const { headers } = require("../utils/headers");
 
-async function userRouter (req, res, pool) {
+async function userRouter (res, pool) {
   try{
     // TODO: Implement user router
     

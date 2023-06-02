@@ -20,13 +20,13 @@ const pool = new Pool({
   port: Number(process.env.DB_PORT)
 });
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   // Format the request body and important metadata inside the res.locals object
   let {
     req: request,
     res: response,
     continue: continueRequest
-  } = destructureRequestMiddleware(req, res);
+  } = await destructureRequestMiddleware(req, res);
 
   if (!continueRequest) {
     response.writeHead(500, headers);
@@ -52,9 +52,9 @@ const server = http.createServer((req, res) => {
 
   // If the user is authorized, check if the request is for each of the routers
   if (request.url?.startsWith('/user')) {
-    return userRouter(request, response, pool);
+    return userRouter(response, pool);
   } else if (request.url?.startsWith('/child')) {
-    return childRouter(request, response, pool);
+    return childRouter(response, pool);
   }
 
   response.writeHead(404, headers);
