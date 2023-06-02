@@ -1,6 +1,7 @@
 const { randomUUID } = require('crypto');
+const { StatusCodes } = require('http-status-codes');
 
-exports.createChild = async (child = {}, pool) => {
+exports.createChild = async (pool, child = {}) => {
   try {
     const { familyId, firstName, lastName, dateOfBirth, gender, nationality, weight, height } =
       child;
@@ -33,7 +34,7 @@ exports.createChild = async (child = {}, pool) => {
   }
 };
 
-exports.updateChild = async (child = {}, pool) => {
+exports.updateChild = async (pool, child = {}) => {
   try {
     const { id, firstName, lastName, dateOfBirth, gender, nationality, weight, height } = child;
     const result = await pool.query(
@@ -68,7 +69,7 @@ exports.updateChild = async (child = {}, pool) => {
   }
 };
 
-exports.deleteChild = async (id, pool) => {
+exports.deleteChild = async (pool, id) => {
   try {
     const result = await pool.query(
       `
@@ -93,8 +94,9 @@ exports.deleteChild = async (id, pool) => {
   }
 };
 
-exports.getChildById = async (id, pool) => {
+exports.getChildById = async (pool, id) => {
   try {
+    console.log(pool)
     const result = await pool.query(
       `
       SELECT * FROM child
@@ -103,23 +105,30 @@ exports.getChildById = async (id, pool) => {
       `,
       [id]
     );
+    console.log(result)
     return {
-      success: true,
-      result: result?.rows?.[0],
-      message: 'Child found.'
+      statusCode: StatusCodes.OK,
+      data: {
+        success: true,
+        result: result?.rows?.[0],
+        message: 'Child found.'
+      }
     };
   } catch (error) {
     console.error(error);
 
     return {
-      success: false,
-      message: 'Child not found.',
-      error
+      statusCode: StatusCodes.NOT_FOUND,
+      data: {
+        success: false,
+        message: 'Child not found.',
+        error: String(error)
+      }
     };
   }
 };
 
-exports.getChildrenByFamilyId = async (familyId, pool) => {
+exports.getChildrenByFamilyId = async (pool, familyId) => {
   try {
     const result = await pool.query(
       `
@@ -139,8 +148,31 @@ exports.getChildrenByFamilyId = async (familyId, pool) => {
     return {
       success: false,
       message: 'Children not found.',
-      error
+      error: String(error)
     };
   }
 };
 
+exports.getChildren = async (pool) => {
+  try {
+    const result = await pool.query(`SELECT * FROM child`);
+    return {
+      statusCode: StatusCodes.OK,
+      data: {
+        success: true,
+        result: result?.rows,
+        message: 'Children found.'
+      }
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: {
+        success: false,
+        message: 'Children not found.',
+        error: String(error)
+      }
+    };
+  }
+};

@@ -1,4 +1,7 @@
 const jwt = require('jsonwebtoken');
+const { StatusCodes } = require('http-status-codes');
+
+const { headers } = require('../utils/headers');
 
 const authorizationMiddleware = (req, res) => {
   // Get the token from the cookie
@@ -6,7 +9,7 @@ const authorizationMiddleware = (req, res) => {
 
   // If there is no token, return a 401
   if (!token) {
-    res.writeHead(401, { 'Content-Type': 'application/json' });
+    res.writeHead(StatusCodes.UNAUTHORIZED, headers);
     res.end(JSON.stringify({ message: 'Unauthorized' }));
     return { req, res, continue: false };
   }
@@ -19,7 +22,7 @@ const authorizationMiddleware = (req, res) => {
     return { req, res, continue: true };
   } catch (err) {
     console.log(err);
-    res.writeHead(401, { 'Content-Type': 'application/json' });
+    res.writeHead(StatusCodes.UNAUTHORIZED, headers);
     return { req, res, continue: false };
   }
 }
