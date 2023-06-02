@@ -17,14 +17,25 @@ const routes = {
       method === routes.createChild.method
     )
   },
+
   updateChild: {
     url: () => '/child',
-    method: methods.PATCH
+    method: methods.PATCH,
+    validate: (url, method) => (
+      url === routes.updateChild.url() &&
+      method === routes.updateChild.method
+    )
   },
+
   deleteChild: {
     url: (childId) => `/child?id=${childId}`,
-    method: methods.DELETE
+    method: methods.DELETE,
+    validate: (url, method, childId) => (
+      url === routes.deleteChild.url(childId) &&
+      method === routes.deleteChild.method
+    )
   },
+
   getChildById: {
     url: (childId) => `/child?id=${childId}`,
     method: methods.GET,
@@ -33,6 +44,7 @@ const routes = {
       method === routes.getChildById.method
     )
   },
+
   getChildrenByFamilyId: {
     url: (familyId) => `/child?familyId=${familyId}`,
     method: methods.GET,
@@ -41,8 +53,9 @@ const routes = {
       method === routes.getChildrenByFamilyId.method
     )
   },
+
   getChildren: {
-    url: () => "/children",
+    url: () => "/child/all",
     method: methods.GET,
     validate: (url, method) => (
       url === routes.getChildren.url() &&

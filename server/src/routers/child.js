@@ -2,8 +2,15 @@ const { StatusCodes } = require('http-status-codes');
 const querystring = require('querystring');
 
 const { headers } = require('../utils/headers');
-const { methods, routes, getQueryString } = require('../utils/routes');
-const { getChildren, getChildById, getChildrenByFamilyId, createChild } = require('../entities/child');
+const { routes, getQueryString } = require('../utils/routes');
+const {
+  getChildren,
+  getChildById,
+  getChildrenByFamilyId,
+  createChild,
+  updateChild,
+  deleteChild,
+} = require('../entities/child');
 
 async function childRouter(res, pool) {
   try {
@@ -33,6 +40,16 @@ async function childRouter(res, pool) {
       resData = data;
     } else if (routes.createChild.validate(url, method)) {
       const { statusCode, data } = await createChild(pool, body);
+
+      resStatusCode = statusCode;
+      resData = data;
+    } else if (routes.updateChild.validate(url, method)) {
+      const { statusCode, data } = await updateChild(pool, body);
+
+      resStatusCode = statusCode;
+      resData = data;
+    } else if (routes.deleteChild.validate(url, method, id)) {
+      const { statusCode, data } = await deleteChild(pool, id);
 
       resStatusCode = statusCode;
       resData = data;
