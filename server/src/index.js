@@ -5,6 +5,9 @@ const { Pool } = require('pg');
 const destructureRequestMiddleware = require('./middlewares/destructureRequest');
 const authorizationMiddleware = require('./middlewares/authorization');
 const authRouter = require('./routers/auth');
+const userRouter = require('./routers/user');
+const childRouter = require('./routers/child');
+const { headers } = require('./utils/headers');
 
 dotenv.config();
 
@@ -17,19 +20,16 @@ const pool = new Pool({
   port: Number(process.env.DB_PORT)
 });
 
-
-const server = http.createServer((req, res) => {
-  console.log('[HERE]', destructureRequestMiddleware);
-
+const server = http.createServer(async (req, res) => {
   // Format the request body and important metadata inside the res.locals object
   let {
     req: request,
     res: response,
     continue: continueRequest
-  } = destructureRequestMiddleware(req, res);
+  } = await destructureRequestMiddleware(req, res);
 
   if (!continueRequest) {
-    response.writeHead(500, { 'Content-Type': 'application/json' });
+    response.writeHead(500, headers);
     return response.end(JSON.stringify({ message: 'Server error' }));
   }
 
@@ -39,23 +39,25 @@ const server = http.createServer((req, res) => {
   }
 
   // If the request is not for the auth router, check if the user is authorized
-  const authorized = authorizationMiddleware(request, response);
+  // const authorized = authorizationMiddleware(request, response);
 
-  request = authorized.req;
-  response = authorized.res;
-  continueRequest = authorized.continue;
+  // request = authorized.req;
+  // response = authorized.res;
+  // continueRequest = authorized.continue;
 
-  if (!continueRequest) {
-    response.writeHead(401, { 'Content-Type': 'application/json' });
-    return response.end(JSON.stringify({ message: 'Unauthorized' }));
-  }
+  // if (!continueRequest) {
+  //   response.writeHead(401, headers);
+  //   return response.end(JSON.stringify({ message: 'Unauthorized' }));
+  // }
 
   // If the user is authorized, check if the request is for each of the routers
   if (request.url?.startsWith('/user')) {
-    return authRouter(response, pool);
+    return userRouter(response, pool);
+  } else if (request.url?.startsWith('/child')) {
+    return childRouter(response, pool);
   }
 
-  response.writeHead(404, { 'Content-Type': 'application/json' });
+  response.writeHead(404, headers);
   return response.end(JSON.stringify({ message: 'Not found' }));
 });
 
