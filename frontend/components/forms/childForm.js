@@ -26,9 +26,13 @@ export default function ChildForm({ child = {}, add = false }) {
 
   const { lastName, firstName, dateOfBirth, gender = "gender", nationality, weight, height } = child;
 
-  const genderOptions = Object.entries(genderTypes).map(([key, value]) => (
-    `<option value="${key}" selected=${gender === key}>${value}</option>`
-  ))
+  const genderOptions = Object.entries(genderTypes).map(([key, value]) => {
+    if (gender === key) {
+      return `<option value="${key}" selected=${gender === key}>${value}</option>`;
+    }
+
+    return `<option value="${key}">${value}</option>`;
+  })
 
 
   const form = document.createElement('form');
@@ -37,12 +41,26 @@ export default function ChildForm({ child = {}, add = false }) {
   form.innerHTML = `
     <div class="flex flex-1 w-full column justify-center">
       <label for="lastName">Nume</label>
-      <input type="text" name="lastName" id="lastName" value="${lastName}" class="bg-yellow-200" />
+      <input
+        id="lastName"
+        type="text"
+        name="lastName"
+        placeholder="Nume"
+        value="${lastName}"
+        class="bg-yellow-200"
+      />
     </div>
 
     <div class="flex flex-1 w-full column justify-center">
       <label for="firstName">Prenume</label>
-      <input type="text" name="firstName" id="firstName" value="${firstName}" class="bg-yellow-200" />
+      <input
+        id="firstName"
+        type="text"
+        name="firstName"
+        placeholder="Prenume"
+        value="${firstName}"
+        class="bg-yellow-200"
+      />
     </div>
   
     <div class="flex flex-1 w-full column justify-center">
@@ -66,17 +84,38 @@ export default function ChildForm({ child = {}, add = false }) {
     </div>
     <div class="flex flex-1 w-full column justify-center">
       <label for="nationality">Nationalitate</label>
-      <input type="text" name="nationality" id="nationality" value="${nationality}" class="bg-yellow-200" />
+      <input
+        id="nationality"
+        type="text"
+        name="nationality"
+        placeholder="Nationalitate" 
+        value="${nationality || ""}"
+        class="bg-yellow-200"
+      />
     </div>
 
     <div class="flex flex-1 w-full items-center justify-between flex-wrap">
       <div class="flex column justify-center">
         <label for="weight">W</label>
-        <input type="text" name="weight" id="weight" value="${weight}" class="bg-yellow-200 w-8" />
+        <input
+          id="weight"
+          type="text"
+          name="weight"
+          placeholder="Greutate" 
+          value="${weight || ""}"
+          class="bg-yellow-200 w-8"
+        />
       </div>
       <div class="flex column justify-center">
         <label for="height">H</label>
-        <input type="text" name="height" id="height" value="${height}" class="bg-yellow-200 w-8" />
+        <input
+          id="height"
+          type="text"
+          name="height"
+          placeholder="Inaltime" 
+          value="${height || ""}"
+          class="bg-yellow-200 w-8"
+        />
       </div>
     </div>
 

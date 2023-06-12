@@ -2,12 +2,13 @@ import Header from '/frontend/components/header.js';
 import ChildForm from '/frontend/components/forms/childForm.js';
 import Routes from '/frontend/utils/Routes.js';
 
-import mocked_children from '/frontend/utils/__mock__children.json' assert { type: 'json' };
-
+import { getChildById } from '/frontend/server/getChildById.js';
 
 const childId = new URLSearchParams(window.location.search).get('childId');
 
-const child = mocked_children.find((child) => child.id === parseInt(childId));
+const child = await getChildById(childId);
 
-document.body.appendChild(Header(Routes.addChild.title));
+console.log(child);
+
+document.body.appendChild(Header(Routes.children.personalInfo.title));
 document.body.appendChild(ChildForm({ child }));
