@@ -4,6 +4,7 @@ const { Pool } = require('pg');
 
 const destructureRequestMiddleware = require('./middlewares/destructureRequest');
 const authorizationMiddleware = require('./middlewares/authorization');
+const corsMiddleware = require('./middlewares/cors');
 const authRouter = require('./routers/auth');
 const userRouter = require('./routers/user');
 const childRouter = require('./routers/child');
@@ -21,6 +22,8 @@ const pool = new Pool({
 });
 
 const server = http.createServer(async (req, res) => {
+  // corsMiddleware(req, res);
+
   // Format the request body and important metadata inside the res.locals object
   let {
     req: request,

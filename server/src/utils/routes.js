@@ -3,7 +3,9 @@ const methods = {
   POST: "POST",
   PUT: "PUT",
   PATCH: "PATCH",
-  DELETE: "DELETE"
+  DELETE: "DELETE",
+  HEAD: "HEAD",
+  OPTIONS: "OPTIONS"
 }
 
 const getQueryString = (string) => string.substring(string.indexOf('?') + 1);

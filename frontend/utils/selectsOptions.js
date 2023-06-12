@@ -9,7 +9,6 @@ export const friendshipTypes = {
 export const genderTypes = {
   "male": "Masculin",
   "female": "Feminin",
-  "friends": "Prieteni",
   "nonBinary": "Non-Binar",
   "preferNotToSay": "Prefer sa nu spun"
 };
