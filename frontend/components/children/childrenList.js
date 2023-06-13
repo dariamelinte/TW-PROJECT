@@ -1,10 +1,6 @@
-import { getFamilyChildren } from "../../server/getFamilyChildren.js";
-
 import ChildCard from "./childCard.js";
 
-export default async function ChildrenList({ onClick }) {
-  const children = await getFamilyChildren();
-
+export default function ChildrenList({ children, onClick }) {
   const childrenList = document.createElement('div');
   childrenList.className = "center flex-wrap mx-9 my-6'";
   
