@@ -35,7 +35,7 @@ form a{
   text-decoration: underline;
 }
 
-form button {
+form button[type="submit"] {
   padding: 0 2em;
   height: 3rem;
   border-radius: 0.5rem;
