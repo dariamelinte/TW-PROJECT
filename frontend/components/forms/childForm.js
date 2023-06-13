@@ -1,5 +1,6 @@
 import Routes from '/frontend/utils/Routes.js';
 import { genderTypes } from '/frontend/utils/selectsOptions.js';
+import cleanInput from '/frontend/utils/cleanInput.js';
 
 import { addChild } from '/frontend/server/addChild.js';
 import { editChild } from '/frontend/server/editChild.js';
@@ -7,7 +8,7 @@ import { editChild } from '/frontend/server/editChild.js';
 const showError = (message) => {
   const error = document.getElementById("error");
   error.innerHTML = message;
-  error.className = "bg-red-500 text-white centered-text rounded shadow-small py-2 mt-3";
+  error.className = "bg-red-500 text-white centered-text rounded shadow-small p-2 mt-3";
 };
 
 export default function ChildForm({ child = {}, add = false }) {
@@ -22,7 +23,7 @@ export default function ChildForm({ child = {}, add = false }) {
       // TODO: get family Id from cookie
       childInput.familyId = "1";
   
-      const data = await addChild(childInput);
+      const data = await addChild(cleanInput(childInput));
       if (!data.success) {
         showError(data.message);
         return;

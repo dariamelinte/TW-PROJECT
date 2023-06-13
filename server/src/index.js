@@ -4,7 +4,6 @@ const { Pool } = require('pg');
 
 const destructureRequestMiddleware = require('./middlewares/destructureRequest');
 const authorizationMiddleware = require('./middlewares/authorization');
-const corsMiddleware = require('./middlewares/cors');
 const authRouter = require('./routers/auth');
 const userRouter = require('./routers/user');
 const childRouter = require('./routers/child');
@@ -22,14 +21,24 @@ const pool = new Pool({
 });
 
 const server = http.createServer(async (req, res) => {
-  // corsMiddleware(req, res);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', '*');
+  res.setHeader('Access-Control-Allow-Headers', '*');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Request-Headers', '*');
 
   // Format the request body and important metadata inside the res.locals object
   let {
     req: request,
     res: response,
-    continue: continueRequest
+    continue: continueRequest,
+    cors
   } = await destructureRequestMiddleware(req, res);
+
+  if (cors && !continueRequest) {
+    response.writeHead(200, headers);
+    return response.end(JSON.stringify({ message: 'CORS Allowed' }));
+  }
 
   if (!continueRequest) {
     response.writeHead(500, headers);

@@ -8,7 +8,5 @@ const childId = new URLSearchParams(window.location.search).get('childId');
 
 const child = await getChildById(childId);
 
-console.log(child);
-
 document.body.appendChild(Header(Routes.children.personalInfo.title));
 document.body.appendChild(ChildForm({ child }));

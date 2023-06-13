@@ -7,6 +7,10 @@ const destructureRequestMiddleware = async (req, res) => {
     method: req.method
   };
 
+  if (req.method === methods.OPTIONS || req.method === methods.HEAD) {
+    return { req, res, continue: false, cors: true };
+  }
+
   if (req.method === methods.GET || req.method === methods.DELETE) {
     return { req, res, continue: true };
   }

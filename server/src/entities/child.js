@@ -3,8 +3,16 @@ const { StatusCodes } = require('http-status-codes');
 
 exports.createChild = async (pool, child = {}) => {
   try {
-    const { familyId, firstName, lastName, dateOfBirth, gender, nationality, weight, height } =
-      child;
+    const {
+      familyId,
+      firstName,
+      lastName,
+      dateOfBirth,
+      gender = null,
+      nationality = null,
+      weight = null,
+      height = null
+    } = child;
     const id = randomUUID();
 
     await pool.query(
