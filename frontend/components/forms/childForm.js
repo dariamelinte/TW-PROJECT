@@ -4,6 +4,7 @@ import cleanInput from '/frontend/utils/cleanInput.js';
 
 import { addChild } from '/frontend/server/addChild.js';
 import { editChild } from '/frontend/server/editChild.js';
+import { deleteChild } from '/frontend/server/deleteChild.js';
 
 const showError = (message) => {
   const error = document.getElementById("error");
@@ -12,8 +13,8 @@ const showError = (message) => {
 };
 
 export default function ChildForm({ child = {}, add = false }) {
-  const saveData = async (e) => {
-    e.preventDefault();
+  const saveChild = async (e) => {
+    e?.preventDefault();
 
     const form = document.querySelector('form');
     const formData = new FormData(form);
@@ -40,6 +41,18 @@ export default function ChildForm({ child = {}, add = false }) {
 
       window.location.href = Routes.child.path(child.id);
     }
+  };
+
+  const removeChild = async (e) => {
+    e?.preventDefault();
+    console.log("hello")
+    const data = await deleteChild(child.id);
+    if (!data.success) {
+      showError(data.message);
+      return;
+    }
+
+    window.location.href = Routes.root;
   };
 
   const {
@@ -143,11 +156,13 @@ export default function ChildForm({ child = {}, add = false }) {
         />
       </div>
     </div>
-    <button class="mt-3" type="button">Submit</button>
+    <button class="principal mt-3" type="submit">Submit</button>
+    <button class="secondary my-2" type="button">Remove child</button>
     <div id="error"></div>
   `;
 
-  form.querySelector('button').addEventListener('click', saveData);
+  form.querySelector('button[type="submit"]').addEventListener('click', saveChild);
+  form.querySelector('button[type="button"]').addEventListener('click', removeChild);
 
   return form;
 }
