@@ -45,7 +45,7 @@ export default function ChildForm({ child = {}, add = false }) {
 
   const removeChild = async (e) => {
     e?.preventDefault();
-    console.log("hello")
+
     const data = await deleteChild(child.id);
     if (!data.success) {
       showError(data.message);
