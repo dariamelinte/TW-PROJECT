@@ -6,7 +6,7 @@ exports.createUser = async (user = {}, pool) => {
 
     const result = await pool.query(
       `
-      INSERT INTO TABLE user 
+      INSERT INTO  user 
         (id, email, password, firstName, lastName, dateOfBirth, gender, nationality, familyId)
       VALUES
         ($1, $2, $3, $4, $5, $6, $7, $8, $9)

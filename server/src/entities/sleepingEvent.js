@@ -5,7 +5,7 @@ exports.saveSleepingEvent = async (sleepingEvent, pool) => {
     const { childId, dateTime, sleepType, note } = sleepingEvent;
     const result = await pool.query(
       `
-    INSERT INTO TABLE sleeping_calendar
+    INSERT INTO  sleeping_calendar
       (id, childId, dateTime, sleepType, note)
     VALUES
       ($1, $2, $3, $4, $5)

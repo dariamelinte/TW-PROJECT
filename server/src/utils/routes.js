@@ -64,6 +64,51 @@ const routes = {
       method === routes.getChildren.method
     )
   },
+
+  createFriend: {
+    url: () => '/friends',
+    method: methods.POST,
+    validate: (url, method) => (
+      url === routes.createFriend.url() &&
+      method === routes.createFriend.method
+    )
+  },
+
+  updateFriend: {
+    url: (friendId) => `/friends?id=${friendId}`,
+    method: methods.PATCH,
+    validate: (url, method, friendId) => (
+      url === routes.updateFriend.url(friendId) &&
+      method === routes.updateFriend.method
+    )
+  },
+
+  deleteFriend: {
+    url: (friendId) => `/friends?id=${friendId}`,
+    method: methods.DELETE,
+    validate: (url, method, friendId) => (
+      url === routes.deleteFriend.url(friendId) &&
+      method === routes.deleteFriend.method
+    )
+  },
+
+  getFriendById: {
+    url: (friendId) => `/friends?id=${friendId}`,
+    method: methods.GET,
+    validate: (url, method, friendId) => (
+      url === routes.getFriendById.url(friendId) &&
+      method === routes.getFriendById.method
+    )
+  },
+
+  getFriends: {
+    url: (childId) => `/friends?childId=${childId}`,
+    method: methods.GET,
+    validate: (url, method, childId) => (
+      url === routes.getFriends.url(childId) &&
+      method === routes.getFriends.method
+    )
+  },
 }
 
 module.exports = {

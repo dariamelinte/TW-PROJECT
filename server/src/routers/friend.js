@@ -7,14 +7,14 @@ const {
   createFriend,
   updateFriend,
   deleteFriend,
-  findFriendById,
-  findAllFriends
+  getFriendById,
+  getAllFriends
 } = require('../entities/friend');
 
-async function childRouter(res, pool) {
+async function friendRouter(res, pool) {
   try {
     const { url, method, body } = res.locals;
-    const { id, familyId } = querystring.parse(getQueryString(url));
+    const { id, childId } = querystring.parse(getQueryString(url));
 
     let resStatusCode = StatusCodes.NOT_FOUND;
     let resData = {
@@ -22,33 +22,28 @@ async function childRouter(res, pool) {
       message: 'Route not found.'
     };
 
-    if (routes.getChildren.validate(url, method)) {
-      const { statusCode, data } = await getChildren(pool);
+    if (routes.getFriends.validate(url, method, childId)) {
+      const { statusCode, data } = await getAllFriends(pool, childId);
 
       resStatusCode = statusCode;
       resData = data;
-    } else if (routes.getChildById.validate(url, method, id)) {
-      const { statusCode, data } = await getChildById(pool, id);
+    } else if (routes.getFriendById.validate(url, method, id)) {
+      const { statusCode, data } = await getFriendById(pool, id);
 
       resStatusCode = statusCode;
       resData = data;
-    } else if (routes.getChildrenByFamilyId.validate(url, method, familyId)) {
-      const { statusCode, data } = await getChildrenByFamilyId(pool, familyId);
+    } else if (routes.createFriend.validate(url, method, id)) {
+      const { statusCode, data } = await createFriend(pool, body);
 
       resStatusCode = statusCode;
       resData = data;
-    } else if (routes.createChild.validate(url, method)) {
-      const { statusCode, data } = await createChild(pool, body);
+    } else if (routes.updateFriend.validate(url, method, id)) {
+      const { statusCode, data } = await updateFriend(pool, id, body);
 
       resStatusCode = statusCode;
       resData = data;
-    } else if (routes.updateChild.validate(url, method)) {
-      const { statusCode, data } = await updateChild(pool, body);
-
-      resStatusCode = statusCode;
-      resData = data;
-    } else if (routes.deleteChild.validate(url, method, id)) {
-      const { statusCode, data } = await deleteChild(pool, id);
+    } else if (routes.deleteFriend.validate(url, method, id)) {
+      const { statusCode, data } = await deleteFriend(pool, id);
 
       resStatusCode = statusCode;
       resData = data;
@@ -68,4 +63,4 @@ async function childRouter(res, pool) {
   }
 }
 
-module.exports = childRouter;
+module.exports = friendRouter;

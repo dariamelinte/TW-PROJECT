@@ -5,7 +5,7 @@ exports.saveMedicalEvent = async (medicalEvent, pool) => {
     const { childId, title, note, date, severity } = medicalEvent;
     const result = await pool.query(
       `
-      INSERT INTO TABLE medical_history
+      INSERT INTO  medical_history
         (id, childId, title, note, date, severity)
       VALUES
         ($1, $2, $3, $4, $5, $6)
