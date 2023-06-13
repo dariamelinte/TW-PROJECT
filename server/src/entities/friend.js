@@ -1,4 +1,5 @@
-import { randomUUID } from 'crypto';
+const { randomUUID } = require('crypto');
+const { StatusCodes } = require('http-status-codes');
 
 exports.createFriend = async (friend = {}, pool) => {
   try {
@@ -11,7 +12,9 @@ exports.createFriend = async (friend = {}, pool) => {
       howTheyMet,
       relationship
     } = friend;
-    const result = await pool.query(
+    const id = randomUUID();
+
+    await pool.query(
       `
       INSERT INTO TABLE friend
         (id, firstName, lastName, dateOfBirth, parentName, parentContact, howTheyMet, relationship)
@@ -19,7 +22,7 @@ exports.createFriend = async (friend = {}, pool) => {
         ($1, $2, $3, $4, $5, $6, $7, $8)
       `,
       [
-        randomUUID(),
+        id,
         firstName,
         lastName,
         dateOfBirth,
@@ -30,17 +33,25 @@ exports.createFriend = async (friend = {}, pool) => {
       ]
     );
 
+    const result = await pool.query(`SELECT * FROM friend WHERE id = $1`, [id]);
+
     return {
-      success: true,
-      message: 'Created friend successfuly.',
-      result
+      statusCode: StatusCodes.CREATED,
+      data: {
+        success: true,
+        message: 'Created friend successfuly.',
+        result: result?.rows?.[0]
+      }
     };
   } catch (error) {
     console.error(error);
     return {
-      success: false,
-      message: 'Could not create friend.',
-      error
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: {
+        success: false,
+        message: 'Could not create new friend.',
+        error
+      }
     };
   }
 };
@@ -57,6 +68,29 @@ exports.updateFriend = async (friend = {}, pool) => {
       howTheyMet,
       relationship
     } = friend;
+
+    if (!id) {
+      return {
+        statusCode: StatusCodes.BAD_REQUEST,
+        data: {
+          success: false,
+          message: 'Please provide the missing fields: id',
+        }
+      };
+    }
+
+    const resSelect = await pool.query(`SELECT * FROM friend WHERE id = $1`, [id]);
+    const {
+      firstName: oldFirstName,
+      lastName: oldLastName,
+      dateOfBirth: oldDOB,
+      gender: oldGender,
+      nationality: oldNat,
+      weight: oldW,
+      height: oldH
+    } = resSelect?.rows?.[0];
+
+
     const result = await pool.query(
       `
       UPDATE friend
