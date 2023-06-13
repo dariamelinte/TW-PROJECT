@@ -1,9 +1,9 @@
-import { SERVER_URL, MESSAGES } from '../utils/constants.js';
+import { SERVER_URL, MESSAGES } from '/frontend/utils/constants.js';
 
-export const deleteChild = async (childId) => {
+export const deleteFriend = async (friendId) => {
   try {
     // TODO: send jwt to validate permission
-    const data = await fetch(`${SERVER_URL}/child?id=${childId}`, {
+    const data = await fetch(`${SERVER_URL}/friends?id=${friendId}`, {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json'

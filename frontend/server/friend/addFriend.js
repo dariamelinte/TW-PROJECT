@@ -1,16 +1,15 @@
-import { SERVER_URL, MESSAGES } from '../utils/constants.js';
+import { SERVER_URL, MESSAGES } from '/frontend/utils/constants.js';
 
-export const editChild = async (childInput) => {
+export const addFriend = async (friendInput) => {
   try {
     // TODO: send jwt to validate permission
-    const data = await fetch(`${SERVER_URL}/child`, {
-      method: 'PATCH',
-      body: JSON.stringify(childInput),
+    const data = await fetch(`${SERVER_URL}/friends`, {
+      method: 'POST',
+      body: JSON.stringify(friendInput),
       headers: {
         'Content-type': 'application/json'
       }
     });
-
     return await data.json();
   } catch (error) {
     console.error(error);

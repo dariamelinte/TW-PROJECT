@@ -2,9 +2,9 @@ import Routes from '/frontend/utils/Routes.js';
 import { genderTypes } from '/frontend/utils/selectsOptions.js';
 import cleanInput from '/frontend/utils/cleanInput.js';
 
-import { addChild } from '/frontend/server/addChild.js';
-import { editChild } from '/frontend/server/editChild.js';
-import { deleteChild } from '/frontend/server/deleteChild.js';
+import { addChild } from '/frontend/server/child/addChild.js';
+import { editChild } from '/frontend/server/child/editChild.js';
+import { deleteChild } from '/frontend/server/child/deleteChild.js';
 
 const showError = (message) => {
   const error = document.getElementById("error");

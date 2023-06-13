@@ -1,10 +1,9 @@
-import { SERVER_URL } from '../utils/constants.js';
+import { SERVER_URL } from '/frontend/utils/constants.js';
 
-export const getFamilyChildren = async () => {
+export const getFriend = async (childId) => {
   try {
-    // TODO: get familyId from cookie
     // TODO: send jwt to validate permission
-    const data = await fetch(`${SERVER_URL}/child?familyId=1`);
+    const data = await fetch(`${SERVER_URL}/friends?childId=${childId}`);
     const { success, result } = await data.json() || {};
 
     if (success) {
