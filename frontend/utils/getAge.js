@@ -1,10 +1,21 @@
 export function getAge(dateString) {
-  var today = new Date();
-  var birthDate = new Date(dateString);
-  var age = today.getFullYear() - birthDate.getFullYear();
-  var m = today.getMonth() - birthDate.getMonth();
-  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
+  const birthDate = new Date(dateString);
+  const today = new Date();
+
+  let age = today.getFullYear() - birthDate.getFullYear();
+  let month = today.getMonth() - birthDate.getMonth();
+  if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+    month += 12;
   }
-  return age;
+
+  if (age == 0) {
+    return `${month} luni`;
+  }
+
+  if (age == 1) {
+    return "1 an";
+  }
+
+  return `${age} ani`;
 }
