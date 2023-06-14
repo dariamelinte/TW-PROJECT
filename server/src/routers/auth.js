@@ -1,15 +1,34 @@
-async function authRouter (req, res, pool) {
-  try {
+const { constants } = require("buffer");
 
+async function authRouter (req, res, pool) {
+  console.log("Check 1");
+  //console.log(req);
+  try {
+    console.log("Check 2");
     // reading the incoming request data
-    let requestData = '';
-    for await (const chunk of req){
-      requestData += chunk;
-    }
+    // let requestData = '';
+
+    // for await (const chunk of req){
+    //   requestData += chunk;
+    //   console.log(chunk);
+    // }
+    
+    // console.log("Check 3");
+    // console.log(requestData);
+    
+    // console.log("Check 4");
 
     // parse the request data as json
-    const requestPayload = JSON.parse(requestData);
-    const { email, password } = requestPayload;
+    // const requestPayload = JSON.parse(requestData);
+    // console.log("Check 5");
+    
+    const { body } = res.locals;
+    console.log(body);
+
+    const { email, password } = body;
+
+    console.log(email);
+    console.log(password);
 
     
     // check if email and passwd are provided
@@ -47,7 +66,7 @@ async function authRouter (req, res, pool) {
 
     // authentication is not successful
     res.writeHead(500, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ message: 'Server error' }));
+    res.end(JSON.stringify({ message: 'Server error 1' }));
     
     return res;
   }

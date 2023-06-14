@@ -3,7 +3,7 @@ const destructureRequestMiddleware = (req, res) => {
   let body = null;
 
   if (req.method === 'POST' || req.method === 'PUT') {
-    let body = '';
+    body = '';
     req.on('data', (chunk) => {
       body += chunk.toString();
     });
@@ -18,6 +18,13 @@ const destructureRequestMiddleware = (req, res) => {
     url: req.url,
     method: req.method
   }
+
+  console.log("res body----------------------------------------------");
+  console.log(res.locals);
+  console.log("body----------------------------------------------");
+  console.log(body);
+  console.log("----------------------------------------------");
+
 
   return { req, res, continue: true };
 };
