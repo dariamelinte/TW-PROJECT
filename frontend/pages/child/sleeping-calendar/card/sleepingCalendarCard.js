@@ -24,5 +24,7 @@ Object.values(mocked_week_sleep).forEach(day => {
   }
 });
 
+console.log(sleepingNote);
+
 document.body.appendChild(Header(add.title));
 document.body.appendChild(SleepingNoteForm({ sleepingNote, onSave }));

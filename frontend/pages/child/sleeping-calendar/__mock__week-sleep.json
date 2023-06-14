@@ -4,13 +4,15 @@
       "id": 1,
       "hours": ["00:00", "09:45"],
       "sleepPeriod": "night",
-      "sleepType": "troubled"
+      "sleepType": "troubled",
+      "info": "S-a foit foarte mult"
     },
     {
       "id": 2,
       "hours": ["13:20", "14:40"],
       "sleepPeriod": "noon",
-      "sleepType": "peacefully"
+      "sleepType": "peacefully",
+      "info": "A adormit foarte greu"
     },
     {
       "id": 3,
@@ -24,7 +26,8 @@
       "id": 1,
       "hours": ["00:00", "09:45"],
       "sleepPeriod": "night",
-      "sleepType": "troubled"
+      "sleepType": "troubled",
+      "info": "S-a trezit de cateva ori"
     },
     {
       "id": 2,

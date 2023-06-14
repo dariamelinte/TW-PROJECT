@@ -35,7 +35,7 @@ const server = http.createServer((req, res) => {
 
   // Check if the request is for the auth router
   if (request.url?.startsWith('/auth')) {
-    return authRouter(response, pool);
+    return authRouter(request, response, pool);
   }
 
   // If the request is not for the auth router, check if the user is authorized

@@ -45,7 +45,7 @@ export default function SleepingNoteForm({ sleepingNote = INITIAL_SLEEPING_NOTE,
     </div>
     
     <div class="flex flex-1 column justify-center w-full">
-      <label for="sleepPeriod">Severitate</label>
+      <label for="sleepPeriod">Perioada de somn</label>
       <select class="bg-yellow-200 rounded p-1" name="sleepPeriod" id="sleepPeriod">
           <option value="sleepPeriod" selected=${"sleepPeriod" === sleepPeriod} disabled>Perioada de somn</option>
           ${sleepPeriodOptions.join("")}
