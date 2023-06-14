@@ -5,7 +5,7 @@ exports.saveFriendInteractionEvent = async (friendInteractionEvent = {}, pool) =
     const { childId, friendId, date, title, note } = friendInteractionEvent;
     const result = await pool.query(
       `
-      INSERT INTO TABLE friend_interactions
+      INSERT INTO  friend_interactions
         (id, childId, friendId, date, title, note)
       VALUES
         ($1, $2, $3, $4, $5, $6)

@@ -1,14 +1,16 @@
-import { SERVER_URL, MESSAGES } from '../utils/constants.js';
+import { SERVER_URL, MESSAGES } from '../../utils/constants.js';
 
-export const deleteChild = async (childId) => {
+export const editChild = async (childInput) => {
   try {
     // TODO: send jwt to validate permission
-    const data = await fetch(`${SERVER_URL}/child?id=${childId}`, {
-      method: 'DELETE',
+    const data = await fetch(`${SERVER_URL}/child`, {
+      method: 'PATCH',
+      body: JSON.stringify(childInput),
       headers: {
         'Content-type': 'application/json'
       }
     });
+
     return await data.json();
   } catch (error) {
     console.error(error);

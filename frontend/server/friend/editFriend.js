@@ -1,16 +1,15 @@
-import { SERVER_URL, MESSAGES } from '../utils/constants.js';
+import { SERVER_URL, MESSAGES } from '../../utils/constants.js';
 
-export const editChild = async (childInput) => {
+export const editFriend = async (friendId, friendInput) => {
   try {
     // TODO: send jwt to validate permission
-    const data = await fetch(`${SERVER_URL}/child`, {
+    const data = await fetch(`${SERVER_URL}/friends?id=${friendId}`, {
       method: 'PATCH',
-      body: JSON.stringify(childInput),
+      body: JSON.stringify(friendInput),
       headers: {
         'Content-type': 'application/json'
       }
     });
-
     return await data.json();
   } catch (error) {
     console.error(error);

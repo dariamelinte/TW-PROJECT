@@ -1,4 +1,4 @@
-import { SERVER_URL } from '../utils/constants.js';
+import { SERVER_URL } from '../../utils/constants.js';
 
 export const getChildById = async (childId) => {
   try {

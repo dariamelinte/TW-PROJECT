@@ -7,6 +7,7 @@ const authorizationMiddleware = require('./middlewares/authorization');
 const authRouter = require('./routers/auth');
 const userRouter = require('./routers/user');
 const childRouter = require('./routers/child');
+const friendRouter = require('./routers/friend');
 const { headers } = require('./utils/headers');
 
 dotenv.config();
@@ -67,6 +68,8 @@ const server = http.createServer(async (req, res) => {
     return userRouter(response, pool);
   } else if (request.url?.startsWith('/child')) {
     return childRouter(response, pool);
+  } else if (request.url?.startsWith('/friends')) {
+    return friendRouter(response, pool);
   }
 
   response.writeHead(404, headers);
