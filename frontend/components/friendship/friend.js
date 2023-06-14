@@ -3,7 +3,17 @@ import { getAge } from '/frontend/utils/getAge.js';
 import { friendshipTypes } from '/frontend/utils/selectsOptions.js';
 
 export default function Friend({ friend = {} }) {
-  const { id, childId, firstName, lastName, dateOfBirth, howTheyMet, parentName, parentContact, relationship } = friend;
+  const {
+    id,
+    childId,
+    firstName,
+    lastName,
+    dateOfBirth,
+    howTheyMet,
+    parentName,
+    parentContact,
+    relationship
+  } = friend;
 
   const friendCard = document.createElement('button');
   friendCard.onclick = () => {
@@ -36,6 +46,6 @@ export default function Friend({ friend = {} }) {
       </div>
     </div>
   `;
-  
+
   return friendCard;
 }

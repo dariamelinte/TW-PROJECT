@@ -1,16 +1,11 @@
 import Routes from '/frontend/utils/Routes.js';
 import { genderTypes } from '/frontend/utils/selectsOptions.js';
 import cleanInput from '/frontend/utils/cleanInput.js';
+import showError from '/frontend/utils/showError.js';
 
 import { addChild } from '/frontend/server/child/addChild.js';
 import { editChild } from '/frontend/server/child/editChild.js';
 import { deleteChild } from '/frontend/server/child/deleteChild.js';
-
-const showError = (message) => {
-  const error = document.getElementById("error");
-  error.innerHTML = message;
-  error.className = "bg-red-500 text-white centered-text rounded shadow-small p-2 mt-3";
-};
 
 export default function ChildForm({ child = {}, add = false }) {
   const saveChild = async (e) => {
@@ -59,7 +54,7 @@ export default function ChildForm({ child = {}, add = false }) {
     lastName,
     firstName,
     dateOfBirth,
-    gender = 'gender',
+    gender,
     nationality,
     weight,
     height
@@ -67,7 +62,7 @@ export default function ChildForm({ child = {}, add = false }) {
 
   const genderOptions = Object.entries(genderTypes).map(([key, value]) => {
     if (gender === key) {
-      return `<option value="${key}" selected=${gender === key}>${value}</option>`;
+      return `<option value="${key}" selected>${value}</option>`;
     }
 
     return `<option value="${key}">${value}</option>`;
@@ -116,7 +111,7 @@ export default function ChildForm({ child = {}, add = false }) {
     <div class="flex flex-1 w-full column justify-center">
       <label for="gender">gender</label>
       <select class="bg-yellow-200 rounded p-1" name="gender" id="gender">
-          <option value="gender" selected=${'gender' === gender} disabled>Gen</option>
+          <option value="gender" disabled>Gen</option>
           ${genderOptions.join('')}
       </select> 
     </div>

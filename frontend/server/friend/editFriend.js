@@ -10,7 +10,6 @@ export const editFriend = async (friendId, friendInput) => {
         'Content-type': 'application/json'
       }
     });
-
     return await data.json();
   } catch (error) {
     console.error(error);
