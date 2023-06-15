@@ -117,7 +117,7 @@ const routes = {
   // feeding routes
 
   createFeedingEvent: {
-    url: (childId) => `/child/feeding-calendar/add/?childId=${childId}`,
+    url: (childId) => `/feeding-calendar/add/?childId=${childId}`,
     method: methods.POST,
     validate: (url, method, childId) => (
       url === routes.createFeedingEvent.url(childId) &&
@@ -126,7 +126,7 @@ const routes = {
   },
 
   updateFeedingEvent: {
-    url: (childId, id) => `/child/feeding-calendar/card/?childId=${childId}&cardId=${id}`,
+    url: (childId, id) => `/feeding-calendar/card/?childId=${childId}&cardId=${id}`,
     method: methods.PATCH,
     validate: (url, method, childId, id) => (
       url === routes.updateFeedingEvent.url(childId, id) &&
@@ -135,7 +135,7 @@ const routes = {
   },
 
   deleteFeedingEvent: {
-    url: (childId, id) => `/child/feeding-calendar/card/?childId=${childId}&cardId=${id}`,
+    url: (childId, id) => `/feeding-calendar/card/?childId=${childId}&cardId=${id}`,
     method: methods.DELETE,
     validate: (url, method, childId, id) => (
       url === routes.deleteFeedingEvent.url(childId, id) &&
@@ -144,7 +144,7 @@ const routes = {
   },
 
   getFeedingEvents: {
-    url: (childId) => `/child/feeding-calendar/?childId=${childId}`,
+    url: (childId) => `/feeding-calendar/?childId=${childId}`,
     method: methods.GET,
     validate: (url, method, childId) => (
       url === routes.getFeedingEvents.url(childId) &&
@@ -153,7 +153,7 @@ const routes = {
   },
 
   getFeedingEventById: {
-    url: (childId, id) => `/child/feeding-calendar/card/?childId=${childId}&cardId=${id}`,
+    url: (childId, id) => `/feeding-calendar/card/?childId=${childId}&cardId=${id}`,
     method: methods.DELETE,
     validate: (url, method, childId, id) => (
       url === routes.getFeedingEventById.url(childId, id) &&
