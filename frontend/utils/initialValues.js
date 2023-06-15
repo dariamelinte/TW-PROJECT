@@ -21,7 +21,7 @@ export const INITIAL_FRIEND = {
 export const INITIAL_ACTIVITY = {
   date: '',
   title: '',
-  description: ''
+  note: ''
 };
 
 export const INITIAL_MEDICAL_ENTRY = {

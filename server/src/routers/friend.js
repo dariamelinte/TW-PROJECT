@@ -22,27 +22,27 @@ async function friendRouter(res, pool) {
       message: 'Route not found.'
     };
 
-    if (routes.getFriends.validate(url, method, childId)) {
+    if (routes.friend.getFriends.validate(url, method, childId)) {
       const { statusCode, data } = await getAllFriends(pool, childId);
 
       resStatusCode = statusCode;
       resData = data;
-    } else if (routes.getFriendById.validate(url, method, id)) {
+    } else if (routes.friend.getFriendById.validate(url, method, id)) {
       const { statusCode, data } = await getFriendById(pool, id);
 
       resStatusCode = statusCode;
       resData = data;
-    } else if (routes.createFriend.validate(url, method, id)) {
+    } else if (routes.friend.createFriend.validate(url, method, id)) {
       const { statusCode, data } = await createFriend(pool, body);
 
       resStatusCode = statusCode;
       resData = data;
-    } else if (routes.updateFriend.validate(url, method, id)) {
+    } else if (routes.friend.updateFriend.validate(url, method, id)) {
       const { statusCode, data } = await updateFriend(pool, id, body);
 
       resStatusCode = statusCode;
       resData = data;
-    } else if (routes.deleteFriend.validate(url, method, id)) {
+    } else if (routes.friend.deleteFriend.validate(url, method, id)) {
       const { statusCode, data } = await deleteFriend(pool, id);
 
       resStatusCode = statusCode;

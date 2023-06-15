@@ -4,7 +4,7 @@ export default function ActivityCard({ activity = {}, add, onClick }) {
   const activityCard = document.createElement('button');
   activityCard.onclick = () => onClick(id, add);
 
-  activityCard.className = 'w-30 bg-purple-400 p-3 my-2 mx-1 rounded shadow-small center column';
+  activityCard.className = 'w-30 bg-purple-400 py-3 px-9 my-2 mx-1 rounded shadow-small center column';
 
   activityCard.innerHTML = add ? `
     <img class="large square mb-3" src="/frontend/assets/img/plus-symbol.png" alt="add activity" />

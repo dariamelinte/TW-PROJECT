@@ -75,7 +75,7 @@ exports.updateFriend = async (pool, friendId, friend = {}) => {
         statusCode: StatusCodes.BAD_REQUEST,
         data: {
           success: false,
-          message: 'Please provide the missing fields: id',
+          message: 'Please provide the missing fields: friendId',
         }
       };
     }
