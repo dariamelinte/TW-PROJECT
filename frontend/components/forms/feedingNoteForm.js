@@ -1,20 +1,36 @@
+import { deleteFeedingEvent } from '/frontend/server/feeding/deleteFeedingEvent.js';
+
 import { INITIAL_FEEDING_NOTE } from '/frontend/utils/initialValues.js';
+import showError from '/frontend/utils/showError.js';
+import Routes from '/frontend/utils/Routes.js';
 
-export default function FeedingNoteForm({ feedingNote = INITIAL_FEEDING_NOTE, onSave }) {
-  const { hour, info } = feedingNote;
+export default function FeedingNoteForm({ childId, feedingNote = INITIAL_FEEDING_NOTE, onSave }) {
+  const { id, hour, info } = feedingNote;
 
-  const saveData = (e) => {
+  const saveData = async (e) => {
     e.preventDefault();
 
     const form = document.querySelector('form');
     const formData = new FormData(form);
 
-    //TODO: send the data to the server
-    console.log("date: ", formData.get("date"));
-    console.log("description: ", formData.get("description"));
+    //send the data to the server
+    await onSave(formData);
 
-    onSave();
+    // console.log("date: ", formData.get("date"));
+    // console.log("description: ", formData.get("description"));
   }
+
+  const deleteData = async (e) => {
+    e?.preventDefault();
+
+    const data = await deleteFeedingEvent(childId, id);
+    if (!data.success) {
+      showError(data.message);
+      return;
+    }
+
+    window.location.href = Routes.children.feedingCalendar.path(childId);
+  };
 
   const form = document.createElement('form');
   form.className = 'mt-9 w-25';
@@ -37,10 +53,13 @@ export default function FeedingNoteForm({ feedingNote = INITIAL_FEEDING_NOTE, on
       </textarea>
     </div>
 
-    <button class="mt-3" type="button">Submit</button>
+    <button class="principal mt-3" type="submit">Submit</button>
+    <button class="secondary my-2" type="button">Delete meal</button>
+    <div id="error"></div>
   `;
 
-  form.querySelector('button').addEventListener('click', saveData);
+  form.querySelector('button[type="submit"]').addEventListener('click', saveData);
+  form.querySelector('button[type="button"]').addEventListener('click', deleteData);
 
   return form;
 }
