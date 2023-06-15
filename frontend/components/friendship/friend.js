@@ -2,7 +2,7 @@ import Routes from '/frontend/utils/Routes.js';
 import { getAge } from '/frontend/utils/getAge.js';
 import { friendshipTypes } from '/frontend/utils/selectsOptions.js';
 
-export default function Friend({ friend = {} }) {
+export default function Friend({ friend = {}, className }) {
   const {
     id,
     childId,
@@ -20,7 +20,7 @@ export default function Friend({ friend = {} }) {
     window.location.href = Routes.children.friendships.friend.edit.path(childId, id);
   };
 
-  friendCard.className = 'bg-purple-400 p-3 my-2 mx-1 rounded shadow-small center column';
+  friendCard.className = `bg-purple-400 p-3 my-2 mx-1 rounded shadow-small center column ${className}`;
 
   friendCard.innerHTML = `
     <img class="xl square mb-2" src="/frontend/assets/img/children.png" alt="child" />

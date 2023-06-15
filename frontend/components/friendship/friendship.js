@@ -3,10 +3,7 @@ import Routes from "/frontend/utils/Routes.js";
 
 import Friend from "./friend.js";
 
-export default function Friendship({ relationship = {}, friend = {} }){
-    console.log(friend);
-    const { activities } = relationship;
-
+export default function Friendship({ interactions = [], friend = {} }){
     const childId = new URLSearchParams(window.location.search).get('childId');
     const friendId = new URLSearchParams(window.location.search).get('friendId');
     
@@ -17,9 +14,9 @@ export default function Friendship({ relationship = {}, friend = {} }){
 
     const friendship = document.createElement('div');
 
-    friendship.className = "center flex-wrap my-6";
+    friendship.className = "items-start flex-wrap my-6 flex justify-around w-full";
 
-    friendship.appendChild(ActivityList({ activities, onClick: onClickActivity }));
+    friendship.appendChild(ActivityList({ activities: interactions, onClick: onClickActivity }));
     friendship.appendChild(Friend({ friend }));
 
     return friendship;

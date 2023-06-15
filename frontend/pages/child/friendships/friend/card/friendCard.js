@@ -1,24 +1,36 @@
 import Header from '/frontend/components/header.js';
 import ActivityForm from '/frontend/components/forms/activityForm.js';
+import showError from '/frontend/utils/showError.js';
+
+import { getFriendInteractionById } from '/frontend/server/friendInteraction/getFriendInteractionById.js';
+import { editFriendInteraction } from '/frontend/server/friendInteraction/editFriendInteraction.js';
 
 import Routes from '/frontend/utils/Routes.js';
 
-import mocked_relationships from '/frontend/utils/__mock__relationships.json' assert { type: 'json' };
-
 const { card, path } = Routes.children.friendships.friend;
 
-const childId = parseInt(new URLSearchParams(window.location.search).get('childId'));
-const friendId = parseInt(new URLSearchParams(window.location.search).get('friendId'));
-const cardId = parseInt(new URLSearchParams(window.location.search).get('cardId'));
+const searchParams = new URLSearchParams(window.location.search);
 
-const relationship = mocked_relationships.find(({ childIds }) => childIds.includes(childId) && childIds.includes(friendId));
-const activity = relationship.activities.find(({ id }) => id === cardId);
+const childId = searchParams.get('childId');
+const friendId = searchParams.get('friendId');
+const cardId = searchParams.get('cardId');
 
-const onSave = () => {
-  // TO DO: api call
+const interaction = await getFriendInteractionById(cardId);
+
+const onSave = async (formData) => {
+  const interactionInput = Object.fromEntries(formData);
+
+  const data = await editFriendInteraction(cardId, interactionInput);
+
+  if (!data.success) {
+    showError(data.message);
+    return;
+  }
+
+
   window.location.href = path(childId, friendId);
 } 
 
 
 document.body.appendChild(Header(card.add.title));
-document.body.appendChild(ActivityForm({ activity, onSave }));
+document.body.appendChild(ActivityForm({ activity: interaction, onSave, childId }));

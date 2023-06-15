@@ -154,7 +154,8 @@ exports.getFriendInteractionByChildId = async (pool, childId, friendId) => {
           fi.note as "note"
         FROM friend_interaction fi JOIN friend f
         ON fi."friendId" = f.id
-        WHERE f."childId" = $1 AND fi."friendId" = $2;
+        WHERE f."childId" = $1 AND fi."friendId" = $2
+        ORDER BY fi.date DESC;
       `,
       [childId, friendId]
     );
