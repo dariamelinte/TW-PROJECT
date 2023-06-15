@@ -53,7 +53,7 @@ exports.updateFeedingEvent = async (feedingEvent, pool) => {
   }
 };
 
-exports.getFeedingEvent = async (childId, pool) => {
+exports.getFeedingEvents = async (childId, pool) => {
   try {
     const result = await pool.query(
       `
@@ -72,6 +72,30 @@ exports.getFeedingEvent = async (childId, pool) => {
     return {
       success: false,
       message: 'Feeding calendar not found.',
+      error
+    };
+  }
+};
+
+exports.getFeedingEventById = async (childId, id, pool) => {
+  try {
+    const result = await pool.query(
+      `
+      SELECT * FROM feeding_calendar
+      WHERE childId = $1 AND id = $2
+      `,
+      [childId, id]
+    );
+    return {
+      success: true,
+      message: 'Feeding calendar event found.',
+      result: result?.rows?.[0]
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      message: 'Feeding calendar event not found.',
       error
     };
   }
