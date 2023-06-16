@@ -8,7 +8,6 @@ import { getFeedingEvents } from '/frontend/server/feeding/getFeedingEvents.js';
 
 const { title, add: addRoute, card: cardRoute } = Routes.children.feedingCalendar;
   
-document.body.appendChild(Header(title));
 
 //if child param present => user on a child page
 const childId = new URLSearchParams(window.location.search).get('childId');
@@ -21,6 +20,8 @@ const onClickCell = (id, add) => {
     window.location.href = cardRoute(childId, id);
   }
 }
+
+document.body.appendChild(Header(title));
 
 document.body.appendChild(Calendar({
   week: feedings,
