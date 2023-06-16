@@ -1,5 +1,3 @@
-// Create function that takes as argument an object and creates a rss feed based on it
-// Return the rss feed as a string
 const rss = require('rss');
 
 const createRssFeed = (data) => {
