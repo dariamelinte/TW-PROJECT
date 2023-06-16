@@ -1,9 +1,9 @@
-import { SERVER_URL, MESSAGES } from "../../utils/constants.js";
+import { SERVER_URL, MESSAGES } from "/frontend/utils/constants.js";
 
 export const createFeedingEvent = async (feedingInput) => {
     try{
         //TODO: send jwt to validate permission
-        const data = await fetch(`${SERVER_URL}/feeding-calendar/add/?childId=${childId}`, {
+        const data = await fetch(`${SERVER_URL}/feeding-calendar/add?childId=${childId}`, {
             method: 'POST',
             body: JSON.stringify(feedingInput),
             headers: {

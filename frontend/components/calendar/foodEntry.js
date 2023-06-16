@@ -1,5 +1,7 @@
 export default function FoodEntry({ entry = {}, add, onClick }) {
-  const { id, hour, note } = entry;
+  const { id, date_time, note } = entry;
+
+  // const date_time_split = date_time.split('\'');
 
   const entryComponent = document.createElement('button');
   entryComponent.onclick = () => onClick(id, add);
@@ -9,7 +11,7 @@ export default function FoodEntry({ entry = {}, add, onClick }) {
   entryComponent.innerHTML = add ? `
     <img class="small square" src="/frontend/assets/img/plus-symbol.png" alt="add feed" />
   ` : `
-    <p class="text-purple-500">${hour}</p>
+    <p class="text-purple-500">${date_time}</p>
     <h2 class="text-yellow-500">${note}</h2>
   `;
   
