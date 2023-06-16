@@ -12,10 +12,7 @@ const { title, add: addRoute, card: cardRoute } = Routes.children.feedingCalenda
 const childId = new URLSearchParams(window.location.search).get('childId');
 const feedings = await getFeedingEvents(childId);
 
-// console.log("check 2");
-// console.log(childId);
-// console.log(feedings);
-// console.log("check 3");
+console.log(feedings);
 
 const onClickCell = (id, add) => {
   if (add) {
@@ -28,7 +25,7 @@ const onClickCell = (id, add) => {
 document.body.appendChild(Header(title));
 
 document.body.appendChild(Calendar({
-  feedings: feedings,
+  week: feedings,
   entryType: entryTypes.food,
   onClick: onClickCell
 }));

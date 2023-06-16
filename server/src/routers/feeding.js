@@ -23,27 +23,27 @@ async function feedingRouter(res, pool) {
         message: 'Route not found.'
         };
 
-        if (routes.createFeedingEvent.validate(url, method, childId)) {
+        if (routes.feeding.create.validate(url, method, childId)) {
             const { statusCode, data } = await createFeedingEvent(body, pool);
       
             resStatusCode = statusCode;
             resData = data;
-        } else if (routes.getFeedingEvents.validate(url, method, childId)) {
-            const { statusCode, data } = await getFeedingEvents(childId, pool);
+        } else if (routes.feeding.getAll.validate(url, method, childId)) {
+            const { statusCode, data } = await getFeedingEvents(pool, childId);
 
             resStatusCode = statusCode;
             resData = data;
-        } else if (routes.getFeedingEventById.validate(url, method, childId, id)) {
+        } else if (routes.feeding.getById.validate(url, method, childId, id)) {
             const { statusCode, data } = await getFeedingEventById(childId, id, pool);
 
             resStatusCode = statusCode;
             resData = data;
-        } else if (routes.updateFeedingEvent.validate(url, method, childId, id)) {
+        } else if (routes.feeding.update.validate(url, method, childId, id)) {
             const { statusCode, data } = await updateFeedingEvent(body, pool);
             
             resStatusCode = statusCode;
             resData = data;
-        } else if (routes.deleteFeedingEvent.validate(url, method, childId, id)) {
+        } else if (routes.feeding.delete.validate(url, method, childId, id)) {
             const { statusCode, data } = await deleteFeedingEvent(id, pool);
             
             resStatusCode = statusCode;
