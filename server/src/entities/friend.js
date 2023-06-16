@@ -1,7 +1,4 @@
-const { randomUUID } = require('crypto');
-const { StatusCodes } = require('http-status-codes');
-
-exports.createFriend = async (pool, friend = {}) => {
+exports.insert = async (pool, id, friend = {}) => {
   try {
     const {
       childId,
@@ -13,7 +10,6 @@ exports.createFriend = async (pool, friend = {}) => {
       howTheyMet,
       relationship
     } = friend;
-    const id = randomUUID();
 
     await pool.query(
       `
@@ -35,30 +31,19 @@ exports.createFriend = async (pool, friend = {}) => {
       ]
     );
 
-    const result = await pool.query(`SELECT * FROM friend WHERE id = $1`, [id]);
-
     return {
-      statusCode: StatusCodes.CREATED,
-      data: {
-        success: true,
-        message: 'Created friend successfuly.',
-        result: result?.rows?.[0]
-      }
+      success: true
     };
   } catch (error) {
     console.error(error);
+
     return {
-      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
-      data: {
-        success: false,
-        message: 'Could not create new friend.',
-        error
-      }
+      success: false
     };
   }
 };
 
-exports.updateFriend = async (pool, friendId, friend = {}) => {
+exports.update = async (pool, id, friend = {}) => {
   try {
     const {
       firstName,
@@ -70,139 +55,67 @@ exports.updateFriend = async (pool, friendId, friend = {}) => {
       relationship
     } = friend;
 
-    if (!friendId) {
-      return {
-        statusCode: StatusCodes.BAD_REQUEST,
-        data: {
-          success: false,
-          message: 'Please provide the missing fields: id',
-        }
-      };
-    }
-
-    const resSelect = await pool.query(`SELECT * FROM friend WHERE id = $1`, [friendId]);
-    const {
-      firstName: oldFirstName,
-      lastName: oldLastName,
-      dateOfBirth: oldDOB,
-      parentName: oldParentName,
-      parentContact: oldParentContact,
-      howTheyMet: oldHowTheyMet,
-      relationship: oldRelationship
-    } = resSelect?.rows?.[0];
-
-
     await pool.query(
       `UPDATE friend SET "firstName" = $1, "lastName" = $2, "dateOfBirth" = $3, "parentName" = $4,
         "parentContact" = $5, "howTheyMet" = $6, relationship = $7 WHERE id = $8`,
-      [
-        firstName || oldFirstName,
-        lastName || oldLastName,
-        dateOfBirth || oldDOB,
-        parentName || oldParentName,
-        parentContact || oldParentContact,
-        howTheyMet || oldHowTheyMet,
-        relationship || oldRelationship,
-        friendId
-      ]
+      [firstName, lastName, dateOfBirth, parentName, parentContact, howTheyMet, relationship, id]
     );
 
-    const result = await pool.query(`SELECT * FROM friend WHERE id = $1`, [friendId]);
-    
     return {
-      statusCode: StatusCodes.ACCEPTED,
-      data: {
-        success: true,
-        message: 'Updated friend successfuly.',
-        result: result?.rows?.[0],
-      }
+      success: true
     };
   } catch (error) {
     console.error(error);
     return {
-      success: false,
-      message: 'Could not update friend.',
-      error
+      success: false
     };
   }
 };
 
-exports.deleteFriend = async (pool, id) => {
+exports.delete = async (pool, id) => {
   try {
     await pool.query(`DELETE FROM friend WHERE id = $1`, [id]);
 
-    const result = await pool.query(`SELECT * FROM friend WHERE id = $1`, [id]);
-
-    if (result?.rows?.length) {
-      throw Error(`Could not properly delete friend with id = ${id}`);
-    }
-
     return {
-      statusCode: StatusCodes.OK,
-      data: {
-        success: true,
-        message: 'Deleted friend successfuly.',
-      }
+      success: true
     };
   } catch (error) {
     console.error(error);
     return {
-      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
-      data: {
-        success: false,
-        message: 'Could not delete friend.',
-        error
-      }
+      success: false
     };
   }
 };
 
-exports.getFriendById = async (pool, id) => {
+exports.getById = async (pool, id) => {
   try {
     const result = await pool.query(`SELECT * FROM friend WHERE id = $1`, [id]);
-
     return {
-      statusCode: StatusCodes.OK,
-      data: {
-        success: true,
-        result: result?.rows?.[0],
-        message: 'Friend found.'
-      }
+      success: true,
+      result: result?.rows?.[0]
     };
   } catch (error) {
     console.error(error);
 
     return {
-      statusCode: StatusCodes.NOT_FOUND,
-      data: {
-        success: false,
-        message: 'Friend not found.',
-        error: String(error)
-      }
+      success: false,
+      result: null
     };
   }
 };
 
-exports.getAllFriends = async (pool, childId) => {
+exports.getByChildId = async (pool, childId) => {
   try {
     const result = await pool.query(`SELECT * FROM friend WHERE "childId" = $1`, [childId]);
     return {
-      statusCode: StatusCodes.OK,
-      data: {
-        success: true,
-        result: result?.rows,
-        message: 'Friends found.'
-      }
+      success: true,
+      result: result?.rows
     };
   } catch (error) {
     console.error(error);
     return {
-      statusCode: StatusCodes.NOT_FOUND,
-      data: {
-        success: false,
-        message: 'Friends not found.',
-        error: String(error)
-      }
+      success: true,
+      result: null
     };
   }
 };

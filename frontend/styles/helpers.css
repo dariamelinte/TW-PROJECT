@@ -61,7 +61,7 @@
 }
 
 .w-50 {
-  max-width: 30em;
+  max-width: 50em;
   width: 100%;
 }
 
@@ -139,6 +139,10 @@
 
 .absolute {
   position: absolute;
+}
+
+.fixed {
+  position: fixed;
 }
 
 .rounded {

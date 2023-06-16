@@ -114,6 +114,82 @@ const routes = {
     },
   },
 
+  friendInteraction: {
+    create: {
+      url: () => '/friend-interactions',
+      method: methods.POST,
+      validate: (url, method) => (
+        url === routes.friendInteraction.create.url() &&
+        method === routes.friendInteraction.create.method
+      )
+    },
+  
+    update: {
+      url: (id) => `/friend-interactions?id=${id}`,
+      method: methods.PATCH,
+      validate: (url, method, id) => (
+        url === routes.friendInteraction.update.url(id) &&
+        method === routes.friendInteraction.update.method
+      )
+    },
+  
+    delete: {
+      url: (id) => `/friend-interactions?id=${id}`,
+      method: methods.DELETE,
+      validate: (url, method, id) => (
+        url === routes.friendInteraction.delete.url(id) &&
+        method === routes.friendInteraction.delete.method
+      )
+    },
+  
+    getById: {
+      url: (id) => `/friend-interactions?id=${id}`,
+      method: methods.GET,
+      validate: (url, method, id) => (
+        url === routes.friendInteraction.getById.url(id) &&
+        method === routes.friendInteraction.getById.method
+      )
+    },
+  
+    getByChildId: {
+      url: (childId, friendId) => `/friend-interactions?childId=${childId}&friendId=${friendId}`,
+      method: methods.GET,
+      validate: (url, method, childId, friendId) => (
+        url === routes.friendInteraction.getByChildId.url(childId, friendId) &&
+        method === routes.friendInteraction.getByChildId.method
+      )
+    },
+  },
+
+  auth: {
+    register: {
+      url: () => '/auth/register',
+      method: methods.POST,
+      validate: (url, method) => (
+        url === routes.auth.register.url() &&
+        method === routes.auth.register.method
+      )
+    },
+
+    login: {
+      url: () => '/auth/login',
+      method: methods.POST,
+      validate: (url, method) => (
+        url === routes.auth.login.url() &&
+        method === routes.auth.login.method
+      )
+    },
+
+    forgotPassword: {
+      url: () => '/auth/forgot-password',
+      method: methods.POST,
+      validate: (url, method) => (
+        url === routes.auth.forgotPassword.url() &&
+        method === routes.auth.forgotPassword.method
+      )
+    }
+  },
+
   feeding: {
     create: {
       url: (childId) => `/feeding-calendar/add/?childId=${childId}`,
