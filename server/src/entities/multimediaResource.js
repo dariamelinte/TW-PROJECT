@@ -1,40 +1,38 @@
-import { randomUUID } from 'crypto';
-
-exports.saveMultimediaResource = async (multimediaResource, pool) => {
+exports.insert = async (pool, id, multimediaResource = {}) => {
   try {
     const { childId, date, note, path } = multimediaResource;
-    const result = await pool.query(
+
+    await pool.query(
       `
       INSERT INTO  multimedia_resources
-        (id, childId, date, note, path)
+        (id, "childId", date, note, path)
       VALUES
         ($1, $2, $3, $4, $5)
       `,
-      [randomUUID(), childId, date, note, path]
+      [id, childId, date, note, path]
     );
+
     return {
-      success: true,
-      message: 'Saved multimedia resource successfully.',
-      result
+      success: true
     };
   } catch (error) {
     console.error(error);
+
     return {
-      success: true,
-      message: 'Could not save multimedia resource.',
-      error
+      success: false
     };
   }
 };
 
-exports.updateMultimediaResource = async (multimediaResource, pool) => {
+exports.update = async (pool, id, multimediaResource = {}) => {
   try {
-    const { childId, date, note, path, id } = multimediaResource;
-    const result = await pool.query(
+    const { childId, date, note, path } = multimediaResource;
+
+    await pool.query(
       `
     UPDATE multimedia_resources
     SET
-      childId = $1,
+      "childId" = $1,
       date = $2,
       note = $3,
       path = $4
@@ -44,88 +42,62 @@ exports.updateMultimediaResource = async (multimediaResource, pool) => {
     );
 
     return {
-      success: true,
-      message: 'Updated multimedia resource successfully.',
-      result
+      success: true
     };
   } catch (error) {
     console.error(error);
     return {
-      success: true,
-      message: 'Could not update multimedia resource.',
-      error
+      success: false
     };
   }
 };
 
-exports.deleteMultimediaResource = async (id, pool) => {
+exports.delete = async (pool, id) => {
   try {
-    const result = await pool.query(
-      `
-      DELETE FROM multimedia_resources
-      WHERE id = $1
-      `,
-      [id]
-    );
+    await pool.query(`DELETE FROM multimedia_resources WHERE id = $1`, [id]);
+
     return {
-      success: true,
-      message: 'Deleted multimedia resource successfully.',
-      result
+      success: true
     };
   } catch (error) {
     console.error(error);
     return {
-      success: true,
-      message: 'Could not delete multimedia resource.',
-      error
+      success: false
     };
   }
 };
 
-exports.getMultimediaResourceById = async (id, pool) => {
+exports.getById = async (pool, id) => {
   try {
-    const result = await pool.query(
-      `
-      SELECT * FROM multimedia_resources
-      WHERE id = $1
-      `,
-      [id]
-    );
+    const result = await pool.query(`SELECT * FROM multimedia_resources WHERE id = $1`, [id]);
     return {
       success: true,
-      message: 'Found multimedia resource.',
       result: result?.rows?.[0]
     };
   } catch (error) {
     console.error(error);
+
     return {
-      success: true,
-      message: 'Could not find multimedia resource.',
-      error
+      success: false,
+      result: null
     };
   }
 };
 
-exports.findMultimediaResourceByChildId = async (childId, pool) => {
+exports.getByChildId = async (pool, childId) => {
   try {
-    const result = await pool.query(
-      `
-        SELECT * FROM multimedia_resources
-        WHERE childId = $1
-        `,
-      [childId]
-    );
+    const result = await pool.query(`SELECT * FROM multimedia_resources WHERE "childId" = $1`, [
+      childId
+    ]);
     return {
       success: true,
-      message: 'Found multimedia resources.',
       result: result?.rows
     };
   } catch (error) {
     console.error(error);
     return {
       success: true,
-      message: 'Could not find multimedia resources.',
-      error
+      result: null
     };
   }
 };

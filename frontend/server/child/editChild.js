@@ -1,9 +1,9 @@
 import { SERVER_URL, MESSAGES } from '../../utils/constants.js';
 
-export const editChild = async (childInput) => {
+export const editChild = async (id, childInput) => {
   try {
     // TODO: send jwt to validate permission
-    const data = await fetch(`${SERVER_URL}/child`, {
+    const data = await fetch(`${SERVER_URL}/child?id=${id}`, {
       method: 'PATCH',
       body: JSON.stringify(childInput),
       headers: {
