@@ -5,7 +5,7 @@ exports.saveMultimediaResource = async (multimediaResource, pool) => {
     const { childId, date, note, path } = multimediaResource;
     const result = await pool.query(
       `
-      INSERT INTO TABLE multimedia_resources
+      INSERT INTO  multimedia_resources
         (id, childId, date, note, path)
       VALUES
         ($1, $2, $3, $4, $5)

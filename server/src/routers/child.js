@@ -23,32 +23,32 @@ async function childRouter(res, pool) {
       message: 'Route not found.'
     };
 
-    if (routes.getChildren.validate(url, method)) {
+    if (routes.child.getChildren.validate(url, method)) {
       const { statusCode, data } = await getChildren(pool);
 
       resStatusCode = statusCode;
       resData = data;
-    } else if (routes.getChildById.validate(url, method, id)) {
+    } else if (routes.child.getChildById.validate(url, method, id)) {
       const { statusCode, data } = await getChildById(pool, id);
 
       resStatusCode = statusCode;
       resData = data;
-    } else if (routes.getChildrenByFamilyId.validate(url, method, familyId)) {
+    } else if (routes.child.getChildrenByFamilyId.validate(url, method, familyId)) {
       const { statusCode, data } = await getChildrenByFamilyId(pool, familyId);
 
       resStatusCode = statusCode;
       resData = data;
-    } else if (routes.createChild.validate(url, method)) {
+    } else if (routes.child.createChild.validate(url, method)) {
       const { statusCode, data } = await createChild(pool, body);
 
       resStatusCode = statusCode;
       resData = data;
-    } else if (routes.updateChild.validate(url, method)) {
+    } else if (routes.child.updateChild.validate(url, method)) {
       const { statusCode, data } = await updateChild(pool, body);
 
       resStatusCode = statusCode;
       resData = data;
-    } else if (routes.deleteChild.validate(url, method, id)) {
+    } else if (routes.child.deleteChild.validate(url, method, id)) {
       const { statusCode, data } = await deleteChild(pool, id);
 
       resStatusCode = statusCode;

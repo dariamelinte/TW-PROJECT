@@ -2,7 +2,7 @@ import ActivityCard from "./activityCard.js";
 
 export default function ActivityList({ activities, onClick }) {
   const activityList = document.createElement('div');
-  activityList.className = "center flex-wrap";
+  activityList.className = "center flex-wrap column";
   
   activityList.appendChild(ActivityCard({ add: true, onClick }))
 

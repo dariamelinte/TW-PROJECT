@@ -3,11 +3,9 @@ import Routes from "/frontend/utils/Routes.js";
 
 import Friend from "./friend.js";
 
-export default function Friendship({ relationship = {}, friend = {} }){
-    const { activities, howTheyMet, friendshipLevel } = relationship;
-
-    const childId = parseInt(new URLSearchParams(window.location.search).get('childId'));
-    const friendId = parseInt(new URLSearchParams(window.location.search).get('friendId'));
+export default function Friendship({ interactions = [], friend = {} }){
+    const childId = new URLSearchParams(window.location.search).get('childId');
+    const friendId = new URLSearchParams(window.location.search).get('friendId');
     
     const onClickActivity = (id, add) => {
         const { path, add: { path: addPath} } = Routes.children.friendships.friend.card;
@@ -16,10 +14,10 @@ export default function Friendship({ relationship = {}, friend = {} }){
 
     const friendship = document.createElement('div');
 
-    friendship.className = "center flex-wrap my-6";
+    friendship.className = "items-start flex-wrap my-6 flex justify-around w-full";
 
-    friendship.appendChild(ActivityList({ activities, onClick: onClickActivity }));
-    friendship.appendChild(Friend({ friend, howTheyMet, friendshipLevel }));
+    friendship.appendChild(ActivityList({ activities: interactions, onClick: onClickActivity }));
+    friendship.appendChild(Friend({ friend }));
 
     return friendship;
 }

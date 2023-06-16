@@ -1,7 +1,7 @@
 import Header from '../components/header.js';
 import VerticalList from '../components/verticalList.js';
 import ChildrenList from '../components/children/childrenList.js';
-import { getFamilyChildren } from "../server/getFamilyChildren.js";
+import { getFamilyChildren } from "../server/child/getFamilyChildren.js";
 import Routes from '../utils/Routes.js';
 
 // if the childId param is present, then the user is on a child page

@@ -230,6 +230,14 @@ img {
   cursor: pointer;
 }
 
+.top-40 {
+  top: var(--40);
+}
+
+.right-6 {
+  right: var(--6);
+}
+
 @media screen and (max-width: 360px) {
   p, button {
     font-size: 14px;

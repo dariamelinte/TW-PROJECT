@@ -6,7 +6,7 @@ exports.createFeedingEvent = async (feedingEvent, pool) => {
 
     const result = await pool.query(
       `
-      INSERT INTO TABLE feeding_calendar
+      INSERT INTO  feeding_calendar
         (id, childId, dateTime, note)
       VALUES
         ($1, $2, $3, $4)

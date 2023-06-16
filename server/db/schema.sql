@@ -88,6 +88,7 @@ ALTER TABLE public.feeding_calendar OWNER TO postgres;
 
 CREATE TABLE public.friend (
     id character varying(64) NOT NULL,
+    "childId" character varying(64) NOT NULL,
     "firstName" character varying(32) NOT NULL,
     "lastName" character varying(32) NOT NULL,
     "dateOfBirth" character varying(16),
@@ -107,7 +108,6 @@ ALTER TABLE public.friend OWNER TO postgres;
 
 CREATE TABLE public.friend_interaction (
     id character varying(64) NOT NULL,
-    "childId" character varying(64) NOT NULL,
     "friendId" character varying(64) NOT NULL,
     date character varying(16) NOT NULL,
     title character varying(32) NOT NULL,

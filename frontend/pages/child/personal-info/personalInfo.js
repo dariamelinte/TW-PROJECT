@@ -2,7 +2,7 @@ import Header from '/frontend/components/header.js';
 import ChildForm from '/frontend/components/forms/childForm.js';
 import Routes from '/frontend/utils/Routes.js';
 
-import { getChildById } from '/frontend/server/getChildById.js';
+import { getChildById } from '/frontend/server/child/getChildById.js';
 
 const childId = new URLSearchParams(window.location.search).get('childId');
 

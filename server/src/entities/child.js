@@ -58,8 +58,7 @@ exports.updateChild = async (pool, child = {}) => {
         statusCode: StatusCodes.BAD_REQUEST,
         data: {
           success: false,
-          message: 'Please provide the missing fields.',
-          error: 'Missing fields: id'
+          message: 'Please provide the missing fields: id'
         }
       };
     }
