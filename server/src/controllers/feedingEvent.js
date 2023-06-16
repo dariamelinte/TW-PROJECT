@@ -1,102 +1,193 @@
 import { randomUUID } from 'crypto';
+const { StatusCodes } = require('http-status-codes');
 
-exports.createFeedingEvent = async (feedingEvent, pool) => {
+const feedingEventEntity = require('../entities/feedingEvent');
+
+exports.createFeedingEvent = async (pool, feedingEvent = {}) => {
   try {
-    const { childId, dateTime, note } = feedingEvent;
+    const id = randomUUID();
+    const {succes: successCreate } = await feedingEventEntity.insert(pool, id, feedingEvent);
+    const { success, result } = await feedingEventEntity.getById(pool, id);
 
-    const result = await pool.query(
-      `
-      INSERT INTO  feeding_calendar
-        (id, childId, dateTime, note)
-      VALUES
-        ($1, $2, $3, $4)
-      `,
-      [randomUUID(), childId, dateTime, note]
-    );
+    //const { childId, dateTime, note } = feedingEvent;
+
+    // const result = await pool.query(
+    //   `
+    //   INSERT INTO  feeding_calendar
+    //     (id, childId, dateTime, note)
+    //   VALUES
+    //     ($1, $2, $3, $4)
+    //   `,
+    //   [randomUUID(), childId, dateTime, note]
+    // );
+
+    if (!successCreate || !success) {
+      throw Error();
+    }
+
     return {
-      success: true,
-      message: 'Saved feeding event successfuly.',
-      result
+      statusCode: StatusCodes.CREATED,
+      data: {
+        success,
+        message: 'Created feeding event successfuly.',
+        result
+      }
     };
   } catch (error) {
     console.error(error);
+
     return {
-      success: true,
-      message: 'Could not save feeding event.',
-      error
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: {
+        success: false,
+        message: 'Could not create new feeding event.',
+        error
+      }
     };
   }
 };
 
-exports.updateFeedingEvent = async (feedingEvent, pool) => {
+exports.updateFeedingEvent = async (pool, id, feedingEvent = {}) => {
   try {
-    const { id, childId, dateTime, note } = feedingEvent;
-    const result = await pool.query(
-      `
-      UPDATE feeding_calendar
-      SET
-        childId = $1,
-        dateTime = $2,
-        note = $3
-      WHERE id = $4
-      `,
-      [childId, dateTime, note, id]
-    );
-    return {
-      success: true,
-      message: 'Updated feeding event successfuly.',
-      result
-    };
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
-};
+    if (!id) {
+      return {
+        statusCode: StatusCodes.BAD_REQUEST,
+        data: {
+          success: false,
+          message: 'Please provide the missing fields: friendId'
+        }
+      };
+    }
 
-exports.getFeedingEvent = async (childId, pool) => {
-  try {
-    const result = await pool.query(
-      `
-      SELECT * FROM feeding_calendar
-      WHERE childId = $1
-      `,
-      [childId]
-    );
+    const { result: oldFeedingEvent } = await feedingEventEntity.getById(pool, id);
+    const { success: successUpdate } = await feedingEventEntity.update(pool, id, {
+      date_time: feedingEvent.date_time || oldFeedingEvent.date_time,
+      note: feedingEvent.note || oldFeedingEvent.note
+    });
+
+    const { success, result: updateFeedingEvent } = await feedingEventEntity.getById(pool, id);
+
+    if (!successUpdate || !success) {
+      throw Error();
+    }
+    // const { id, childId, dateTime, note } = feedingEvent;
+    // const result = await pool.query(
+    //   `
+    //   UPDATE feeding_calendar
+    //   SET
+    //     childId = $1,
+    //     dateTime = $2,
+    //     note = $3
+    //   WHERE id = $4
+    //   `,
+    //   [childId, dateTime, note, id]
+    // );
+
     return {
-      success: true,
-      message: 'Feeding calendar found.',
-      result: result?.rows
+      statusCode: StatusCodes.ACCEPTED,
+      data: {
+        success: true,
+        message: 'Updated feeding event successfuly.',
+        result: updatedFriend
+      }
     };
   } catch (error) {
     console.error(error);
     return {
-      success: false,
-      message: 'Feeding calendar not found.',
-      error
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: {
+        success: false,
+        message: 'Could not update feeding event.',
+        error
+      }
+    };
+  }
+};
+
+exports.getFeedingEvents = async (childId, pool) => {
+  try {
+    const { success, result } = await feedingEventEntity.getByChildId(pool, childId);
+
+    if (!success) {
+      throw Error();
+    }
+
+    return {
+      statusCode: StatusCodes.OK,
+      data: {
+        success: true,
+        result,
+        message: 'Feeding calendar found.'
+      }
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      statusCode: StatusCodes.NOT_FOUND,
+      data: {
+        success: false,
+        message: 'Feeding calendar not found.',
+        error: String(error)
+      }
+    };
+  }
+};
+
+exports.getFeedingEventById = async (pool, id) => {
+  try {
+    const { success, result } = await friendEntity.getById(pool, id);
+
+    if (!success) {
+      throw Error();
+    }
+
+    return {
+      statusCode: StatusCodes.OK,
+      data: {
+        success: true,
+        result,
+        message: 'Feeding event found.'
+      }
+    };
+  } catch (error) {
+    console.error(error);
+
+    return {
+      statusCode: StatusCodes.NOT_FOUND,
+      data: {
+        success: false,
+        message: 'Feeding event not found.',
+        error: String(error)
+      }
     };
   }
 };
 
 exports.deleteFeedingEvent = async (id, pool) => {
   try {
-    const result = await pool.query(
-      `
-      DELETE FROM feeding_calendar
-      WHERE id = $1
-      `,
-      [id]
-    );
+    await feedingEventEntity.delete(pool, id);
+    const { result } = await feedingEventEntity.getById(pool, id);
+
+    if (result) {
+      throw Error(`Could not properly delete feeding event with id = ${id}`);
+    }
+
     return {
-      success: true,
-      message: 'Deleted feeding calendar successfuly.',
-      result: result?.rows?.[0]
+      statusCode: StatusCodes.OK,
+      data: {
+        success: true,
+        message: 'Deleted feeding event successfuly.'
+      }
     };
   } catch (error) {
     console.error(error);
     return {
-      success: false,
-      message: 'Could not delete feeding calendar.',
-      error
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: {
+        success: false,
+        message: 'Could not delete feeding event.',
+        error
+      }
     };
   }
 };

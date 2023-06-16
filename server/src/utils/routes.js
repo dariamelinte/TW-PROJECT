@@ -192,11 +192,11 @@ const routes = {
 
   feeding: {
     create: {
-      url: (childId) => `/feeding-calendar/add/?childId=${childId}`,
+      url: (childId) => `/feeding-calendar/?childId=${childId}`,
       method: methods.POST,
       validate: (url, method, childId) => (
-        url === routes.createFeedingEvent.url(childId) &&
-        method === routes.createFeedingEvent.method
+        url === routes.feeding.create.url(childId) &&
+        method === routes.feeding.create.method
       )
     },
 
@@ -204,8 +204,8 @@ const routes = {
       url: (childId, id) => `/feeding-calendar/card/?childId=${childId}&cardId=${id}`,
       method: methods.PATCH,
       validate: (url, method, childId, id) => (
-        url === routes.updateFeedingEvent.url(childId, id) &&
-        method === routes.updateFeedingEvent.method
+        url === routes.feeding.update.url(childId, id) &&
+        method === routes.feeding.update.method
       )
     },
 
@@ -213,8 +213,8 @@ const routes = {
       url: (childId, id) => `/feeding-calendar/card/?childId=${childId}&cardId=${id}`,
       method: methods.DELETE,
       validate: (url, method, childId, id) => (
-        url === routes.deleteFeedingEvent.url(childId, id) &&
-        method === routes.deleteFeedingEvent.method
+        url === routes.feeding.delete.url(childId, id) &&
+        method === routes.feeding.delete.method
       )
     },
 
@@ -222,8 +222,8 @@ const routes = {
       url: (childId) => `/feeding-calendar/?childId=${childId}`,
       method: methods.GET,
       validate: (url, method, childId) => (
-        url === routes.getFeedingEvents.url(childId) &&
-        method === routes.getFeedingEvents.method
+        url === routes.feeding.getAll.url(childId) &&
+        method === routes.feeding.getAll.method
       )
     },
 
@@ -231,8 +231,8 @@ const routes = {
       url: (childId, id) => `/feeding-calendar/card/?childId=${childId}&cardId=${id}`,
       method: methods.GET,
       validate: (url, method, childId, id) => (
-        url === routes.getFeedingEventById.url(childId, id) &&
-        method === routes.getFeedingEventById.method
+        url === routes.feeding.getById.url(childId, id) &&
+        method === routes.feeding.getById.method
       )
     },
   }

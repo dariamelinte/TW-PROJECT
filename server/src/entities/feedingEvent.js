@@ -51,7 +51,7 @@ exports.update = async (pool, id, feedingEvent = {}) => {
   }
 };
 
-exports.getFeedingEvent = async (childId, pool) => {
+exports.delete = async (pool, id) => {
   try {
     await pool.query(`DELETE FROM feeding_calendar WHERE id = $1`, [id]);
 
@@ -66,7 +66,7 @@ exports.getFeedingEvent = async (childId, pool) => {
   }
 };
 
-exports.deleteFeedingEvent = async (id, pool) => {
+exports.getById = async (pool, id) => {
   try {
     const result = await pool.query(`SELECT * FROM feeding_calendar WHERE id = $1`, [id]);
     return {

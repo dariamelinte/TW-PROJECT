@@ -10,7 +10,7 @@ const {
     getFeedingEvents,
     getFeedingEventById,
     deleteFeedingEvent
-} = require('../entities/feedingEvent');
+} = require('../controllers/feedingEvent');
 
 async function feedingRouter(res, pool) {
     try{
