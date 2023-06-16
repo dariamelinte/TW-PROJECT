@@ -1,29 +1,30 @@
 const { randomUUID } = require('crypto');
 const { StatusCodes } = require('http-status-codes');
 
+const friendInteractionEntity = require('../entities/friendInteraction');
+
 exports.createFriendInteraction = async (pool, friendInteraction = {}) => {
   try {
-    const { friendId, date, title, note } = friendInteraction;
     const id = randomUUID();
   
-    await pool.query(
-      `INSERT INTO  friend_interaction (id, "friendId", date, title, note) 
-        VALUES ($1, $2, $3, $4, $5)`,
-      [id, friendId, date, title, note]
-    );
+    const { success: successCreate } = await friendInteractionEntity.insert(pool, id, friendInteraction);
+    const { success, result } = await friendInteractionEntity.getById(pool, id);
 
-    const result = await pool.query(`SELECT * FROM friend_interaction WHERE id = $1`, [id]);
+    if (!successCreate || !success) {
+      throw Error();
+    }
 
     return {
       statusCode: StatusCodes.CREATED,
       data: {
-        success: true,
+        success,
         message: 'Created friend interaction successfuly.',
-        result: result?.rows?.[0]
+        result
       }
     };
   } catch (error) {
     console.error(error);
+
     return {
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       data: {
@@ -37,8 +38,6 @@ exports.createFriendInteraction = async (pool, friendInteraction = {}) => {
 
 exports.updateFriendInteraction = async (pool, id, friendInteraction = {}) => {
   try {
-    const { date, title, note } = friendInteraction;
-
     if (!id) {
       return {
         statusCode: StatusCodes.BAD_REQUEST,
@@ -49,59 +48,25 @@ exports.updateFriendInteraction = async (pool, id, friendInteraction = {}) => {
       };
     }
 
-    const resSelect = await pool.query(`SELECT * FROM friend_interaction WHERE id = $1`, [id]);
-    const {
-      date: oldDate,
-      title: oldTitle,
-      note: oldNote,
-    } = resSelect?.rows?.[0];
+    const { result: old } = await friendInteractionEntity.getById(pool, id);
+    const { success: successUpdate } = await friendInteractionEntity.update(pool, id, {
+      date: friendInteraction.date || old.date,
+      title: friendInteraction.title || old.title,
+      note: friendInteraction.note || old.note
+    });
 
+    const { success, result } = await friendInteractionEntity.getById(pool, id);
 
-    await pool.query(
-      `UPDATE friend_interaction SET date = $1, title = $2, note = $3 WHERE id = $4`,
-      [
-        date || oldDate,
-        title || oldTitle,
-        note || oldNote,
-        id
-      ]
-    );
+    if (!successUpdate || !success) {
+      throw Error();
+    }
 
-    const result = await pool.query(`SELECT * FROM friend_interaction WHERE id = $1`, [id]);
-    
     return {
       statusCode: StatusCodes.ACCEPTED,
       data: {
         success: true,
         message: 'Updated friend interaction successfuly.',
-        result: result?.rows?.[0],
-      }
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      success: false,
-      message: 'Could not update friend interaction.',
-      error
-    };
-  }
-};
-
-exports.deleteFriendInteraction = async (pool, id) => {
-  try {
-    await pool.query(`DELETE FROM friend_interaction WHERE id = $1`, [id]);
-
-    const result = await pool.query(`SELECT * FROM friend_interaction WHERE id = $1`, [id]);
-
-    if (result?.rows?.length) {
-      throw Error(`Could not properly delete friend with id = ${id}`);
-    }
-
-    return {
-      statusCode: StatusCodes.OK,
-      data: {
-        success: true,
-        message: 'Deleted friend successfuly.',
+        result
       }
     };
   } catch (error) {
@@ -110,7 +75,36 @@ exports.deleteFriendInteraction = async (pool, id) => {
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       data: {
         success: false,
-        message: 'Could not delete friend.',
+        message: 'Could not update friend interaction.',
+        error
+      }
+    };
+  }
+};
+
+exports.deleteFriendInteraction = async (pool, id) => {
+  try {
+    await friendInteractionEntity.delete(pool, id);
+    const { result } = await friendInteractionEntity.getById(pool, id);
+
+    if (result) {
+      throw Error();
+    }
+
+    return {
+      statusCode: StatusCodes.OK,
+      data: {
+        success: true,
+        message: 'Deleted friend interaction successfuly.'
+      }
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: {
+        success: false,
+        message: 'Could not delete friend interaction.',
         error
       }
     };
@@ -119,13 +113,17 @@ exports.deleteFriendInteraction = async (pool, id) => {
 
 exports.getFriendInteractionById = async (pool, id) => {
   try {
-    const result = await pool.query(`SELECT * FROM friend_interaction WHERE id = $1`, [id]);
+    const { success, result } = await friendInteractionEntity.getById(pool, id);
+
+    if (!success) {
+      throw Error();
+    }
 
     return {
       statusCode: StatusCodes.OK,
       data: {
         success: true,
-        result: result?.rows?.[0],
+        result,
         message: 'Friend interaction found.'
       }
     };
@@ -145,25 +143,16 @@ exports.getFriendInteractionById = async (pool, id) => {
 
 exports.getFriendInteractionByChildId = async (pool, childId, friendId) => {
   try {
-    const result = await pool.query(
-      `
-        SELECT
-          fi.id as "id",
-          fi.date as "date",
-          fi.title as "title",
-          fi.note as "note"
-        FROM friend_interaction fi JOIN friend f
-        ON fi."friendId" = f.id
-        WHERE f."childId" = $1 AND fi."friendId" = $2
-        ORDER BY fi.date DESC;
-      `,
-      [childId, friendId]
-    );
+    const { success, result } = await friendInteractionEntity.getByChildId(pool, childId, friendId);
+
+    if (!success) {
+      throw Error();
+    }
     return {
       statusCode: StatusCodes.OK,
       data: {
         success: true,
-        result: result?.rows,
+        result,
         message: 'Friend interactions found.'
       }
     };
