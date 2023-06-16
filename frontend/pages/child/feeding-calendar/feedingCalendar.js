@@ -7,11 +7,15 @@ import { getFeedingEvents } from '/frontend/server/feeding/getFeedingEvents.js';
 
 
 const { title, add: addRoute, card: cardRoute } = Routes.children.feedingCalendar;
-  
 
 //if child param present => user on a child page
 const childId = new URLSearchParams(window.location.search).get('childId');
 const feedings = await getFeedingEvents(childId);
+
+// console.log("check 2");
+// console.log(childId);
+// console.log(feedings);
+// console.log("check 3");
 
 const onClickCell = (id, add) => {
   if (add) {
@@ -24,7 +28,7 @@ const onClickCell = (id, add) => {
 document.body.appendChild(Header(title));
 
 document.body.appendChild(Calendar({
-  week: feedings,
+  feedings: feedings,
   entryType: entryTypes.food,
   onClick: onClickCell
 }));

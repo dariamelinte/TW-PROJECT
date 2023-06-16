@@ -1,6 +1,6 @@
 import { SERVER_URL, MESSAGES } from "../../utils/constants.js";
 
-export const createFeedingEvent = async (childId) => {
+export const getFeedingEvents = async (childId) => {
     try{
         //TODO: send jwt to validate permission
         const data = await fetch(`${SERVER_URL}/feeding-calendar/?childId=${childId}`);
