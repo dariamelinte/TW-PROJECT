@@ -10,7 +10,7 @@ const {
   createChild,
   updateChild,
   deleteChild,
-} = require('../entities/child');
+} = require('../controllers/child');
 
 async function childRouter(res, pool) {
   try {
@@ -23,32 +23,32 @@ async function childRouter(res, pool) {
       message: 'Route not found.'
     };
 
-    if (routes.child.getChildren.validate(url, method)) {
+    if (routes.child.getAll.validate(url, method)) {
       const { statusCode, data } = await getChildren(pool);
 
       resStatusCode = statusCode;
       resData = data;
-    } else if (routes.child.getChildById.validate(url, method, id)) {
+    } else if (routes.child.getById.validate(url, method, id)) {
       const { statusCode, data } = await getChildById(pool, id);
 
       resStatusCode = statusCode;
       resData = data;
-    } else if (routes.child.getChildrenByFamilyId.validate(url, method, familyId)) {
+    } else if (routes.child.getByFamilyId.validate(url, method, familyId)) {
       const { statusCode, data } = await getChildrenByFamilyId(pool, familyId);
 
       resStatusCode = statusCode;
       resData = data;
-    } else if (routes.child.createChild.validate(url, method)) {
+    } else if (routes.child.create.validate(url, method)) {
       const { statusCode, data } = await createChild(pool, body);
 
       resStatusCode = statusCode;
       resData = data;
-    } else if (routes.child.updateChild.validate(url, method)) {
-      const { statusCode, data } = await updateChild(pool, body);
+    } else if (routes.child.update.validate(url, method, id)) {
+      const { statusCode, data } = await updateChild(pool, id, body);
 
       resStatusCode = statusCode;
       resData = data;
-    } else if (routes.child.deleteChild.validate(url, method, id)) {
+    } else if (routes.child.delete.validate(url, method, id)) {
       const { statusCode, data } = await deleteChild(pool, id);
 
       resStatusCode = statusCode;

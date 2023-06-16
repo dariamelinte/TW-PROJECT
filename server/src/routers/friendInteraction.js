@@ -9,7 +9,7 @@ const {
   deleteFriendInteraction,
   getFriendInteractionById,
   getFriendInteractionByChildId
-} = require('../entities/friendInteraction');
+} = require('../controllers/friendInteraction');
 
 async function friendInteractionRouter(res, pool) {
   try {
