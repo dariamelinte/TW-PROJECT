@@ -1,16 +1,14 @@
 const { randomUUID } = require('crypto');
 const { StatusCodes } = require('http-status-codes');
 
-const { getChildrenByFamilyId, deleteChild } = require('./child');
+const userEntity = require('../entities/user');
 
 exports.createUser = async (pool, user = {}) => {
   try {
-    const { email, password, firstName, lastName, dateOfBirth, gender, nationality } = user;
     const id = randomUUID();
+    const { result: existentUser } = await userEntity.getUserByEmail(pool, user.email);
 
-    const userWithEmail = await getUserByEmail(pool, email);
-
-    if (Object.keys(userWithEmail.result).length) {
+    if (Object.keys(existentUser).length) {
       return {
         statusCode: StatusCodes.CONFLICT,
         data: {
@@ -21,34 +19,19 @@ exports.createUser = async (pool, user = {}) => {
       }
     }
 
-    await pool.query(
-      `
-      INSERT INTO  user 
-        (id, email, password, "firstName", "lastName", "dateOfBirth", gender, nationality, "familyId")
-      VALUES
-        ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-      `,
-      [
-        id,
-        email,
-        password,
-        firstName,
-        lastName,
-        dateOfBirth,
-        gender,
-        nationality,
-        randomUUID()
-      ]
-    );
+    const { success: successCreate } = await userEntity.insert(pool, id, user);
+    const { success, result } = await userEntity.getById(pool, id);
 
-    const result = await pool.query(`SELECT * FROM user WHERE id = $1`, [id]);
+    if (!successCreate || !success) {
+      throw Error();
+    }
 
     return {
       statusCode: StatusCodes.CREATED,
       data: {
-        success: true,
+        success,
         message: 'Created user successfuly.',
-        result: result?.rows?.[0]
+        result
       }
     };
   } catch (error) {
@@ -67,8 +50,6 @@ exports.createUser = async (pool, user = {}) => {
 
 exports.updateUser = async (pool, id, user = {}) => {
   try {
-    const { firstName, lastName, dateOfBirth, gender, nationality, familyId } = user;
-    
     if (!id) {
       return {
         statusCode: StatusCodes.BAD_REQUEST,
@@ -79,39 +60,28 @@ exports.updateUser = async (pool, id, user = {}) => {
       };
     }
 
-    const resSelect = await pool.query(`SELECT * FROM user WHERE id = $1`, [id]);
-    const {
-      firstName: oldFirstName,
-      lastName: oldLastName,
-      dateOfBirth: oldDOB,
-      gender: oldGender,
-      nationality: oldNat,
-      familyId: oldFamilyId
-    } = resSelect?.rows?.[0];
-   
-   
-    await pool.query(
-      `UPDATE user SET firstName = $1, lastName = $2, dateOfBirth = $3, 
-        gender = $4, nationality = $5, familyId = $6 WHERE id = $7`,
-      [
-        firstName || oldFirstName,
-        lastName || oldLastName,
-        dateOfBirth || oldDOB,
-        gender || oldGender,
-        nationality || oldNat,
-        familyId || oldFamilyId,
-        id
-      ]
-    );
+    const { result: oldUser } = await userEntity.getById(pool, id);
+    const { success: successUpdate } = await userEntity.update(pool, id, {
+      firstName: user.firstName || oldUser.firstName,
+      lastName: user.lastName || oldUser.lastName,
+      dateOfBirth: user.dateOfBirth || oldUser.dateOfBirth,
+      gender: user.gender || oldUser.gender,
+      nationality: user.nationality || oldUser.nationality,
+      familyId: user.familyId || oldUser.familyId
+    });
 
-    const result = await pool.query(`SELECT * FROM user WHERE id = $1`, [id]);
+    const { success, result } = await userEntity.getById(pool, id);
+
+    if (!successUpdate || !success) {
+      throw Error();
+    }
 
     return {
       statusCode: StatusCodes.ACCEPTED,
       data: {
         success: true,
         message: 'Updated user successfuly.',
-        result: result?.rows?.[0],
+        result
       }
     };
   } catch (error) {
@@ -129,39 +99,18 @@ exports.updateUser = async (pool, id, user = {}) => {
 
 exports.deleteUser = async (pool, id) => {
   try {
-    const { data: { result: user } } = await this.getUserById(pool, id);
+    await userEntity.delete(pool, id);
+    const { result } = await userEntity.getById(pool, id);
 
-    await pool.query(`DELETE FROM user WHERE id = $1`, [id]);
-
-    const { data: { result: userAfter } } = await this.getUserById(pool, id);
-    
-    if (userAfter?.length) {
+    if (result) {
       throw Error(`Could not properly delete user with id = ${id}`);
-    }
-  
-    const { data: { result: users }} = await this.getUserByFamilyId(pool, user.familyId);
-     
-    if (users?.length) {
-      return {
-        statusCode: StatusCodes.OK,
-        data: {
-          success: true,
-          message: 'Deleted user successfuly.',
-        }
-      };
-    }
-
-    const { data: { result: children }} = await getChildrenByFamilyId(pool, user.familyId);
-   
-    for (const child in children) {
-      await deleteChild(pool, child.id);
     }
 
     return {
       statusCode: StatusCodes.OK,
       data: {
         success: true,
-        message: 'Deleted user and children successfuly.',
+        message: 'Deleted user successfuly.'
       }
     };
   } catch (error) {
@@ -179,12 +128,17 @@ exports.deleteUser = async (pool, id) => {
 
 exports.getUserById = async (pool, id) => {
   try {
-    const result = await pool.query(`SELECT * FROM user WHERE id = $1`, [id]);
+    const { success, result } = await userEntity.getById(pool, id);
+
+    if (!success) {
+      throw Error();
+    }
+
     return {
       statusCode: StatusCodes.OK,
       data: {
         success: true,
-        result: result?.rows?.[0],
+        result,
         message: 'User found.'
       }
     };
@@ -196,34 +150,37 @@ exports.getUserById = async (pool, id) => {
       data: {
         success: false,
         message: 'User not found.',
-        error
+        error: String(error)
       }
     };
   }
 };
 
-exports.getUserByFamilyId = async (pool, familyId) => {
+exports.getUsersByFamilyId = async (pool, familyId) => {
   try {
-    const result = await pool.query(
-      `SELECT * FROM user WHERE "familyId" = $1`,
-      [familyId]
-    );
+    const { success, result } = await userEntity.getByFamilyId(pool, familyId);
+
+    if (!success) {
+      throw Error();
+    }
+
     return {
       statusCode: StatusCodes.OK,
       data: {
         success: true,
-        result: result?.rows,
+        result,
         message: 'Users found.'
       }
     };
   } catch (error) {
     console.error(error);
+
     return {
-      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      statusCode: StatusCodes.NOT_FOUND,
       data: {
         success: false,
         message: 'Users not found.',
-        error
+        error: String(error)
       }
     };
   }
@@ -231,26 +188,29 @@ exports.getUserByFamilyId = async (pool, familyId) => {
 
 exports.getUserByEmail = async (pool, email) => {
   try {
-    const result = await pool.query(
-      `SELECT * FROM user WHERE email = $1`,
-      [email]
-    );
+    const { success, result } = await userEntity.getByEmail(pool, email);
+
+    if (!success) {
+      throw Error();
+    }
+
     return {
       statusCode: StatusCodes.OK,
       data: {
         success: true,
-        result: result?.rows?.[0],
+        result,
         message: 'User found.'
       }
     };
   } catch (error) {
     console.error(error);
+
     return {
-      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      statusCode: StatusCodes.NOT_FOUND,
       data: {
         success: false,
         message: 'User not found.',
-        error
+        error: String(error)
       }
     };
   }
