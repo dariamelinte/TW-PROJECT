@@ -159,6 +159,35 @@ const routes = {
         method === routes.friendInteraction.getByChildId.method
       )
     },
+  },
+
+  auth: {
+    register: {
+      url: () => '/auth/register',
+      method: methods.POST,
+      validate: (url, method) => (
+        url === routes.auth.register.url() &&
+        method === routes.auth.register.method
+      )
+    },
+
+    login: {
+      url: () => '/auth/login',
+      method: methods.POST,
+      validate: (url, method) => (
+        url === routes.auth.login.url() &&
+        method === routes.auth.login.method
+      )
+    },
+
+    forgotPassword: {
+      url: () => '/auth/forgot-password',
+      method: methods.POST,
+      validate: (url, method) => (
+        url === routes.auth.forgotPassword.url() &&
+        method === routes.auth.forgotPassword.method
+      )
+    }
   }
 }
 

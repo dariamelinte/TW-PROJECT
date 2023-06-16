@@ -102,9 +102,12 @@ exports.updateChild = async (pool, child = {}) => {
   } catch (error) {
     console.error(error);
     return {
-      success: false,
-      message: 'Could not update child.',
-      error
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: {
+        success: false,
+        message: 'Could not update child.',
+        error
+      }
     };
   }
 };
