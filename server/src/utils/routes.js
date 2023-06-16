@@ -12,104 +12,104 @@ const getQueryString = (string) => string.substring(string.indexOf('?') + 1);
 
 const routes = {
   child: {
-    createChild: {
+    create: {
       url: () => '/child',
       method: methods.POST,
       validate: (url, method) => (
-        url === routes.child.createChild.url() &&
-        method === routes.child.createChild.method
+        url === routes.child.create.url() &&
+        method === routes.child.create.method
       )
     },
   
-    updateChild: {
+    update: {
       url: (id) => `/child?id=${id}`,
       method: methods.PATCH,
       validate: (url, method, id) => (
-        url === routes.child.updateChild.url(id) &&
-        method === routes.child.updateChild.method
+        url === routes.child.update.url(id) &&
+        method === routes.child.update.method
       )
     },
   
-    deleteChild: {
+    delete: {
       url: (childId) => `/child?id=${childId}`,
       method: methods.DELETE,
       validate: (url, method, childId) => (
-        url === routes.child.deleteChild.url(childId) &&
-        method === routes.child.deleteChild.method
+        url === routes.child.delete.url(childId) &&
+        method === routes.child.delete.method
       )
     },
   
-    getChildById: {
+    getById: {
       url: (childId) => `/child?id=${childId}`,
       method: methods.GET,
       validate: (url, method, childId) => (
-        url === routes.child.getChildById.url(childId) &&
-        method === routes.child.getChildById.method
+        url === routes.child.getById.url(childId) &&
+        method === routes.child.getById.method
       )
     },
   
-    getChildrenByFamilyId: {
+    getByFamilyId: {
       url: (familyId) => `/child?familyId=${familyId}`,
       method: methods.GET,
       validate: (url, method, familyId) => (
-        url === routes.child.getChildrenByFamilyId.url(familyId) &&
-        method === routes.child.getChildrenByFamilyId.method
+        url === routes.child.getByFamilyId.url(familyId) &&
+        method === routes.child.getByFamilyId.method
       )
     },
   
-    getChildren: {
+    getAll: {
       url: () => "/child/all",
       method: methods.GET,
       validate: (url, method) => (
-        url === routes.child.getChildren.url() &&
-        method === routes.child.getChildren.method
+        url === routes.child.getAll.url() &&
+        method === routes.child.getAll.method
       )
     },
   },
 
   friend: {
-    createFriend: {
+    create: {
       url: () => '/friends',
       method: methods.POST,
       validate: (url, method) => (
-        url === routes.friend.createFriend.url() &&
-        method === routes.friend.createFriend.method
+        url === routes.friend.create.url() &&
+        method === routes.friend.create.method
       )
     },
   
-    updateFriend: {
+    update: {
       url: (friendId) => `/friends?id=${friendId}`,
       method: methods.PATCH,
       validate: (url, method, friendId) => (
-        url === routes.friend.updateFriend.url(friendId) &&
-        method === routes.friend.updateFriend.method
+        url === routes.friend.update.url(friendId) &&
+        method === routes.friend.update.method
       )
     },
   
-    deleteFriend: {
+    delete: {
       url: (friendId) => `/friends?id=${friendId}`,
       method: methods.DELETE,
       validate: (url, method, friendId) => (
-        url === routes.friend.deleteFriend.url(friendId) &&
-        method === routes.friend.deleteFriend.method
+        url === routes.friend.delete.url(friendId) &&
+        method === routes.friend.delete.method
       )
     },
   
-    getFriendById: {
+    getById: {
       url: (friendId) => `/friends?id=${friendId}`,
       method: methods.GET,
       validate: (url, method, friendId) => (
-        url === routes.friend.getFriendById.url(friendId) &&
-        method === routes.friend.getFriendById.method
+        url === routes.friend.getById.url(friendId) &&
+        method === routes.friend.getById.method
       )
     },
   
-    getFriends: {
+    getAll: {
       url: (childId) => `/friends?childId=${childId}`,
       method: methods.GET,
       validate: (url, method, childId) => (
-        url === routes.friend.getFriends.url(childId) &&
-        method === routes.friend.getFriends.method
+        url === routes.friend.getAll.url(childId) &&
+        method === routes.friend.getAll.method
       )
     },
   },

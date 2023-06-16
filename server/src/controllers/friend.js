@@ -1,52 +1,29 @@
 const { randomUUID } = require('crypto');
 const { StatusCodes } = require('http-status-codes');
 
+const friendEntity = require('../entities/friend');
+
 exports.createFriend = async (pool, friend = {}) => {
   try {
-    const {
-      childId,
-      firstName,
-      lastName,
-      dateOfBirth,
-      parentName,
-      parentContact,
-      howTheyMet,
-      relationship
-    } = friend;
     const id = randomUUID();
+    const { success: successCreate } = await friendEntity.insert(pool, id, friend);
+    const { success, result } = await friendEntity.getById(pool, id);
 
-    await pool.query(
-      `
-      INSERT INTO friend
-        (id, "childId", "firstName", "lastName", "dateOfBirth", "parentName", "parentContact", "howTheyMet", relationship)
-      VALUES
-        ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-      `,
-      [
-        id,
-        childId,
-        firstName,
-        lastName,
-        dateOfBirth,
-        parentName,
-        parentContact,
-        howTheyMet,
-        relationship
-      ]
-    );
-
-    const result = await pool.query(`SELECT * FROM friend WHERE id = $1`, [id]);
+    if (!successCreate || !success) {
+      throw Error();
+    }
 
     return {
       statusCode: StatusCodes.CREATED,
       data: {
-        success: true,
+        success,
         message: 'Created friend successfuly.',
-        result: result?.rows?.[0]
+        result
       }
     };
   } catch (error) {
     console.error(error);
+
     return {
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       data: {
@@ -58,82 +35,62 @@ exports.createFriend = async (pool, friend = {}) => {
   }
 };
 
-exports.updateFriend = async (pool, friendId, friend = {}) => {
+exports.updateFriend = async (pool, id, friend = {}) => {
   try {
-    const {
-      firstName,
-      lastName,
-      dateOfBirth,
-      parentName,
-      parentContact,
-      howTheyMet,
-      relationship
-    } = friend;
-
-    if (!friendId) {
+    if (!id) {
       return {
         statusCode: StatusCodes.BAD_REQUEST,
         data: {
           success: false,
-          message: 'Please provide the missing fields: friendId',
+          message: 'Please provide the missing fields: friendId'
         }
       };
     }
 
-    const resSelect = await pool.query(`SELECT * FROM friend WHERE id = $1`, [friendId]);
-    const {
-      firstName: oldFirstName,
-      lastName: oldLastName,
-      dateOfBirth: oldDOB,
-      parentName: oldParentName,
-      parentContact: oldParentContact,
-      howTheyMet: oldHowTheyMet,
-      relationship: oldRelationship
-    } = resSelect?.rows?.[0];
+    const { result: oldFriend } = await friendEntity.getById(pool, id);
+    const { success: successUpdate } = await friendEntity.update(pool, id, {
+      firstName: friend.firstName || oldFriend.firstName,
+      lastName: friend.lastName || oldFriend.lastName,
+      dateOfBirth: friend.dateOfBirth || oldFriend.dateOfBirth,
+      parentName: friend.parentName || oldFriend.parentName,
+      parentContact: friend.parentContact || oldFriend.parentContact,
+      howTheyMet: friend.howTheyMet || oldFriend.howTheyMet,
+      relationship: friend.relationship || oldFriend.relationship
+    });
 
+    const { success, result: updatedFriend } = await friendEntity.getById(pool, id);
 
-    await pool.query(
-      `UPDATE friend SET "firstName" = $1, "lastName" = $2, "dateOfBirth" = $3, "parentName" = $4,
-        "parentContact" = $5, "howTheyMet" = $6, relationship = $7 WHERE id = $8`,
-      [
-        firstName || oldFirstName,
-        lastName || oldLastName,
-        dateOfBirth || oldDOB,
-        parentName || oldParentName,
-        parentContact || oldParentContact,
-        howTheyMet || oldHowTheyMet,
-        relationship || oldRelationship,
-        friendId
-      ]
-    );
+    if (!successUpdate || !success) {
+      throw Error();
+    }
 
-    const result = await pool.query(`SELECT * FROM friend WHERE id = $1`, [friendId]);
-    
     return {
       statusCode: StatusCodes.ACCEPTED,
       data: {
         success: true,
         message: 'Updated friend successfuly.',
-        result: result?.rows?.[0],
+        result: updatedFriend
       }
     };
   } catch (error) {
     console.error(error);
     return {
-      success: false,
-      message: 'Could not update friend.',
-      error
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: {
+        success: false,
+        message: 'Could not update friend.',
+        error
+      }
     };
   }
 };
 
 exports.deleteFriend = async (pool, id) => {
   try {
-    await pool.query(`DELETE FROM friend WHERE id = $1`, [id]);
+    await friendEntity.delete(pool, id);
+    const { result } = await friendEntity.getById(pool, id);
 
-    const result = await pool.query(`SELECT * FROM friend WHERE id = $1`, [id]);
-
-    if (result?.rows?.length) {
+    if (result) {
       throw Error(`Could not properly delete friend with id = ${id}`);
     }
 
@@ -141,7 +98,7 @@ exports.deleteFriend = async (pool, id) => {
       statusCode: StatusCodes.OK,
       data: {
         success: true,
-        message: 'Deleted friend successfuly.',
+        message: 'Deleted friend successfuly.'
       }
     };
   } catch (error) {
@@ -159,13 +116,17 @@ exports.deleteFriend = async (pool, id) => {
 
 exports.getFriendById = async (pool, id) => {
   try {
-    const result = await pool.query(`SELECT * FROM friend WHERE id = $1`, [id]);
+    const { success, result } = await friendEntity.getById(pool, id);
+
+    if (!success) {
+      throw Error();
+    }
 
     return {
       statusCode: StatusCodes.OK,
       data: {
         success: true,
-        result: result?.rows?.[0],
+        result,
         message: 'Friend found.'
       }
     };
@@ -185,12 +146,16 @@ exports.getFriendById = async (pool, id) => {
 
 exports.getAllFriends = async (pool, childId) => {
   try {
-    const result = await pool.query(`SELECT * FROM friend WHERE "childId" = $1`, [childId]);
+    const { success, result } = await friendEntity.getByChildId(pool, childId);
+
+    if (!success) {
+      throw Error();
+    }
     return {
       statusCode: StatusCodes.OK,
       data: {
         success: true,
-        result: result?.rows,
+        result,
         message: 'Friends found.'
       }
     };
