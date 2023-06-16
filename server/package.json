@@ -24,6 +24,7 @@
     "http-status-codes": "^2.2.0",
     "jsonwebtoken": "^9.0.0",
     "pg": "^8.10.0",
+    "rss": "^1.2.2",
     "uuid": "^9.0.0"
   }
 }
