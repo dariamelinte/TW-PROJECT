@@ -10,7 +10,7 @@ const {
   createChild,
   updateChild,
   deleteChild,
-} = require('../entities/child');
+} = require('../controllers/child');
 
 async function childRouter(res, pool) {
   try {
@@ -43,8 +43,8 @@ async function childRouter(res, pool) {
 
       resStatusCode = statusCode;
       resData = data;
-    } else if (routes.child.updateChild.validate(url, method)) {
-      const { statusCode, data } = await updateChild(pool, body);
+    } else if (routes.child.updateChild.validate(url, method, id)) {
+      const { statusCode, data } = await updateChild(pool, id, body);
 
       resStatusCode = statusCode;
       resData = data;

@@ -9,7 +9,7 @@ const {
   deleteFriend,
   getFriendById,
   getAllFriends
-} = require('../entities/friend');
+} = require('../controllers/friend');
 
 async function friendRouter(res, pool) {
   try {

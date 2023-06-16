@@ -27,8 +27,7 @@ export default function ChildForm({ child = {}, add = false }) {
 
       window.location.href = Routes.root;
     } else {
-      childInput.id = child.id;
-      const data = await editChild(childInput);
+      const data = await editChild(child.id, childInput);
       if (!data.success) {
         showError(data.message);
         return;

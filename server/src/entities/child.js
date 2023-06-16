@@ -1,7 +1,4 @@
-const { randomUUID } = require('crypto');
-const { StatusCodes } = require('http-status-codes');
-
-exports.createChild = async (pool, child = {}) => {
+exports.insert = async (pool, id, child = {}) => {
   try {
     const {
       familyId,
@@ -13,7 +10,6 @@ exports.createChild = async (pool, child = {}) => {
       weight = null,
       height = null
     } = child;
-    const id = randomUUID();
 
     await pool.query(
       `
@@ -25,200 +21,99 @@ exports.createChild = async (pool, child = {}) => {
       [id, familyId, firstName, lastName, dateOfBirth, gender, nationality, weight, height]
     );
 
-    const result = await pool.query(`SELECT * FROM child WHERE id = $1`, [id]);
-
     return {
-      statusCode: StatusCodes.CREATED,
-      data: {
-        success: true,
-        message: 'Created child successfuly.',
-        result: result?.rows?.[0]
-      }
+      success: true
     };
   } catch (error) {
     console.error(error);
 
     return {
-      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
-      data: {
-        success: false,
-        message: 'Could not create new child.',
-        error
-      }
+      success: false
     };
   }
 };
 
-exports.updateChild = async (pool, child = {}) => {
+exports.update = async (pool, id, child = {}) => {
   try {
-    const { id, firstName, lastName, dateOfBirth, gender, nationality, weight, height } = child;
-
-    if (!id) {
-      return {
-        statusCode: StatusCodes.BAD_REQUEST,
-        data: {
-          success: false,
-          message: 'Please provide the missing fields: id'
-        }
-      };
-    }
-
-    const resSelect = await pool.query(`SELECT * FROM child WHERE id = $1`, [id]);
-    const {
-      firstName: oldFirstName,
-      lastName: oldLastName,
-      dateOfBirth: oldDOB,
-      gender: oldGender,
-      nationality: oldNat,
-      weight: oldW,
-      height: oldH
-    } = resSelect?.rows?.[0];
+    const { firstName, lastName, dateOfBirth, gender, nationality, weight, height } = child;
 
     await pool.query(
       `UPDATE child SET "firstName" = $1, "lastName" = $2, "dateOfBirth" = $3, gender = $4,
         nationality = $5, weight = $6, height = $7 WHERE id = $8`,
-      [
-        firstName || oldFirstName,
-        lastName || oldLastName,
-        dateOfBirth || oldDOB,
-        gender || oldGender,
-        nationality || oldNat,
-        weight || oldW,
-        height || oldH,
-        id
-      ]
+      [firstName, lastName, dateOfBirth, gender, nationality, weight, height, id]
     );
 
-    const result = await pool.query(`SELECT * FROM child WHERE id = $1`, [id]);
-
     return {
-      statusCode: StatusCodes.ACCEPTED,
-      data: {
-        success: true,
-        message: 'Updated child successfuly.',
-        result: result?.rows?.[0],
-      }
+      success: true
     };
   } catch (error) {
     console.error(error);
     return {
-      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
-      data: {
-        success: false,
-        message: 'Could not update child.',
-        error
-      }
+      success: false
     };
   }
 };
 
-exports.deleteChild = async (pool, id) => {
+exports.delete = async (pool, id) => {
   try {
     await pool.query(`DELETE FROM child WHERE id = $1`, [id]);
 
+    return {
+      success: true
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false
+    };
+  }
+};
+
+exports.getById = async (pool, id) => {
+  try {
     const result = await pool.query(`SELECT * FROM child WHERE id = $1`, [id]);
-
-    if (result?.rows?.length) {
-      throw Error(`Could not properly delete child with id = ${id}`);
-    }
-
     return {
-      statusCode: StatusCodes.OK,
-      data: {
-        success: true,
-        message: 'Deleted child successfuly.',
-      }
+      success: true,
+      result: result?.rows?.[0]
     };
   } catch (error) {
     console.error(error);
+
     return {
-      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
-      data: {
-        success: false,
-        message: 'Could not delete child.',
-        error
-      }
+      success: false,
+      result: null
     };
   }
 };
 
-exports.getChildById = async (pool, id) => {
+exports.getByFamilyId = async (pool, familyId) => {
   try {
-    const result = await pool.query(
-      `
-      SELECT * FROM child
-      WHERE
-        id = $1
-      `,
-      [id]
-    );
+    const result = await pool.query(`SELECT * FROM child WHERE "familyId" = $1`, [familyId]);
     return {
-      statusCode: StatusCodes.OK,
-      data: {
-        success: true,
-        result: result?.rows?.[0],
-        message: 'Child found.'
-      }
-    };
-  } catch (error) {
-    console.error(error);
-
-    return {
-      statusCode: StatusCodes.NOT_FOUND,
-      data: {
-        success: false,
-        message: 'Child not found.',
-        error: String(error)
-      }
-    };
-  }
-};
-
-exports.getChildrenByFamilyId = async (pool, familyId) => {
-  try {
-    const result = await pool.query(`SELECT * FROM child where "familyId" = $1`, [familyId]);
-
-    return {
-      statusCode: StatusCodes.OK,
-      data: {
-        success: true,
-        result: result?.rows,
-        message: 'Children found.'
-      }
+      success: true,
+      result: result?.rows
     };
   } catch (error) {
     console.error(error);
     return {
-      statusCode: StatusCodes.NOT_FOUND,
-      data: {
-        success: false,
-        message: 'Children not found.',
-        error: String(error)
-      }
+      success: false,
+      result: []
     };
   }
 };
 
-exports.getChildren = async (pool) => {
+exports.getAll = async (pool) => {
   try {
     const result = await pool.query(`SELECT * FROM child`);
     return {
-      statusCode: StatusCodes.OK,
-      data: {
-        success: true,
-        result: result?.rows,
-        message: 'Children found.'
-      }
+      success: true,
+      result: result?.rows
     };
   } catch (error) {
     console.error(error);
     return {
-      statusCode: StatusCodes.NOT_FOUND,
-      data: {
-        success: false,
-        message: 'Children not found.',
-        error: String(error)
-      }
+      success: true,
+      result: null
     };
   }
 };

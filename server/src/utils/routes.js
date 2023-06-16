@@ -22,10 +22,10 @@ const routes = {
     },
   
     updateChild: {
-      url: () => '/child',
+      url: (id) => `/child?id=${id}`,
       method: methods.PATCH,
-      validate: (url, method) => (
-        url === routes.child.updateChild.url() &&
+      validate: (url, method, id) => (
+        url === routes.child.updateChild.url(id) &&
         method === routes.child.updateChild.method
       )
     },
