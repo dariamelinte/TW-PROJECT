@@ -4,8 +4,6 @@ exports.insert = async (pool, id, user = {}) => {
   try {
     const { email, password, firstName, lastName, dateOfBirth, gender, nationality } = user;
 
-    console.log(id, email, password, firstName, lastName, dateOfBirth, gender, nationality, randomUUID())
-
     await pool.query(
       `
       INSERT INTO "user" 

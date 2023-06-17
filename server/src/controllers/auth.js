@@ -93,7 +93,9 @@ exports.login = async (pool, credentials = {}) => {
       };
     }
 
-    const token = jwt.sign({ id: user.id }, process.env.TOKEN, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user.id, familyId: user.familyId }, process.env.TOKEN, {
+      expiresIn: '1h'
+    });
 
     const { success } = await userEntity.updateJWT(pool, user.id, token);
     const { success: successGet, result } = await userEntity.getByEmail(pool, user.email);

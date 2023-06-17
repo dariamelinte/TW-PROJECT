@@ -1,11 +1,13 @@
-import Routes from '/frontend/utils/Routes.js';
-import { genderTypes } from '/frontend/utils/selectsOptions.js';
-import cleanInput from '/frontend/utils/cleanInput.js';
-import showError from '/frontend/utils/showError.js';
-
 import { addChild } from '/frontend/server/child/addChild.js';
 import { editChild } from '/frontend/server/child/editChild.js';
 import { deleteChild } from '/frontend/server/child/deleteChild.js';
+
+import cleanInput from '/frontend/utils/cleanInput.js';
+import { COOKIE_NAME } from '/frontend/utils/constants.js';
+import Routes from '/frontend/utils/Routes.js';
+import { genderTypes } from '/frontend/utils/selectsOptions.js';
+import showError from '/frontend/utils/showError.js';
+import { parseJwt } from '/frontend/utils/jwt.js';
 
 export default function ChildForm({ child = {}, add = false }) {
   const saveChild = async (e) => {
@@ -16,8 +18,8 @@ export default function ChildForm({ child = {}, add = false }) {
     const childInput = Object.fromEntries(formData);
 
     if (add) {
-      // TODO: get family Id from cookie
-      childInput.familyId = "1";
+      const userInfo = parseJwt(COOKIE_NAME);
+      childInput.familyId = userInfo?.familyId;
   
       const data = await addChild(cleanInput(childInput));
       if (!data.success) {

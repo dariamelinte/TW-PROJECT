@@ -5,7 +5,16 @@ import showError from '/frontend/utils/showError.js';
 import { getFriendInteractionById } from '/frontend/server/friendInteraction/getFriendInteractionById.js';
 import { editFriendInteraction } from '/frontend/server/friendInteraction/editFriendInteraction.js';
 
+import { getCookie } from '/frontend/utils/cookie.js';
+import { COOKIE_NAME } from '/frontend/utils/constants.js';
+import { isJwtExpired } from '/frontend/utils/jwt.js';
 import Routes from '/frontend/utils/Routes.js';
+
+const jwt = getCookie(COOKIE_NAME);
+
+if (!jwt || isJwtExpired(jwt)) {
+  window.location.href = Routes.login.path();
+}
 
 const { card, path } = Routes.children.friendships.friend;
 
