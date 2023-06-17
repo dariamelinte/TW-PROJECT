@@ -1,8 +1,10 @@
 const { randomUUID } = require('crypto');
 const { StatusCodes } = require('http-status-codes');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 
 const userEntity = require('../entities/user');
+const { createRandomString } = require('../utils/createRandomString');
 const { hashString, isHashMatching } = require('../utils/hash');
 
 exports.register = async (pool, user = {}) => {
@@ -65,20 +67,20 @@ exports.register = async (pool, user = {}) => {
 };
 
 exports.login = async (pool, credentials = {}) => {
+  const emptyEmail = !(credentials.email && credentials.email.trim().length);
+  const emptyPassword = !(credentials.password && credentials.password.trim().length);
+
+  if (emptyEmail || emptyPassword) {
+    return {
+      statusCode: StatusCodes.BAD_REQUEST,
+      data: {
+        success: false,
+        message: 'Missing fields: email, password.'
+      }
+    };
+  }
+
   try {
-    const emptyEmail = !(credentials.email && credentials.email.trim().length);
-    const emptyPassword = !(credentials.password && credentials.password.trim().length);
-
-    if (emptyEmail || emptyPassword) {
-      return {
-        statusCode: StatusCodes.BAD_REQUEST,
-        data: {
-          success: false,
-          message: 'Missing fields: email, password.'
-        }
-      };
-    }
-
     const { result: user } = await userEntity.getByEmail(pool, credentials.email);
 
     if (!user || !isHashMatching(credentials.password, user.password)) {
@@ -115,6 +117,71 @@ exports.login = async (pool, credentials = {}) => {
         success: false,
         message: 'Could not login.',
         error
+      }
+    };
+  }
+};
+
+exports.forgotPassword = async (pool, credentials = {}) => {
+  const emptyEmail = !(credentials.email && credentials.email.trim().length);
+  const password = createRandomString(10);
+
+  if (emptyEmail) {
+    return {
+      statusCode: StatusCodes.BAD_REQUEST,
+      data: {
+        success: false,
+        message: 'Missing field: email.'
+      }
+    };
+  }
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.EMAIL_PASSWORD
+    }
+  });
+
+  const mailOptions = {
+    from: process.env.EMAIL,
+    to: credentials.email,
+    subject: '[BAIN] - Password reset',
+    text: 'Your new password is ' + password
+  };
+
+  try {
+    const { accepted } = await transporter.sendMail(mailOptions);
+
+    if (!accepted.length) throw Error();
+
+    const { success: succesGet, result: user } = await userEntity.getByEmail(
+      pool,
+      credentials.email
+    );
+    const { success: successUpdate } = await userEntity.updatePassword(
+      pool,
+      user.id,
+      hashString(password)
+    );
+
+    if (!succesGet || !successUpdate) throw Error();
+
+    return {
+      statusCode: StatusCodes.OK,
+      data: {
+        success: true,
+        message: 'Email sent to ' + accepted[0]
+      }
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: {
+        success: false,
+        message: 'Something went wrong, please try again.'
       }
     };
   }

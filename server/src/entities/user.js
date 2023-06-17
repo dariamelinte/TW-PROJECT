@@ -64,6 +64,20 @@ exports.updateJWT = async (pool, id, jwt) => {
   }
 };
 
+exports.updatePassword = async (pool, id, password) => {
+  try {
+    await pool.query(`UPDATE "user" SET password = $1 WHERE id = $2`, [password, id]);
+
+    return {
+      success: true
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false
+    };
+  }
+};
 
 exports.delete = async (pool, id) => {
   try {

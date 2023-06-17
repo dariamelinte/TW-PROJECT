@@ -2,7 +2,7 @@ const { StatusCodes } = require('http-status-codes');
 
 const { headers } = require('../utils/headers');
 const { routes } = require('../utils/routes');
-const { register, login } = require('../controllers/auth');
+const { register, login, forgotPassword } = require('../controllers/auth');
 
 async function authRouter(res, pool) {
   try {
@@ -21,6 +21,10 @@ async function authRouter(res, pool) {
       resData = data;
     } else if (routes.auth.login.validate(url, method)) {
       const { statusCode, data } = await login(pool, body);
+      resStatusCode = statusCode;
+      resData = data;
+    } else if (routes.auth.forgotPassword.validate(url, method)) {
+      const { statusCode, data } = await forgotPassword(pool, body);
       resStatusCode = statusCode;
       resData = data;
     }
