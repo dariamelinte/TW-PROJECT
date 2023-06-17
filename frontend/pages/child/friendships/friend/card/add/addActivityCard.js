@@ -6,7 +6,7 @@ import { INITIAL_ACTIVITY } from '/frontend/utils/initialValues.js';
 import { getCookie } from '/frontend/utils/cookie.js';
 import { COOKIE_NAME } from '/frontend/utils/constants.js';
 import { isJwtExpired } from '/frontend/utils/jwt.js';
-import showError from '/frontend/utils/showError.js';
+import { showError } from '/frontend/utils/showMessages.js';
 import cleanInput from '/frontend/utils/cleanInput.js';
 import Routes from '/frontend/utils/Routes.js';
 

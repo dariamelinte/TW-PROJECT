@@ -26,7 +26,7 @@ export default function Header(title) {
   const logoutButton = header.querySelector('button');
   logoutButton.addEventListener('click', () => {
     // Make the cookie invalid
-    document.cookie = `${COOKIE_NAME}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    document.cookie = `${COOKIE_NAME}=; path=/;`;
     window.location.href = Routes.login.path();
   }); 
 

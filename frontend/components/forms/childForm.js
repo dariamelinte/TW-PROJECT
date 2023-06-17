@@ -6,7 +6,7 @@ import cleanInput from '/frontend/utils/cleanInput.js';
 import { COOKIE_NAME } from '/frontend/utils/constants.js';
 import Routes from '/frontend/utils/Routes.js';
 import { genderTypes } from '/frontend/utils/selectsOptions.js';
-import showError from '/frontend/utils/showError.js';
+import { showError } from '/frontend/utils/showMessages.js';
 import { parseJwt } from '/frontend/utils/jwt.js';
 
 export default function ChildForm({ child = {}, add = false }) {

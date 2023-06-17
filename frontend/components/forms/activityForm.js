@@ -1,7 +1,7 @@
 import { deleteFriendInteraction } from '/frontend/server/friendInteraction/deleteFriendInteraction.js';
 
 import { INITIAL_ACTIVITY } from '/frontend/utils/initialValues.js';
-import showError from '/frontend/utils/showError.js';
+import { showError } from '/frontend/utils/showMessages.js';
 import Routes from '/frontend/utils/Routes.js';
 
 export default function ActivityForm({ childId, activity = INITIAL_ACTIVITY, onSave }) {

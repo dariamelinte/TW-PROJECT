@@ -1,6 +1,6 @@
 import Header from '/frontend/components/header.js';
 import ActivityForm from '/frontend/components/forms/activityForm.js';
-import showError from '/frontend/utils/showError.js';
+import { showError } from '/frontend/utils/showMessages.js';
 
 import { getFriendInteractionById } from '/frontend/server/friendInteraction/getFriendInteractionById.js';
 import { editFriendInteraction } from '/frontend/server/friendInteraction/editFriendInteraction.js';
