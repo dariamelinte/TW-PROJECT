@@ -15,8 +15,6 @@ if (!jwt || isJwtExpired(jwt)) {
   window.location.href = Routes.login.path();
 }
 
-console.log(parseJwt(jwt));
-
 // if the childId param is present, then the user is on a child page
 const childId = new URLSearchParams(window.location.search).get('childId');
 

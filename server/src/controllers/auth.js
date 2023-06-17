@@ -188,3 +188,44 @@ exports.forgotPassword = async (pool, credentials = {}) => {
     };
   }
 };
+
+exports.logout = async (pool, user = {}) => {
+  try {
+    const data = await userEntity.getById(pool, user.id);
+
+    if (!data.success || !data.result) {
+      return {
+        statusCode: StatusCodes.UNAUTHORIZED,
+        data: {
+          success: false,
+          message: 'User not found.'
+        }
+      };
+    }
+
+    const { success } = await userEntity.updateJWT(pool, user.id, null);
+    const { success: successGet, result } = await userEntity.getById(pool, user.id);
+
+    if (!success || !successGet) throw Error();
+
+    return {
+      statusCode: StatusCodes.OK,
+      data: {
+        success: true,
+        message: 'Logout successful.',
+        result
+      }
+    };
+  } catch (error) {
+    console.error(error);
+
+    return {
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: {
+        success: false,
+        message: 'Could not login.',
+        error
+      }
+    };
+  }
+};
