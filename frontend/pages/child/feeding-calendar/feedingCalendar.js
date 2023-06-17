@@ -11,28 +11,28 @@ const { title, add: addRoute, card: cardRoute } = Routes.children.feedingCalenda
 console.log(addRoute);
 //if child param present => user on a child page
 const childId = new URLSearchParams(window.location.search).get('childId');
-const feedings = await getFeedingEvents(childId);
-// const feedings = [
-//   {
-//     childId: "0cbb7893-ad2d-4c8c-9349-dc877ee9c449",
-//     date_time: "2023-06-12'T'21:03:34.245'Z'",
-//     note: "lapte cu gris cu dulceata de visine",
-//     id: "1"
-//   },
-//   {
-//     childId: "0cbb7893-ad2d-4c8c-9349-dc877ee9c449",
-//     date_time: "2023-06-13'T'09:03:34.245'Z'",
-//     note: "banana",
-//     id: "2"
-//   },
-//   {
-//     childId: "0cbb7893-ad2d-4c8c-9349-dc877ee9c449",
-//     date_time: "2023-06-13'T'14:03:34.245'Z'",
-//     note: "supica cu paine",
-//     id: "3"
-//   }
+// const feedings = await getFeedingEvents(childId);
+const feedings = [
+  {
+    childId: "0cbb7893-ad2d-4c8c-9349-dc877ee9c449",
+    date_time: "2023-06-12T21:03",
+    note: "lapte cu gris cu dulceata de visine",
+    id: "1"
+  },
+  {
+    childId: "0cbb7893-ad2d-4c8c-9349-dc877ee9c449",
+    date_time: "2023-06-13T09:03",
+    note: "banana",
+    id: "2"
+  },
+  {
+    childId: "0cbb7893-ad2d-4c8c-9349-dc877ee9c449",
+    date_time: "2023-06-13T14:03",
+    note: "supica cu paine",
+    id: "3"
+  }
   
-// ];
+];
 
 const onClickCell = async (id, add) => {
   if (add) {

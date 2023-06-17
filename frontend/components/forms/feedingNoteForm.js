@@ -4,8 +4,8 @@ import { INITIAL_FEEDING_NOTE } from '/frontend/utils/initialValues.js';
 import showError from '/frontend/utils/showError.js';
 import Routes from '/frontend/utils/Routes.js';
 
-export default function FeedingNoteForm({ childId, feedingNote = INITIAL_FEEDING_NOTE, onSave }) {
-  const { id, hour, info } = feedingNote;
+export default function FeedingNoteForm({ childId, feedingNote, onSave }) {
+  const { id, date_time, note } = feedingNote;
 
   const saveData = async (e) => {
     e.preventDefault();
@@ -38,7 +38,7 @@ export default function FeedingNoteForm({ childId, feedingNote = INITIAL_FEEDING
   form.innerHTML = `
     <div class="flex column justify-center w-full">
       <label for="hour">Ora</label>
-      <input type="time" name="hour" id="hour" value="${hour}" class="bg-yellow-200 w-full" />
+      <input type="datetime-local" name="datetime" id="datetime" value="${date_time}" class="bg-yellow-200 w-full" />
     </div>
     
     <div class="flex column justify-center w-full">
@@ -49,7 +49,7 @@ export default function FeedingNoteForm({ childId, feedingNote = INITIAL_FEEDING
         placeholder="Adauga aici masa ..."
         class="bg-yellow-200 h-20"
       >
-        ${info}
+        ${note}
       </textarea>
     </div>
 

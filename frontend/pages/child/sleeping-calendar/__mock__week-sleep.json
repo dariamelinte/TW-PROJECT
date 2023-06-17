@@ -1,67 +1,24 @@
-{
-  "monday": [
-    {
-      "id": 1,
-      "hours": ["00:00", "09:45"],
-      "sleepPeriod": "night",
-      "sleepType": "troubled"
-    },
-    {
-      "id": 2,
-      "hours": ["13:20", "14:40"],
-      "sleepPeriod": "noon",
-      "sleepType": "peacefully"
-    },
-    {
-      "id": 3,
-      "hours": ["19:50", "20:20"],
-      "sleepPeriod": "night",
-      "sleepType": "peacefully"
-    }
-  ],
-  "tuesday": [
-    {
-      "id": 1,
-      "hours": ["00:00", "09:45"],
-      "sleepPeriod": "night",
-      "sleepType": "troubled"
-    },
-    {
-      "id": 2,
-      "hours": ["13:20", "14:40"],
-      "sleepPeriod": "noon",
-      "sleepType": "peacefully"
-    }
-  ],
-  "wednesday": [
-    {
-      "id": 1,
-      "hours": ["00:00", "09:45"],
-      "sleepPeriod": "night",
-      "sleepType": "troubled"
-    },
-    {
-      "id": 2,
-      "hours": ["13:20", "14:40"],
-      "sleepPeriod": "noon",
-      "sleepType": "peacefully"
-    }
-  ],
-  "thursday": [
-    {
-      "id": 1,
-      "hours": ["00:00", "09:45"],
-      "sleepPeriod": "night",
-      "sleepType": "troubled"
-    },
-    {
-      "id": 2,
-      "hours": ["13:20", "14:40"],
-      "sleepPeriod": "noon",
-      "sleepType": "peacefully"
-    }
-  ],
-  "friday": [],
-  "saturday": [],
-  "sunday": []
-}
+[
+  {
+    "childId": "0cbb7893-ad2d-4c8c-9349-dc877ee9c449",
+    "date_time": "2023-06-12'T'21:03:34.245'Z'",
+    "sleepType": "Somn de noapte",
+    "note": "lapte cu gris cu dulceata de visine",
+    "id": "1"
+  },
+  {
+    "childId": "0cbb7893-ad2d-4c8c-9349-dc877ee9c449",
+    "date_time": "2023-06-13'T'09:03:34.245'Z'",
+    "sleepType": "Somn de noapte",
+    "note": "banana",
+    "id": "2"
+  },
+  {
+    "childId": "0cbb7893-ad2d-4c8c-9349-dc877ee9c449",
+    "date_time": "2023-06-13'T'14:03:34.245'Z'",
+    "sleepType": "Somn de amiaza",
+    "note": "supica cu paine",
+    "id": "3"
+  }
+  
+]

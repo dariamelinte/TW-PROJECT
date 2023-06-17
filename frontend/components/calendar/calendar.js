@@ -4,105 +4,121 @@ export default function Calendar({ week, entryType, onClick }) {
     const calendar = document.createElement('div');
     calendar.className = "w-full bg-purple-400 m-6 p-3 rounded shadow-small center column";
 
-    const timePeriod = document.createElement('h1');
-    timePeriod.className = "mb-2";
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
 
-    Date.prototype.GetFirstDayOfWeek = function () {
-      return ( new Date(this.setDate(this.getDate() - this.getDay() + (this.getDay() == 0 ? -6 : 1) )));
-    };
-    Date.prototype.GetLastDayOfWeek = function () {
-      return ( new Date(this.setDate(this.getDate() - this.getDay() + 7 )));
-    };
-    const today = new Date;
-    const firstDay = today.GetFirstDayOfWeek().toString().split(' ');
-    const lastDay = today.GetLastDayOfWeek().toString().split(' ');
+    today = yyyy + '-' + mm + '-' + dd;
+    console.log(today);
 
-    timePeriod.textContent = 'Luni ' + firstDay[2] + ' - Duminica ' + lastDay[2];
+    const inputStartDate = document.createElement('input');
+    inputStartDate.setAttribute('type', 'date');
+    inputStartDate.setAttribute('id', 'start-date');
+    inputStartDate.setAttribute('max', today);
+    inputStartDate.setAttribute('value', '');
+    inputStartDate.className = "ml-3 bg-yellow-200 rounded p-1";
+
+    const inputEndDate = document.createElement('input');
+    inputEndDate.setAttribute('type', 'date');
+    inputEndDate.setAttribute('id', 'end-date');
+    inputEndDate.setAttribute('max', today);
+    inputEndDate.setAttribute('value', '');
+    inputEndDate.className = "ml-3 bg-yellow-200 rounded p-1";
+
+    const startDateContainer = document.createElement('div');
+    startDateContainer.className = "m-3 row";
+    const start = document.createElement('h2');
+    start.className = "center";
+    start.textContent = 'De la:';
+    startDateContainer.appendChild(start);
+    startDateContainer.appendChild(inputStartDate);
+
+    const endDateContainer = document.createElement('div');
+    endDateContainer.className = "m-3 row";
+    const end = document.createElement('h2');
+    end.className = "center";
+    end.textContent = 'Pana la:';
+    endDateContainer.appendChild(end);
+    endDateContainer.appendChild(inputEndDate);
+
+    const applyButton = document.createElement('button');
+    applyButton.className = "ml-3 bg-yellow-200 rounded p-1";
+    applyButton.textContent = "Aplica";
+
+    const newMeal = document.createElement('button');
+    newMeal.className = "ml-3 bg-yellow-200 rounded p-1";
+    newMeal.textContent = "Masa noua";
+    newMeal.onclick = () => onClick(true);
+
+    const timePeriod = document.createElement('div');
+    timePeriod.className = "w-full p-3 rounded flex-wrap center row";
+    timePeriod.appendChild(startDateContainer);
+    timePeriod.appendChild(endDateContainer);
+    timePeriod.appendChild(applyButton);
+
     calendar.appendChild(timePeriod);
-
-    const daysContainer = document.createElement('div');
-    daysContainer.className = "w-full flex justify-evenly flex-wrap";
-    
-    let mondayEvents = [];
-    let tuesdayEvents = [];
-    let wednesdayEvents = [];
-    let thursdayEvents = [];
-    let fridayEvents = [];
-    let saturdayEvents = [];
-    let sundayEvents = [];
+    calendar.appendChild(newMeal);
 
     console.log(week);
     
-    week.forEach((event) => {
-      console.log(event);
-
-      const { date_time } = event;
-      console.log(date_time);
-
-      const date_time_split = date_time.split('\'');
-      console.log(date_time_split[0]);
-
-      const date = new Date(date_time_split[0]);
-      console.log(date);
-
-      const day = date.toString().split(' ');
-      console.log(day[0]);
-
-      if ( day[0] === "Sun" ) {
-        sundayEvents.push(event);
-      } else if ( day[0] === "Mon" ){
-        mondayEvents.push(event);
-      } else if ( day[0] === "Tue" ){
-        tuesdayEvents.push(event);
-      } else if ( day[0] === "Wed" ){
-        wednesdayEvents.push(event);
-      } else if ( day[0] === "Thu" ){
-        thursdayEvents.push(event);
-      } else if ( day[0] === "Fri" ){
-        fridayEvents.push(event);
-      } else if ( day[0] === "Sat" ){
-        saturdayEvents.push(event);
-      }
+    let inputStart;
+    let inputEnd;
+    let startDate;
+    let endDate;
+    window.addEventListener("DOMContentLoaded", (event) => {
+      document.getElementById('start-date').addEventListener("change", function() {
+        inputStart = this.value;
+        inputEndDate.setAttribute('min', inputStart);
+        startDate = new Date(inputStart);
+        console.log("START");
+        console.log(inputStart); //e.g. 2015-11-13
+      });
+      document.getElementById('end-date').addEventListener("change", function() {
+        inputEnd = this.value;
+        inputStartDate.setAttribute('max', inputEnd);
+        endDate = new Date(inputEnd);
+        console.log("END");
+        console.log(inputEnd); //e.g. 2015-11-13
+      });
     });
 
     
-    let weekDay = "monday";
-    let entries = mondayEvents;
-    daysContainer.appendChild(Day({ weekDay, entries, entryType, onClick }));
+    const daysContainer = document.createElement('div');
+    daysContainer.className = "w-full flex justify-evenly flex-wrap";
+    
+    applyButton.addEventListener('click', () => {
+      daysContainer.innerHTML = "";
+      for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+        console.log(new Date(d));
+        const stringDate = d.toString();
+        console.log(stringDate);
+        window[stringDate] = [];
+      }
+      week.forEach((event) => {
+        console.log(event);
+  
+        const { date_time } = event;
+        console.log(date_time);
+  
+        const date_time_split = date_time.split('T');
+        console.log(date_time_split[0]);
 
-    weekDay = "tuesday";
-    entries = [];
-    entries = tuesdayEvents;
-    daysContainer.appendChild(Day({ weekDay, entries, entryType, onClick }));
+        let dateOfEvent = new Date(date_time_split[0]);
+        console.log(dateOfEvent);
 
-    weekDay = "wednesday";
-    entries.length = 0;
-    entries = wednesdayEvents;
-    daysContainer.appendChild(Day({ weekDay, entries, entryType, onClick }));
-    
-    weekDay = "thursday";
-    entries.length = 0;
-    entries = thursdayEvents;
-    daysContainer.appendChild(Day({ weekDay, entries, entryType, onClick }));
-    
-    weekDay = "friday";
-    entries.length = 0;
-    entries = fridayEvents;
-    daysContainer.appendChild(Day({ weekDay, entries, entryType, onClick }));
-    
-    weekDay = "saturday";
-    entries.length = 0;
-    entries = saturdayEvents;
-    daysContainer.appendChild(Day({ weekDay, entries, entryType, onClick }));
-    
-    weekDay = "sunday";
-    entries.length = 0;
-    entries = sundayEvents;
-    daysContainer.appendChild(Day({ weekDay, entries, entryType, onClick }));
+        if ( dateOfEvent >= startDate && dateOfEvent <= endDate){
+          console.log("yas queen");
+          window[dateOfEvent].push(event);
+        }
+  
+      });
+      for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+        console.log(window[d]);
 
-    // Object.entries(week).forEach(([weekDay, entries]) => {
-    //   daysContainer.appendChild(Day({ weekDay, entries, entryType, onClick }));
-    // });
+        daysContainer.appendChild(Day({ 'dayOfEvent': d, 'entries': window[d], entryType, onClick }));
+      }
+    });
 
     calendar.appendChild(daysContainer);
   
