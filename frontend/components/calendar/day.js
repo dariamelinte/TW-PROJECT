@@ -14,7 +14,6 @@ export default function Day({ weekDay, entries, entryType, onClick }) {
 
     day.appendChild(dayName);
 
-    console.log(entries);
     
     entries.forEach(entry => {
       day.appendChild(Entry({ entryType, entry, onClick }))
