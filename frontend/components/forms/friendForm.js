@@ -2,7 +2,7 @@ import Routes from '/frontend/utils/Routes.js';
 import cleanInput from '/frontend/utils/cleanInput.js';
 import { INITIAL_FRIEND } from '/frontend/utils/initialValues.js';
 import { friendshipTypes } from '/frontend/utils/selectsOptions.js';
-import showError from '/frontend/utils/showError.js';
+import { showError } from '/frontend/utils/showMessages.js';
 
 import { addFriend } from '/frontend/server/friend/addFriend.js';
 import { editFriend } from '/frontend/server/friend/editFriend.js';
