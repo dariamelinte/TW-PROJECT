@@ -99,15 +99,21 @@ export default function Calendar({ week, entryType, onClick }) {
       }
       week.forEach((event) => {
         console.log(event);
-  
-        const { date_time } = event;
-        console.log(date_time);
-  
-        const date_time_split = date_time.split('T');
-        console.log(date_time_split[0]);
+        let dateOfEvent;
+        if (entryType === "food") {
+          const { date_time } = event;
+          console.log(date_time);
+    
+          const date_time_split = date_time.split('T');
+          console.log(date_time_split[0]);
 
-        let dateOfEvent = new Date(date_time_split[0]);
-        console.log(dateOfEvent);
+          dateOfEvent = new Date(date_time_split[0]);
+          console.log(dateOfEvent);
+        } else {
+          const { date } = event;
+          dateOfEvent = new Date(date);
+          console.log(dateOfEvent);
+        }
 
         if ( dateOfEvent >= startDate && dateOfEvent <= endDate){
           console.log("yas queen");

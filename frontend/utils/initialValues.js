@@ -37,8 +37,9 @@ export const INITIAL_FEEDING_NOTE = {
 };
 
 export const INITIAL_SLEEPING_NOTE = {
-  firstHour: '',
-  secondHour: '',
-  sleepPeriod: '',
-  sleepType: ''
+  date: '',
+  start_time: '',
+  end_time: '',
+  sleepType: '',
+  note: ''
 };

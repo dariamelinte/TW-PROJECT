@@ -145,7 +145,7 @@ exports.deleteFeedingEvent = async (pool, id) => {
     const { result } = await feedingEventEntity.getById(pool, id);
 
     if (result) {
-      throw Error(`Could not properly delete friend with id = ${id}`);
+      throw Error(`Could not properly delete feeding event with id = ${id}`);
     }
 
     return {

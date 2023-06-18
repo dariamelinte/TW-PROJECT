@@ -235,6 +235,53 @@ const routes = {
         method === routes.feeding.getById.method
       )
     },
+  },
+
+  sleeping: {
+    create: {
+      url: () => `/sleeping-calendar`,
+      method: methods.POST,
+      validate: (url, method) => (
+        url === routes.sleeping.create.url() &&
+        method === routes.sleeping.create.method
+      )
+    },
+
+    update: {
+      url: (id) => `/sleeping-calendar?id=${id}`,
+      method: methods.PATCH,
+      validate: (url, method, id) => (
+        url === routes.sleeping.update.url(id) &&
+        method === routes.sleeping.update.method
+      )
+    },
+
+    delete: {
+      url: (id) => `/sleeping-calendar?id=${id}`,
+      method: methods.DELETE,
+      validate: (url, method, id) => (
+        url === routes.sleeping.delete.url(id) &&
+        method === routes.sleeping.delete.method
+      )
+    },
+
+    getAll: {
+      url: (childId) => `/sleeping-calendar?childId=${childId}`,
+      method: methods.GET,
+      validate: (url, method, childId) => (
+        url === routes.sleeping.getAll.url(childId) &&
+        method === routes.sleeping.getAll.method
+      )
+    },
+
+    getById: {
+      url: (id) => `/sleeping-calendar?id=${id}`,
+      method: methods.GET,
+      validate: (url, method, id) => (
+        url === routes.sleeping.getById.url(id) &&
+        method === routes.sleeping.getById.method
+      )
+    },
   }
 }
 
