@@ -14,8 +14,8 @@ export default function FeedingNoteForm({ feedingNote = INITIAL_FEEDING_NOTE, ad
   const childId = new URLSearchParams(window.location.search).get('childId');
 
   const whiteHeart = '\u2661';
-  const blackHeart = '\u2665';
-
+  const blackHeart = '\u2665';  
+  
   function toggleFavourite() {
     const like = button.textContent;
     if(like==whiteHeart) {
@@ -23,6 +23,8 @@ export default function FeedingNoteForm({ feedingNote = INITIAL_FEEDING_NOTE, ad
     } else {
       button.textContent = whiteHeart;
     }
+
+    window.location.href = Routes.children.feedingCalendar.card.path(childId, cardId = id);
   }
 
   const saveData = async (e) => {
@@ -59,8 +61,8 @@ export default function FeedingNoteForm({ feedingNote = INITIAL_FEEDING_NOTE, ad
   form.className = 'mt-9 w-25';
 
   form.innerHTML = `
-    <div class="flex justify-right w-full ">
-      <button type="favourite">♡</button>
+    <div class="flex justify-end w-full">
+      <button id="favourite" type="favourite" style="font-size : 30px;">♡</button>
     </div>
 
     <div class="flex column justify-center w-full">
@@ -85,9 +87,11 @@ export default function FeedingNoteForm({ feedingNote = INITIAL_FEEDING_NOTE, ad
     <div id="error"></div>
   `;
 
+  const button = form.querySelector('button[type="favourite"]');
+  button.addEventListener('click', toggleFavourite);
+
   form.querySelector('button[type="submit"]').addEventListener('click', saveData);
   form.querySelector('button[type="button"]').addEventListener('click', deleteData);
-  form.querySelector('button[type="favourite"]').addEventListener('click', toggleFavourite);
 
   return form;
 }

@@ -282,6 +282,53 @@ const routes = {
         method === routes.sleeping.getById.method
       )
     },
+  },
+
+  favourite: {
+    add: {
+      url: () => `/favourites`,
+      method: methods.GET,
+      validate: (url, method) => (
+        url === routes.favourite.add.url() &&
+        method === routes.favourite.add.method
+      )
+    },
+
+    delete: {
+      url: (id) => `/favourites?id=${id}`,
+      method: methods.GET,
+      validate: (url, method, id) => (
+        url === routes.favourite.delete.url(id) &&
+        method === routes.favourite.delete.method
+      )
+    },
+
+    getByUserId: {
+      url: (userId) => `/favourites?userId=${userId}`,
+      method: methods.GET,
+      validate: (url, method, userId) => (
+        url === routes.favourite.getByUserId.url(userId) &&
+        method === routes.favourite.getByUserId.method
+      )
+    },
+
+    getByElementId: {
+      url: (elementId) => `/favourites?elementId=${elementId}`,
+      method: methods.GET,
+      validate: (url, method, elementId) => (
+        url === routes.favourite.getByElementId.url(elementId) &&
+        method === routes.favourite.getByElementId.method
+      )
+    },
+
+    getById: {
+      url: (id) => `/favourites?id=${id}`,
+      method: methods.GET,
+      validate: (url, method, id) => (
+        url === routes.favourite.delete.url(id) &&
+        method === routes.favourite.delete.method
+      )
+    }
   }
 }
 

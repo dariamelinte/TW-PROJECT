@@ -214,6 +214,15 @@ ALTER TABLE ONLY public.child
 
 
 --
+-- TOC entry 3203 (class 2606 OID 40985)
+-- Name: favourites favourite_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.favourites
+    ADD CONSTRAINT favourite_pkey PRIMARY KEY (id);
+
+
+--
 -- TOC entry 3207 (class 2606 OID 41024)
 -- Name: feeding_calendar eating_calendar_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --

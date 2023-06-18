@@ -10,6 +10,7 @@ const childRouter = require('./routers/child');
 const friendRouter = require('./routers/friend');
 const feedingRouter = require('./routers/feeding');
 const sleepingRouter = require('./routers/sleeping');
+const favouriteRouter = require('./routers/favourite');
 const friendInteractionRouter = require('./routers/friendInteraction');
 const { headers } = require('./utils/headers');
 
@@ -79,6 +80,8 @@ const server = http.createServer(async (req, res) => {
     return feedingRouter(response, pool);
   } else if (request.url?.startsWith('/sleeping-calendar')) {
     return sleepingRouter(response, pool);
+  } else if (request.url?.startsWith('/favourites')) {
+    return favouriteRouter(response, pool);
   }
 
   response.writeHead(404, headers);
