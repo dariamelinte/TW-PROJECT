@@ -1,27 +1,28 @@
 import Header from '/frontend/components/header.js';
 import Calendar from "/frontend/components/calendar/calendar.js";
-
 import Routes from '/frontend/utils/Routes.js';
 import { entryTypes } from "/frontend/utils/selectsOptions.js";
 
-import mock_week_sleep from './__mock__week-sleep.json' assert { type: "json" };
+import { getSleepingEvents } from '/frontend/server/sleeping/getSleepingEvents.js';
 
-const { title, add: { path: addPath}, card: { path: cardPath } } = Routes.children.sleepingCalendar;
+const { title, add: addRoute, card: cardRoute } = Routes.children.sleepingCalendar;
 
-const childId = parseInt(new URLSearchParams(window.location.search).get('childId'));
+//if child param present => user on a child page
+const childId = new URLSearchParams(window.location.search).get('childId');
+const sleepings = await getSleepingEvents(childId);
   
-const onClickCell = (id, add) => {
+const onClickCell = async (id, add) => {
   if (add) {
-    window.location.href = addPath(childId);
+    window.location.href = addRoute.path(childId);
   } else {
-    window.location.href = cardPath(childId, id);
+    window.location.href = cardRoute.path(childId, id);
   }
 }
 
 document.body.appendChild(Header(title));
 
 document.body.appendChild(Calendar({
-  week: mock_week_sleep,
+  week: sleepings,
   entryType: entryTypes.sleep,
   onClick: onClickCell
 }));
