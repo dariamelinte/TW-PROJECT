@@ -1,13 +1,11 @@
-import myAccountForm from "./myAccountForm.js";
-import myAccountSide from "./myAccountSide.js";
+import MyAccountForm from "./myAccountForm.js";
 
-export default function myAccount(){
+export default function MyAccount({ account }) {
     const myAccount = document.createElement('div');
 
-    myAccount.className = "center flex-wrap mx-9 my-6";
+    myAccount.className = "center flex-col flex-wrap mx-9 my-6";
 
-    myAccount.appendChild(myAccountForm());
-    myAccount.appendChild(myAccountSide());
+    myAccount.appendChild(MyAccountForm({ account }));
 
     return myAccount;
 }

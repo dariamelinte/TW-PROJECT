@@ -26,7 +26,7 @@ const destructureRequestMiddleware = async (req, res) => {
 
   res.locals = {
     ...res.locals,
-    body: JSON.parse(body)
+    body: body ? JSON.parse(body) : '{}'
   };
 
   return { req, res, continue: true };

@@ -1,8 +1,18 @@
 import Header from '/frontend/components/header.js';
 import ChildrenList from '/frontend/components/children/childrenList.js';
-import Routes from '/frontend/utils/Routes.js';
 
 import { getFriend } from '/frontend/server/friend/getFriends.js';
+
+import { getCookie } from '/frontend/utils/cookie.js';
+import { COOKIE_NAME } from '/frontend/utils/constants.js';
+import { isJwtExpired } from '/frontend/utils/jwt.js';
+import Routes from '/frontend/utils/Routes.js';
+
+const jwt = getCookie(COOKIE_NAME);
+
+if (!jwt || isJwtExpired(jwt)) {
+  window.location.href = Routes.login.path();
+}
 
 
 const { title, friend: friendRoute } = Routes.children.friendships;

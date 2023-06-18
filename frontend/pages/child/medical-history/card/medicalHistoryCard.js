@@ -1,23 +1,29 @@
 import Header from '/frontend/components/header.js';
 import MedicalEntryForm from '/frontend/components/forms/medicalEntryForm.js';
 
-import Routes from '/frontend/utils/Routes.js';
+import { getMedicalEventById } from '/frontend/server/medicalEvent/getMedicalEventById.js';
+import { editMedicalEvent } from '/frontend/server/medicalEvent/editMedicalEvent.js';
 
-import mocked_medical_history from '/frontend/utils/__mock__medical-history.json' assert { type: 'json' };
+import Routes from '/frontend/utils/Routes.js';
+import { showError } from '/frontend/utils/showMessages.js';
 
 const { card, path } = Routes.children.medicalHistory;
 
-const childId = parseInt(new URLSearchParams(window.location.search).get('childId'));
-const cardId = parseInt(new URLSearchParams(window.location.search).get('cardId'));
+const params = new URLSearchParams(window.location.search);
+const cardId = params.get('cardId');
+const childId = params.get('childId');
 
-const medicalEntry = mocked_medical_history.find((medical_entry) => (
-  medical_entry.childId === childId && medical_entry.id === cardId
-));
+const { result: medicalEntry } = await getMedicalEventById(cardId);
 
-console.log(medicalEntry);
+const onSave = async (formData) => {
+  const interactionInput = Object.fromEntries(formData);
+  const data = await editMedicalEvent(cardId, interactionInput);
 
-const onSave = () => {
-  // TO DO: api call
+  if (!data.success) {
+    showError(data.message);
+    return;
+  }
+
   window.location.href = path(childId);
 } 
 

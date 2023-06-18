@@ -23,7 +23,12 @@ export default class Routes {
   
   static myAccount = {
     path: () => Routes.root + '/my-account',
-    title: 'Contul meu'
+    title: 'Contul meu',
+
+    changePassword: {
+      path: () => Routes.root + '/my-account/change-password',
+      title: 'Schimbare parola'
+    }
   }
   
   static child = {

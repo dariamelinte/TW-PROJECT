@@ -1,29 +1,25 @@
-import Routes from '../../utils/Routes.js';
+import { forgotPassword } from '/frontend/server/auth/forgotPassword.js';
+import Routes from '/frontend/utils/Routes.js';
+import { showError, showMessage } from '/frontend/utils/showMessages.js';
 
 export default function ForgotPasswordForm() {
   const form = document.createElement('form');
   form.className = "w-20";
 
-  function submit(event) {
+  const onForgotPassword = async (event) => {
     event.preventDefault();
     const form = document.querySelector('form');
+    const formData = new FormData(form);
+    const forgotPasswordInput = Object.fromEntries(formData);
 
-    document.getElementById('email_label').remove();
-    document.getElementById('email').remove();
-    document.getElementById('send').remove();
+    const data = await forgotPassword(forgotPasswordInput);
 
-    const message = document.createElement('p');
-    message.innerText = 'Check your email for a link to reset your password.';
-    form.appendChild(message);
-
-    const button = document.createElement('button');
-    button.classList.add('mt-3');
-    button.innerText = 'Login';
-    button.onclick = (e) => {
-      e.preventDefault();
-      window.location.href = Routes.login.path();
-    };
-    form.appendChild(button); 
+    if (!data.success) {
+      showError(data.message);
+      return;
+    } else {
+      showMessage("Un email cu noua parola a fost trimis.");
+    }
   }
 
   form.innerHTML = `
@@ -32,10 +28,14 @@ export default function ForgotPasswordForm() {
       <input type="email" name="email" id="email" placeholder="Email" />
     </div>
 
-    <button id="send" class="mt-3">Send</button>
+
+    <button class="principal mt-3" type="submit">Trimitere</button>
+    <a class="mt-2" href="${Routes.login.path()}">Ai deja cont?</a>
+    <div id="error"></div>
+    <div id="message"></div>
   `;
 
-  form.querySelector('button').addEventListener('click', submit);
+  form.querySelector('button').addEventListener('click', onForgotPassword);
 
   return form;
 }

@@ -250,8 +250,223 @@ const routes = {
         url === routes.auth.forgotPassword.url() &&
         method === routes.auth.forgotPassword.method
       )
-    }
-  }
+    },
+    
+    logout: {
+      url: () => '/auth/logout',
+      method: methods.POST,
+      validate: (url, method) => (
+        url === routes.auth.logout.url() &&
+        method === routes.auth.logout.method
+      )
+    },
+
+    changePassword: {
+      url: (id) => `/auth/change-password?id=${id}`,
+      method: methods.POST,
+      validate: (url, method, id) => (
+        url === routes.auth.changePassword.url(id) &&
+        method === routes.auth.changePassword.method
+      )
+    },
+  },
+
+  user: {
+    create: {
+      url: () => '/users',
+      method: methods.POST,
+      validate: (url, method) => (
+        url === routes.user.create.url() &&
+        method === routes.user.create.method
+      )
+    },
+  
+    update: {
+      url: (id) => `/users?id=${id}`,
+      method: methods.PATCH,
+      validate: (url, method, id) => (
+        url === routes.user.update.url(id) &&
+        method === routes.user.update.method
+      )
+    },
+  
+    delete: {
+      url: (id) => `/users?id=${id}`,
+      method: methods.DELETE,
+      validate: (url, method, id) => (
+        url === routes.user.delete.url(id) &&
+        method === routes.user.delete.method
+      )
+    },
+  
+    getById: {
+      url: (id) => `/users?id=${id}`,
+      method: methods.GET,
+      validate: (url, method, id) => (
+        url === routes.user.getById.url(id) &&
+        method === routes.user.getById.method
+      )
+    },
+  
+    getByFamilyId: {
+      url: (id) => `/users?familyId=${id}`,
+      method: methods.GET,
+      validate: (url, method, id) => (
+        url === routes.user.getByFamilyId.url(id) &&
+        method === routes.user.getByFamilyId.method
+      )
+    },
+  
+    getByEmail: {
+      url: (email) => `/users?email=${email}`,
+      method: methods.GET,
+      validate: (url, method, email) => (
+        url === routes.user.getByEmail.url(email) &&
+        method === routes.user.getByEmail.method
+      )
+    },
+  },
+
+  feeding: {
+    create: {
+      url: () => `/feeding-calendar`,
+      method: methods.POST,
+      validate: (url, method) => (
+        url === routes.feeding.create.url() &&
+        method === routes.feeding.create.method
+      )
+    },
+
+    update: {
+      url: (id) => `/feeding-calendar?id=${id}`,
+      method: methods.PATCH,
+      validate: (url, method, id) => (
+        url === routes.feeding.update.url(id) &&
+        method === routes.feeding.update.method
+      )
+    },
+
+    delete: {
+      url: (id) => `/feeding-calendar?id=${id}`,
+      method: methods.DELETE,
+      validate: (url, method, id) => (
+        url === routes.feeding.delete.url(id) &&
+        method === routes.feeding.delete.method
+      )
+    },
+
+    getAll: {
+      url: (childId) => `/feeding-calendar?childId=${childId}`,
+      method: methods.GET,
+      validate: (url, method, childId) => (
+        url === routes.feeding.getAll.url(childId) &&
+        method === routes.feeding.getAll.method
+      )
+    },
+
+    getById: {
+      url: (id) => `/feeding-calendar?id=${id}`,
+      method: methods.GET,
+      validate: (url, method, id) => (
+        url === routes.feeding.getById.url(id) &&
+        method === routes.feeding.getById.method
+      )
+    },
+  },
+
+  sleeping: {
+    create: {
+      url: () => `/sleeping-calendar`,
+      method: methods.POST,
+      validate: (url, method) => (
+        url === routes.sleeping.create.url() &&
+        method === routes.sleeping.create.method
+      )
+    },
+
+    update: {
+      url: (id) => `/sleeping-calendar?id=${id}`,
+      method: methods.PATCH,
+      validate: (url, method, id) => (
+        url === routes.sleeping.update.url(id) &&
+        method === routes.sleeping.update.method
+      )
+    },
+
+    delete: {
+      url: (id) => `/sleeping-calendar?id=${id}`,
+      method: methods.DELETE,
+      validate: (url, method, id) => (
+        url === routes.sleeping.delete.url(id) &&
+        method === routes.sleeping.delete.method
+      )
+    },
+
+    getAll: {
+      url: (childId) => `/sleeping-calendar?childId=${childId}`,
+      method: methods.GET,
+      validate: (url, method, childId) => (
+        url === routes.sleeping.getAll.url(childId) &&
+        method === routes.sleeping.getAll.method
+      )
+    },
+
+    getById: {
+      url: (id) => `/sleeping-calendar?id=${id}`,
+      method: methods.GET,
+      validate: (url, method, id) => (
+        url === routes.sleeping.getById.url(id) &&
+        method === routes.sleeping.getById.method
+      )
+    },
+  },
+
+  medical: {
+    create: {
+      url: () => '/medical-events',
+      method: methods.POST,
+      validate: (url, method) => (
+        url === routes.medical.create.url() &&
+        method === routes.medical.create.method
+      )
+    },
+  
+    update: {
+      url: (id) => `/medical-events?id=${id}`,
+      method: methods.PATCH,
+      validate: (url, method, id) => (
+        url === routes.medical.update.url(id) &&
+        method === routes.medical.update.method
+      )
+    },
+  
+    delete: {
+      url: (id) => `/medical-events?id=${id}`,
+      method: methods.DELETE,
+      validate: (url, method, id) => (
+        url === routes.medical.delete.url(id) &&
+        method === routes.medical.delete.method
+      )
+    },
+  
+    getById: {
+      url: (id) => `/medical-events?id=${id}`,
+      method: methods.GET,
+      validate: (url, method, id) => (
+        url === routes.medical.getById.url(id) &&
+        method === routes.medical.getById.method
+      )
+    },
+  
+    getByChildId: {
+      url: (childId) => `/medical-events?childId=${childId}`,
+      method: methods.GET,
+      validate: (url, method, childId) => (
+        url === routes.medical.getByChildId.url(childId) &&
+        method === routes.medical.getByChildId.method
+      )
+    },
+  },
 }
 
 module.exports = {

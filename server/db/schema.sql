@@ -73,7 +73,7 @@ ALTER TABLE public.child OWNER TO postgres;
 
 CREATE TABLE public.feeding_calendar (
     "childId" character varying(64) NOT NULL,
-    date_time character varying(16) NOT NULL,
+    date_time character varying(30) NOT NULL,
     note text NOT NULL,
     id character varying(64) NOT NULL
 );
@@ -157,7 +157,9 @@ ALTER TABLE public.multimedia_resource OWNER TO postgres;
 
 CREATE TABLE public.sleeping_calendar (
     "childId" character varying(64) NOT NULL,
-    date_time character varying(16) NOT NULL,
+    "date" character varying(16) NOT NULL,
+    start_time character varying(16) NOT NULL,
+    end_time character varying(16) NOT NULL,
     "sleepType" character varying(16) NOT NULL,
     note text,
     id character varying(64) NOT NULL
@@ -180,7 +182,8 @@ CREATE TABLE public."user" (
     "dateOfBirth" character varying(16) NOT NULL,
     gender character varying(16),
     nationality character varying(16),
-    "familyId" character varying(64) NOT NULL
+    "familyId" character varying(64) NOT NULL,
+    jwt text
 );
 
 
