@@ -2,7 +2,7 @@ import { genderTypes } from '/frontend/utils/selectsOptions.js';
 import { showError, showMessage } from '/frontend/utils/showMessages.js';
 import Routes from '/frontend/utils/Routes.js';
 
-import { updateMyProfile } from '/frontend/server/my-profile/updateMyProfile.js';
+import { updateMyProfile } from '/frontend/server/myProfile/updateMyProfile.js';
 
 export default function MyAccountForm({ account = {} }) {
     const { id, firstName, lastName, email, dateOfBirth, gender, nationality } = account;

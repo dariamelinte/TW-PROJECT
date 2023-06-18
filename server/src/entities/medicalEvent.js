@@ -32,7 +32,7 @@ exports.update = async (pool, id, medicalEvent = {}) => {
       `
     UPDATE medical_history
     SET
-      childId = $1,
+      "childId" = $1,
       title = $2,
       note = $3,
       date = $4,
@@ -87,9 +87,10 @@ exports.getById = async (pool, id) => {
 
 exports.getByChildId = async (pool, childId) => {
   try {
-    const result = await pool.query(`SELECT * FROM medical_history WHERE "childId" = $1`, [
-      childId
-    ]);
+    const result = await pool.query(
+      `SELECT * FROM medical_history WHERE "childId" = $1 ORDER BY date DESC;`,
+      [childId]
+    );
     return {
       success: true,
       result: result?.rows

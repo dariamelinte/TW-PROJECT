@@ -28,7 +28,7 @@ export const INITIAL_MEDICAL_ENTRY = {
   date: '',
   title: '',
   severity: '',
-  description: ''
+  note: ''
 };
 
 export const INITIAL_FEEDING_NOTE = {

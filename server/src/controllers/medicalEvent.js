@@ -1,132 +1,172 @@
-import { randomUUID } from 'crypto';
+const { randomUUID } = require('crypto');
+const { StatusCodes } = require('http-status-codes');
 
-exports.saveMedicalEvent = async (medicalEvent, pool) => {
+const medicalEventEntity = require('../entities/medicalEvent');
+
+exports.createMedicalEvent = async (pool, medicalEvent = {}) => {
   try {
-    const { childId, title, note, date, severity } = medicalEvent;
-    const result = await pool.query(
-      `
-      INSERT INTO  medical_history
-        (id, childId, title, note, date, severity)
-      VALUES
-        ($1, $2, $3, $4, $5, $6)
-      `,
-      [randomUUID(), childId, title, note, date, severity]
-    );
+    const id = randomUUID();
+  
+    const { success: successCreate } = await medicalEventEntity.insert(pool, id, medicalEvent);
+    const { success, result } = await medicalEventEntity.getById(pool, id);
+
+    if (!successCreate || !success) {
+      throw Error();
+    }
+
     return {
-      success: true,
-      message: 'Saved medical event successfully.',
-      result
+      statusCode: StatusCodes.CREATED,
+      data: {
+        success,
+        message: 'Created medical event successfuly.',
+        result
+      }
     };
   } catch (error) {
     console.error(error);
+
     return {
-      success: true,
-      message: 'Could not save medical event.',
-      error
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: {
+        success: false,
+        message: 'Could not create new medical event.',
+        error
+      }
     };
   }
 };
 
-exports.updateMedicalEvent = async (medicalEvent, pool) => {
+exports.updateMedicalEvent = async (pool, id, medicalEvent = {}) => {
   try {
-    const { childId, title, note, date, severity } = medicalEvent;
-    const result = await pool.query(
-      `
-      UPDATE medical_history
-      SET
-        childId = $1,
-        title = $2,
-        note = $3,
-        date = $4,
-        severity = $5
-      WHERE id = $6
-      `,
-      [childId, title, note, date, severity, id]
-    );
+    if (!id) {
+      return {
+        statusCode: StatusCodes.BAD_REQUEST,
+        data: {
+          success: false,
+          message: 'Please provide the missing fields: id',
+        }
+      };
+    }
+
+    const { result: old } = await medicalEventEntity.getById(pool, id);
+    const { success: successUpdate } = await medicalEventEntity.update(pool, id, {
+      childId: medicalEvent.childId || old.childId,
+      title: medicalEvent.title || old.title,
+      note: medicalEvent.note || old.note,
+      date: medicalEvent.date || old.date,
+      severity: medicalEvent.severity || old.severity,
+    });
+
+    const { success, result } = await medicalEventEntity.getById(pool, id);
+
+    if (!successUpdate || !success) {
+      throw Error();
+    }
 
     return {
-      success: true,
-      message: 'Updated medical event successfully.',
-      result
+      statusCode: StatusCodes.ACCEPTED,
+      data: {
+        success: true,
+        message: 'Updated medical event successfuly.',
+        result
+      }
     };
   } catch (error) {
     console.error(error);
     return {
-      success: true,
-      message: 'Could not update medical event.',
-      error
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: {
+        success: false,
+        message: 'Could not update medical event.',
+        error
+      }
     };
   }
 };
 
-exports.deleteMedicalEvent = async (id, pool) => {
+exports.deleteMedicalEvent = async (pool, id) => {
   try {
-    const result = await pool.query(
-      `
-      DELETE FROM medical_history
-      WHERE id = $1
-      `,
-      [id]
-    );
+    await medicalEventEntity.delete(pool, id);
+    const { result } = await medicalEventEntity.getById(pool, id);
+
+    if (result) {
+      throw Error();
+    }
+
     return {
-      success: true,
-      message: 'Deleted medical event successfully.',
-      result
+      statusCode: StatusCodes.OK,
+      data: {
+        success: true,
+        message: 'Deleted medical event successfuly.'
+      }
     };
   } catch (error) {
     console.error(error);
     return {
-      success: true,
-      message: 'Could not delete medical event.',
-      error
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: {
+        success: false,
+        message: 'Could not delete medical event.',
+        error
+      }
     };
   }
 };
 
-exports.getMedicalEventById = async (id, pool) => {
+exports.getMedicalEventById = async (pool, id) => {
   try {
-    const result = await pool.query(
-      `
-      SELECT * FROM medical_history
-      WHERE id = $1
-      `,
-      [id]
-    );
+    const { success, result } = await medicalEventEntity.getById(pool, id);
+
+    if (!success) {
+      throw Error();
+    }
+
     return {
-      success: true,
-      message: 'Found medical event.',
-      result: result?.rows?.[0]
+      statusCode: StatusCodes.OK,
+      data: {
+        success: true,
+        result,
+        message: 'Medical event found.'
+      }
     };
   } catch (error) {
     console.error(error);
+
     return {
-      success: true,
-      message: 'Could not find medical event.',
-      error
+      statusCode: StatusCodes.NOT_FOUND,
+      data: {
+        success: false,
+        message: 'Medical event not found.',
+        error: String(error)
+      }
     };
   }
 };
 
-exports.findMedicalEventByChildId = async (childId, pool) => {
+exports.getMedicalEventByChildId = async (pool, childId, friendId) => {
   try {
-    const result = await pool.query(
-      `
-        SELECT * FROM medical_history
-        WHERE childId = $1
-        `,
-      [childId]
-    );
+    const { success, result } = await medicalEventEntity.getByChildId(pool, childId, friendId);
+
+    if (!success) {
+      throw Error();
+    }
     return {
-      success: true,
-      message: 'Found medical events.',
-      result: result?.rows
+      statusCode: StatusCodes.OK,
+      data: {
+        success: true,
+        result,
+        message: 'Medical events found.'
+      }
     };
   } catch (error) {
     console.error(error);
     return {
-      success: true,
-      message: 'Could not find medical events.',
-      error
+      statusCode: StatusCodes.NOT_FOUND,
+      data: {
+        success: false,
+        message: 'Medical events not found.',
+        error: String(error)
+      }
     };
   }
 };
