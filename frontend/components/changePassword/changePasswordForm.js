@@ -1,114 +1,53 @@
-import { genderTypes } from '/frontend/utils/selectsOptions.js';
 import { showError, showMessage } from '/frontend/utils/showMessages.js';
+import { COOKIE_NAME } from '/frontend/utils/constants.js';
+import { getCookie } from '/frontend/utils/cookie.js';
+import { parseJwt } from '/frontend/utils/jwt.js';
 
-import { updateMyProfile } from '/frontend/server/my-profile/updateMyProfile.js';
+import { changePassword } from '/frontend/server/my-profile/changePassword.js';
 
-export default function ChangePasswordForm({ account = {} }) {
-    const { id, firstName, lastName, email, dateOfBirth, gender, nationality } = account;
-    console.log({ firstName, lastName, email, dateOfBirth, gender, nationality })
-    const ChangePasswordForm = document.createElement('form');
+export default function ChangePasswordForm() {
+    const { id: userId } = parseJwt(getCookie(COOKIE_NAME)) || {};
+    const changePasswordForm = document.createElement('form');
   
     const onSave = async (event) => {
       event.preventDefault();
   
       const form = document.querySelector('form');
       const formData = new FormData(form);
-      const ChangePasswordInput = Object.fromEntries(formData);
+      const changePasswordInput = Object.fromEntries(formData);
 
-      const data = await updateMyProfile(id, ChangePasswordInput);
+      const data = await changePassword(userId, changePasswordInput);
 
       if (!data.success) {
         showError(data.message);
       } else {
-        showMessage("Contul a fost actualizat.");
+        showMessage("Parola actualizata cu succes.");
       }
     };
-
-    const genderOptions = Object.entries(genderTypes).map(([key, value]) => {
-      if (gender === key) {
-        return `<option value="${key}" selected>${value}</option>`;
-      }
   
-      return `<option value="${key}">${value}</option>`;
-    });
-  
-    ChangePasswordForm.className="rounded";
-    ChangePasswordForm.innerHTML = `
-      <div class="flex row justify-center">
-        <div class="flex column justify-center mr-2">
-            <div class="flex column justify-center">
-                <label for="firstName">Prenume</label>
-                <input 
-                  type="text" 
-                  name="firstName" 
-                  id="firstName" 
-                  placeholder="Prenume"
-                  value=${firstName}
-                />
-            </div>
-
-            <div class="flex column justify-center">
-                <label for="lastName">Nume</label>
-                <input 
-                  type="text" 
-                  name="lastName" 
-                  id="lastName" 
-                  placeholder="Nume"
-                  value=${lastName}
-                />
-            </div>
-  
-            <div class="flex column justify-center">
-                <label for="email">Email</label>
-                <input 
-                  type="email" 
-                  name="email" 
-                  id="email" 
-                  placeholder="Email"
-                  value=${email}
-                  disabled
-                />
-            </div>
+    changePasswordForm.className="rounded";
+    changePasswordForm.innerHTML = `
+      <div class="flex column justify-center">
+        <div class="flex column justify-center">
+          <label for="password">Parola actuala</label>
+          <input name="password" id="password" placeholder="Parola actuala" type="password" />
         </div>
-  
-        <div class="flex column justify-center ml-2">
-          <div class="flex column justify-center">
-              <label for="dateOfBirth">Data de nastere</label>
-              <input 
-                type="date" 
-                name="dateOfBirth" 
-                id="dateOfBirth" 
-                placeholder="Data de nastere"
-                value=${dateOfBirth}
-              />
-          </div>
-  
-          <div class="flex column justify-center">
-            <label for="gender">Gen</label>
-            <select class="rounded pb-2 pt-2 px-1" name="gender" id="gender">
-                <option value="gender">Gen</option>
-                ${genderOptions.join('')}
-            </select> 
-          </div>
-  
-          <div class="flex column justify-center">
-            <label for="nationalitate">Nationalitate</label>
-            <input 
-              type="text" 
-              name="nationalitate" i
-              d="nationalitate" 
-              placeholder="Nationalitate"
-              value=${nationality}
-            />
-          </div>
+
+        <div class="flex column justify-center">
+          <label for="newPassword">Noua parola</label>
+          <input
+            id="newPassword"
+            name="newPassword"
+            placeholder="Noua parola"
+            type="password"
+          />
         </div>
       </div>
-  
       <button class="principal mt-3" type="submit">Salveaza</button>
       <div id="error"></div>
       <div id="message"></div>
     `;
 
-    ChangePasswordForm.querySelector('button[type="submit"]').addEventListener('click', onSave);
-    return ChangePasswordForm;
+    changePasswordForm.querySelector('button[type="submit"]').addEventListener('click', onSave);
+    return changePasswordForm;
   }

@@ -1,11 +1,11 @@
 import { genderTypes } from '/frontend/utils/selectsOptions.js';
 import { showError, showMessage } from '/frontend/utils/showMessages.js';
+import Routes from '/frontend/utils/Routes.js';
 
 import { updateMyProfile } from '/frontend/server/my-profile/updateMyProfile.js';
 
 export default function MyAccountForm({ account = {} }) {
     const { id, firstName, lastName, email, dateOfBirth, gender, nationality } = account;
-    console.log({ firstName, lastName, email, dateOfBirth, gender, nationality })
     const myAccountForm = document.createElement('form');
   
     const onSave = async (event) => {
@@ -105,6 +105,7 @@ export default function MyAccountForm({ account = {} }) {
       </div>
   
       <button class="principal mt-3" type="submit">Salveaza</button>
+      <a href=${Routes.myAccount.changePassword.path()} class="mt-3">Schimba parola</button>
       <div id="error"></div>
       <div id="message"></div>
     `;
