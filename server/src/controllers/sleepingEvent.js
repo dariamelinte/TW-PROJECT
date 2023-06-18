@@ -1,131 +1,172 @@
-import { randomUUID } from 'crypto';
+const { randomUUID } = require('crypto');
+const { StatusCodes } = require('http-status-codes');
 
-exports.saveSleepingEvent = async (sleepingEvent, pool) => {
+const sleepingEventEntity = require('../entities/sleepingEvent');
+
+exports.createSleepingEvent = async (pool, sleepingEvent = {}) => {
   try {
-    const { childId, dateTime, sleepType, note } = sleepingEvent;
-    const result = await pool.query(
-      `
-    INSERT INTO  sleeping_calendar
-      (id, childId, dateTime, sleepType, note)
-    VALUES
-      ($1, $2, $3, $4, $5)
-    `,
-      [randomUUID(), childId, dateTime, sleepType, note]
-    );
+    const id = randomUUID();
+    const { success: successCreate } = await sleepingEventEntity.insert(pool, id, sleepingEvent);
+    const { success, result } = await sleepingEventEntity.getById(pool, id);
+
+    if (!successCreate || !success) {
+      throw Error();
+    }
+
     return {
-      success: true,
-      message: 'Saved sleeping event successfully.',
-      result
+      statusCode: StatusCodes.CREATED,
+      data: {
+        success,
+        message: 'Created sleeping event successfuly.',
+        result
+      }
     };
   } catch (error) {
     console.error(error);
+
     return {
-      success: true,
-      message: 'Could not save sleeping event.',
-      error
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: {
+        success: false,
+        message: 'Could not create new sleeping event.',
+        error
+      }
     };
   }
 };
 
-exports.updateSleepingEvent = async (sleepingEvent, pool) => {
+exports.updateSleepingEvent = async (pool, id, sleepingEvent = {}) => {
   try {
-    const { childId, dateTime, sleepType, note, id } = sleepingEvent;
-    const result = await pool.query(
-      `
-    UPDATE sleeping_calendar
-    SET
-      childId = $1,
-      dateTime = $2,
-      sleepType = $3,
-      note = $4
-    WHERE id = $5
-    `,
-      [childId, dateTime, sleepType, note, id]
-    );
+    if (!id) {
+      return {
+        statusCode: StatusCodes.BAD_REQUEST,
+        data: {
+          success: false,
+          message: 'Please provide the missing fields: friendId'
+        }
+      };
+    }
+
+    const { result: oldSleepingEvent } = await sleepingEventEntity.getById(pool, id);
+    const { success: successUpdate } = await sleepingEventEntity.update(pool, id, {
+      date: sleepingEvent.date || oldSleepingEvent.date,
+      start_time: sleepingEvent.start_time || oldSleepingEvent.start_time,
+      end_time: sleepingEvent.end_time || oldSleepingEvent.end_time,
+      sleepType: sleepingEvent.sleepType || oldSleepingEvent.sleepType,
+      note: sleepingEvent.note || oldSleepingEvent.note
+    });
+
+    const { success, result } = await sleepingEventEntity.getById(pool, id);
+
+    if (!successUpdate || !success) {
+      throw Error();
+    }
 
     return {
-      success: true,
-      message: 'Updated sleeping event successfully.',
-      result
+      statusCode: StatusCodes.ACCEPTED,
+      data: {
+        success: true,
+        message: 'Updated sleeping event successfuly.',
+        result
+      }
     };
   } catch (error) {
     console.error(error);
     return {
-      success: true,
-      message: 'Could not update sleeping event.',
-      error
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: {
+        success: false,
+        message: 'Could not update sleeping event.',
+        error
+      }
     };
   }
 };
 
-exports.deleteSleepingEvent = async (id, pool) => {
+exports.getSleepingEvents = async (pool, childId) => {
   try {
-    const result = await pool.query(
-      `
-      DELETE FROM sleeping_calendar
-      WHERE id = $1
-      `,
-      [id]
-    );
+    const { success, result } = await sleepingEventEntity.getByChildId(pool, childId);
+
+    if (!success) {
+      throw Error();
+    }
+
     return {
-      success: true,
-      message: 'Deleted sleeping event successfully.',
-      result
+      statusCode: StatusCodes.OK,
+      data: {
+        success: true,
+        result,
+        message: 'Sleeping calendar found.'
+      }
     };
   } catch (error) {
     console.error(error);
     return {
-      success: true,
-      message: 'Could not delete sleeping event.',
-      error
+      statusCode: StatusCodes.NOT_FOUND,
+      data: {
+        success: false,
+        message: 'Sleeping calendar not found.',
+        error: String(error)
+      }
     };
   }
 };
 
-exports.getSleepingEventById = async (id, pool) => {
+exports.getSleepingEventById = async (pool, id) => {
   try {
-    const result = await pool.query(
-      `
-      SELECT * FROM sleeping_calendar
-      WHERE id = $1
-      `,
-      [id]
-    );
+    const { success, result } = await sleepingEventEntity.getById(pool, id);
+
+    if (!success) {
+      throw Error();
+    }
+
     return {
-      success: true,
-      message: 'Found sleeping event.',
-      result: result?.rows?.[0]
+      statusCode: StatusCodes.OK,
+      data: {
+        success: true,
+        result,
+        message: 'Sleeping event found.'
+      }
     };
   } catch (error) {
     console.error(error);
+
     return {
-      success: true,
-      message: 'Could not find sleeping event.',
-      error
+      statusCode: StatusCodes.NOT_FOUND,
+      data: {
+        success: false,
+        message: 'Sleeping event not found.',
+        error: String(error)
+      }
     };
   }
 };
 
-exports.findSleepingEventByChildId = async (childId, pool) => {
+exports.deleteSleepingEvent = async (pool, id) => {
   try {
-    const result = await pool.query(
-      `
-        SELECT * FROM sleeping_calendar
-        WHERE childId = $1
-        `,
-      [childId]
-    );
+    await sleepingEventEntity.delete(pool, id);
+    const { result } = await sleepingEventEntity.getById(pool, id);
+
+    if (result) {
+      throw Error(`Could not properly delete sleeping event with id = ${id}`);
+    }
+
     return {
-      success: true,
-      message: 'Found sleeping events.',
-      result: result?.rows
+      statusCode: StatusCodes.OK,
+      data: {
+        success: true,
+        message: 'Deleted sleeping event successfuly.'
+      }
     };
   } catch (error) {
     console.error(error);
     return {
-      success: true,
-      message: 'Could not find sleeping events.',
-      error
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: {
+        success: false,
+        message: 'Could not delete sleeping event.',
+        error
+      }
     };
   }
 };
