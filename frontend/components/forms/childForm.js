@@ -110,7 +110,7 @@ export default function ChildForm({ child = {}, add = false }) {
     </div>
 
     <div class="flex flex-1 w-full column justify-center">
-      <label for="gender">gender</label>
+      <label for="gender">Gen</label>
       <select class="bg-yellow-200 rounded p-1" name="gender" id="gender">
           <option value="gender" disabled>Gen</option>
           ${genderOptions.join('')}

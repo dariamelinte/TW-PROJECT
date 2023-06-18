@@ -1,7 +1,12 @@
-import myAccount from "../../components/myAccount/myAccount.js";
+import MyAccount from "../../components/myAccount/myAccount.js";
 import Header from '../../components/header.js';
+import Routes from "../../utils/Routes.js";
 
-document.body.appendChild(Header('Contul meu'));
+import { getMyProfile } from "../../server/my-profile/getMyProfile.js";
 
+const { result: account } = await getMyProfile();
 
-document.body.appendChild(myAccount());
+console.log(account);
+
+document.body.appendChild(Header(Routes.myAccount.title));
+document.body.appendChild(MyAccount({ account }));
