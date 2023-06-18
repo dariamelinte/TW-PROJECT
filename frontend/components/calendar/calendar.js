@@ -1,4 +1,5 @@
 import Day from "./day.js";
+import Entry from "./entry.js";
 
 export default function Calendar({ week, entryType, onClick }) {
     const calendar = document.createElement('div');
@@ -6,7 +7,7 @@ export default function Calendar({ week, entryType, onClick }) {
 
     let today = new Date();
     let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); 
     let yyyy = today.getFullYear();
 
     today = yyyy + '-' + mm + '-' + dd;
@@ -43,22 +44,20 @@ export default function Calendar({ week, entryType, onClick }) {
     endDateContainer.appendChild(inputEndDate);
 
     const applyButton = document.createElement('button');
-    applyButton.className = "ml-3 bg-yellow-200 rounded p-1";
+    applyButton.className = "ml-3 mr-3 bg-yellow-200 rounded p-1";
     applyButton.textContent = "Aplica";
-
-    const newMeal = document.createElement('button');
-    newMeal.className = "ml-3 bg-yellow-200 rounded p-1";
-    newMeal.textContent = "Masa noua";
-    newMeal.onclick = () => onClick(true);
 
     const timePeriod = document.createElement('div');
     timePeriod.className = "w-full p-3 rounded flex-wrap center row";
+    timePeriod.setAttribute("style", "max-width: 670px");
     timePeriod.appendChild(startDateContainer);
     timePeriod.appendChild(endDateContainer);
     timePeriod.appendChild(applyButton);
+    timePeriod.appendChild(Entry({ entryType, add: true, onClick }));
 
     calendar.appendChild(timePeriod);
-    calendar.appendChild(newMeal);
+    
+    // calendar.appendChild(newMeal);
 
     console.log(week);
     
@@ -66,8 +65,9 @@ export default function Calendar({ week, entryType, onClick }) {
     let inputEnd;
     let startDate;
     let endDate;
-    window.addEventListener("DOMContentLoaded", (event) => {
-      document.getElementById('start-date').addEventListener("change", function() {
+
+    setTimeout(() => {      
+      document.getElementById("start-date").addEventListener("change", function() {
         inputStart = this.value;
         inputEndDate.setAttribute('min', inputStart);
         startDate = new Date(inputStart);
@@ -81,7 +81,9 @@ export default function Calendar({ week, entryType, onClick }) {
         console.log("END");
         console.log(inputEnd); //e.g. 2015-11-13
       });
-    });
+    
+    }, "1000");
+      
 
     
     const daysContainer = document.createElement('div');

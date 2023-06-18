@@ -21,7 +21,7 @@ export default function Day({ dayOfEvent, entries, entryType, onClick }) {
       day.appendChild(Entry({ entryType, entry, onClick }))
     });
   
-    //day.appendChild(Entry({ entryType, add: true, onClick }))
+    // day.appendChild(Entry({ entryType, add: true, onClick }))
     
     return day;
   }

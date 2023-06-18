@@ -19,12 +19,12 @@ async function feedingRouter(res, pool) {
 
         let resStatusCode = StatusCodes.NOT_FOUND;
         let resData = {
-        success: false,
-        message: 'Route not found.'
+            success: false,
+            message: 'Route not found.'
         };
 
-        if (routes.feeding.create.validate(url, method, childId)) {
-            const { statusCode, data } = await createFeedingEvent(body, pool);
+        if (routes.feeding.create.validate(url, method, id)) {
+            const { statusCode, data } = await createFeedingEvent(pool, body);
       
             resStatusCode = statusCode;
             resData = data;
@@ -33,18 +33,18 @@ async function feedingRouter(res, pool) {
 
             resStatusCode = statusCode;
             resData = data;
-        } else if (routes.feeding.getById.validate(url, method, childId, id)) {
-            const { statusCode, data } = await getFeedingEventById(childId, id, pool);
+        } else if (routes.feeding.getById.validate(url, method, id)) {
+            const { statusCode, data } = await getFeedingEventById(pool, id);
 
             resStatusCode = statusCode;
             resData = data;
-        } else if (routes.feeding.update.validate(url, method, childId, id)) {
-            const { statusCode, data } = await updateFeedingEvent(body, pool);
+        } else if (routes.feeding.update.validate(url, method, id)) {
+            const { statusCode, data } = await updateFeedingEvent(pool, id, body);
             
             resStatusCode = statusCode;
             resData = data;
-        } else if (routes.feeding.delete.validate(url, method, childId, id)) {
-            const { statusCode, data } = await deleteFeedingEvent(id, pool);
+        } else if (routes.feeding.delete.validate(url, method, id)) {
+            const { statusCode, data } = await deleteFeedingEvent(pool, id);
             
             resStatusCode = statusCode;
             resData = data;

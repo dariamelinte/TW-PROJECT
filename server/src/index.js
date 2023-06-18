@@ -8,6 +8,7 @@ const authRouter = require('./routers/auth');
 const userRouter = require('./routers/user');
 const childRouter = require('./routers/child');
 const friendRouter = require('./routers/friend');
+const feedingRouter = require('./routers/feeding');
 const friendInteractionRouter = require('./routers/friendInteraction');
 const { headers } = require('./utils/headers');
 
@@ -73,6 +74,8 @@ const server = http.createServer(async (req, res) => {
     return friendRouter(response, pool);
   } else if (request.url?.startsWith('/friend-interactions')) {
     return friendInteractionRouter(response, pool);
+  } else if (request.url?.startsWith('/feeding-calendar')) {
+    return feedingRouter(response, pool);
   }
 
   response.writeHead(404, headers);

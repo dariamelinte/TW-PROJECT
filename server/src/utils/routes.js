@@ -192,28 +192,28 @@ const routes = {
 
   feeding: {
     create: {
-      url: (childId) => `/feeding-calendar?childId=${childId}`,
+      url: () => `/feeding-calendar`,
       method: methods.POST,
-      validate: (url, method, childId) => (
-        url === routes.feeding.create.url(childId) &&
+      validate: (url, method) => (
+        url === routes.feeding.create.url() &&
         method === routes.feeding.create.method
       )
     },
 
     update: {
-      url: (childId, id) => `/feeding-calendar/card?childId=${childId}&cardId=${id}`,
+      url: (id) => `/feeding-calendar?id=${id}`,
       method: methods.PATCH,
-      validate: (url, method, childId, id) => (
-        url === routes.feeding.update.url(childId, id) &&
+      validate: (url, method, id) => (
+        url === routes.feeding.update.url(id) &&
         method === routes.feeding.update.method
       )
     },
 
     delete: {
-      url: (childId, id) => `/feeding-calendar/card?childId=${childId}&cardId=${id}`,
+      url: (id) => `/feeding-calendar?id=${id}`,
       method: methods.DELETE,
-      validate: (url, method, childId, id) => (
-        url === routes.feeding.delete.url(childId, id) &&
+      validate: (url, method, id) => (
+        url === routes.feeding.delete.url(id) &&
         method === routes.feeding.delete.method
       )
     },
@@ -228,10 +228,10 @@ const routes = {
     },
 
     getById: {
-      url: (childId, id) => `/feeding-calendar/card?childId=${childId}&cardId=${id}`,
+      url: (id) => `/feeding-calendar?id=${id}`,
       method: methods.GET,
-      validate: (url, method, childId, id) => (
-        url === routes.feeding.getById.url(childId, id) &&
+      validate: (url, method, id) => (
+        url === routes.feeding.getById.url(id) &&
         method === routes.feeding.getById.method
       )
     },

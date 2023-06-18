@@ -1,29 +1,50 @@
-import { deleteFeedingEvent } from '/frontend/server/feeding/deleteFeedingEvent.js';
-
+import Routes from '/frontend/utils/Routes.js';
+import cleanInput from '/frontend/utils/cleanInput.js';
 import { INITIAL_FEEDING_NOTE } from '/frontend/utils/initialValues.js';
 import showError from '/frontend/utils/showError.js';
-import Routes from '/frontend/utils/Routes.js';
 
-export default function FeedingNoteForm({ childId, feedingNote, onSave }) {
+import { deleteFeedingEvent } from '/frontend/server/feeding/deleteFeedingEvent.js';
+import { addFeedingEvent } from '/frontend/server/feeding/createFeedingEvent.js';
+import { editFeedingEvent } from '/frontend/server/feeding/updateFeedingEvent.js';
+
+
+export default function FeedingNoteForm({ feedingNote = INITIAL_FEEDING_NOTE, add = false }) {
   const { id, date_time, note } = feedingNote;
+
+  const childId = new URLSearchParams(window.location.search).get('childId');
 
   const saveData = async (e) => {
     e.preventDefault();
 
     const form = document.querySelector('form');
     const formData = new FormData(form);
+    const feedingInput = Object.fromEntries(formData);
+    feedingInput.childId = childId;
 
-    //send the data to the server
-    await onSave(formData);
+    const data = add ? await addFeedingEvent(cleanInput(feedingInput)) : await editFeedingEvent(id, feedingInput);
+    if (!data.success) {
+      showError(data.message);
+      return;
+    }
+    
+    window.location.href = Routes.children.feedingCalendar.path(childId);
+    // console.log("CHECK1");
+    // console.log(form);
+    // console.log(formData);
+    
 
-    // console.log("date: ", formData.get("date"));
-    // console.log("description: ", formData.get("description"));
+    // //send the data to the server
+    // await onSave(formData);
+
+    // // console.log("date: ", formData.get("date"));
+    // // console.log("description: ", formData.get("description"));
   }
 
   const deleteData = async (e) => {
     e?.preventDefault();
 
-    const data = await deleteFeedingEvent(childId, id);
+    const data = await deleteFeedingEvent(id);
+    console.log(data.success);
     if (!data.success) {
       showError(data.message);
       return;
@@ -37,15 +58,15 @@ export default function FeedingNoteForm({ childId, feedingNote, onSave }) {
 
   form.innerHTML = `
     <div class="flex column justify-center w-full">
-      <label for="hour">Ora</label>
-      <input type="datetime-local" name="datetime" id="datetime" value="${date_time}" class="bg-yellow-200 w-full" />
+      <label for="hour">Data si ora</label>
+      <input type="datetime-local" name="date_time" id="date_time" value="${date_time}" class="bg-yellow-200 w-full" />
     </div>
     
     <div class="flex column justify-center w-full">
       <label for="info">Informatii despre masa</label>
       <textarea 
-        name="info" 
-        id="info"
+        name="note" 
+        id="note"
         placeholder="Adauga aici masa ..."
         class="bg-yellow-200 h-20"
       >

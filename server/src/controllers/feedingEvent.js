@@ -1,4 +1,4 @@
-import { randomUUID } from 'crypto';
+const { randomUUID } = require('crypto');
 const { StatusCodes } = require('http-status-codes');
 
 const feedingEventEntity = require('../entities/feedingEvent');
@@ -6,20 +6,8 @@ const feedingEventEntity = require('../entities/feedingEvent');
 exports.createFeedingEvent = async (pool, feedingEvent = {}) => {
   try {
     const id = randomUUID();
-    const {succes: successCreate } = await feedingEventEntity.insert(pool, id, feedingEvent);
+    const { success: successCreate } = await feedingEventEntity.insert(pool, id, feedingEvent);
     const { success, result } = await feedingEventEntity.getById(pool, id);
-
-    //const { childId, dateTime, note } = feedingEvent;
-
-    // const result = await pool.query(
-    //   `
-    //   INSERT INTO  feeding_calendar
-    //     (id, childId, dateTime, note)
-    //   VALUES
-    //     ($1, $2, $3, $4)
-    //   `,
-    //   [randomUUID(), childId, dateTime, note]
-    // );
 
     if (!successCreate || !success) {
       throw Error();
@@ -65,30 +53,18 @@ exports.updateFeedingEvent = async (pool, id, feedingEvent = {}) => {
       note: feedingEvent.note || oldFeedingEvent.note
     });
 
-    const { success, result: updateFeedingEvent } = await feedingEventEntity.getById(pool, id);
+    const { success, result } = await feedingEventEntity.getById(pool, id);
 
     if (!successUpdate || !success) {
       throw Error();
     }
-    // const { id, childId, dateTime, note } = feedingEvent;
-    // const result = await pool.query(
-    //   `
-    //   UPDATE feeding_calendar
-    //   SET
-    //     childId = $1,
-    //     dateTime = $2,
-    //     note = $3
-    //   WHERE id = $4
-    //   `,
-    //   [childId, dateTime, note, id]
-    // );
 
     return {
       statusCode: StatusCodes.ACCEPTED,
       data: {
         success: true,
         message: 'Updated feeding event successfuly.',
-        result: updatedFriend
+        result
       }
     };
   } catch (error) {
@@ -104,7 +80,7 @@ exports.updateFeedingEvent = async (pool, id, feedingEvent = {}) => {
   }
 };
 
-exports.getFeedingEvents = async (childId, pool) => {
+exports.getFeedingEvents = async (pool, childId) => {
   try {
     const { success, result } = await feedingEventEntity.getByChildId(pool, childId);
 
@@ -135,7 +111,7 @@ exports.getFeedingEvents = async (childId, pool) => {
 
 exports.getFeedingEventById = async (pool, id) => {
   try {
-    const { success, result } = await friendEntity.getById(pool, id);
+    const { success, result } = await feedingEventEntity.getById(pool, id);
 
     if (!success) {
       throw Error();
@@ -163,13 +139,13 @@ exports.getFeedingEventById = async (pool, id) => {
   }
 };
 
-exports.deleteFeedingEvent = async (id, pool) => {
+exports.deleteFeedingEvent = async (pool, id) => {
   try {
     await feedingEventEntity.delete(pool, id);
     const { result } = await feedingEventEntity.getById(pool, id);
 
     if (result) {
-      throw Error(`Could not properly delete feeding event with id = ${id}`);
+      throw Error(`Could not properly delete friend with id = ${id}`);
     }
 
     return {
