@@ -187,7 +187,16 @@ const routes = {
         url === routes.auth.forgotPassword.url() &&
         method === routes.auth.forgotPassword.method
       )
-    }
+    },
+    
+    logout: {
+      url: () => '/auth/logout',
+      method: methods.POST,
+      validate: (url, method) => (
+        url === routes.auth.logout.url() &&
+        method === routes.auth.logout.method
+      )
+    },
   },
 
   feeding: {

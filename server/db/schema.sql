@@ -182,7 +182,8 @@ CREATE TABLE public."user" (
     "dateOfBirth" character varying(16) NOT NULL,
     gender character varying(16),
     nationality character varying(16),
-    "familyId" character varying(64) NOT NULL
+    "familyId" character varying(64) NOT NULL,
+    jwt text
 );
 
 

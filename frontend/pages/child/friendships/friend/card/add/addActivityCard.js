@@ -1,11 +1,20 @@
 import Header from '/frontend/components/header.js';
 import ActivityForm from '/frontend/components/forms/activityForm.js';
-import showError from '/frontend/utils/showError.js';
-
-import cleanInput from '/frontend/utils/cleanInput.js';
-import Routes from '/frontend/utils/Routes.js';
 import { addFriendInteraction } from '/frontend/server/friendInteraction/addFriendInteraction.js';
 import { INITIAL_ACTIVITY } from '/frontend/utils/initialValues.js';
+
+import { getCookie } from '/frontend/utils/cookie.js';
+import { COOKIE_NAME } from '/frontend/utils/constants.js';
+import { isJwtExpired } from '/frontend/utils/jwt.js';
+import { showError } from '/frontend/utils/showMessages.js';
+import cleanInput from '/frontend/utils/cleanInput.js';
+import Routes from '/frontend/utils/Routes.js';
+
+const jwt = getCookie(COOKIE_NAME);
+
+if (!jwt || isJwtExpired(jwt)) {
+  window.location.href = Routes.login.path();
+}
 
 const { card, path } = Routes.children.friendships.friend;
 
