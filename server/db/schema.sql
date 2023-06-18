@@ -67,6 +67,22 @@ CREATE TABLE public.child (
 ALTER TABLE public.child OWNER TO postgres;
 
 --
+-- TOC entry 221 (class 1259 OID 41041)
+-- Name: favourites; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.favourites (
+    id character varying(64) NOT NULL,
+    "userId" character varying(64) NOT NULL,
+    "elementId" character varying(64) NOT NULL,
+    "date" character varying(32) NOT NULL,
+    "table_name" character varying(32) NOT NULL
+);
+
+
+ALTER TABLE public.favourites OWNER TO postgres;
+
+--
 -- TOC entry 217 (class 1259 OID 41001)
 -- Name: feeding_calendar; Type: TABLE; Schema: public; Owner: postgres
 --

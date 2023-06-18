@@ -13,6 +13,18 @@ export default function FeedingNoteForm({ feedingNote = INITIAL_FEEDING_NOTE, ad
 
   const childId = new URLSearchParams(window.location.search).get('childId');
 
+  const whiteHeart = '\u2661';
+  const blackHeart = '\u2665';
+
+  function toggleFavourite() {
+    const like = button.textContent;
+    if(like==whiteHeart) {
+      button.textContent = blackHeart;
+    } else {
+      button.textContent = whiteHeart;
+    }
+  }
+
   const saveData = async (e) => {
     e.preventDefault();
 
@@ -28,16 +40,6 @@ export default function FeedingNoteForm({ feedingNote = INITIAL_FEEDING_NOTE, ad
     }
     
     window.location.href = Routes.children.feedingCalendar.path(childId);
-    // console.log("CHECK1");
-    // console.log(form);
-    // console.log(formData);
-    
-
-    // //send the data to the server
-    // await onSave(formData);
-
-    // // console.log("date: ", formData.get("date"));
-    // // console.log("description: ", formData.get("description"));
   }
 
   const deleteData = async (e) => {
@@ -57,6 +59,10 @@ export default function FeedingNoteForm({ feedingNote = INITIAL_FEEDING_NOTE, ad
   form.className = 'mt-9 w-25';
 
   form.innerHTML = `
+    <div class="flex justify-right w-full ">
+      <button type="favourite">♡</button>
+    </div>
+
     <div class="flex column justify-center w-full">
       <label for="hour">Data si ora</label>
       <input type="datetime-local" name="date_time" id="date_time" value="${date_time}" class="bg-yellow-200 w-full" />
@@ -81,6 +87,7 @@ export default function FeedingNoteForm({ feedingNote = INITIAL_FEEDING_NOTE, ad
 
   form.querySelector('button[type="submit"]').addEventListener('click', saveData);
   form.querySelector('button[type="button"]').addEventListener('click', deleteData);
+  form.querySelector('button[type="favourite"]').addEventListener('click', toggleFavourite);
 
   return form;
 }
