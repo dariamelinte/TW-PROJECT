@@ -20,8 +20,6 @@ export default function Day({ dayOfEvent, entries, entryType, onClick }) {
     entries.forEach(entry => {
       day.appendChild(Entry({ entryType, entry, onClick }))
     });
-  
-    // day.appendChild(Entry({ entryType, add: true, onClick }))
     
     return day;
   }

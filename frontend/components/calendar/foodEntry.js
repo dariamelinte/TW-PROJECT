@@ -5,7 +5,6 @@ export default function FoodEntry({ entry = {}, add, onClick }) {
   let time = "";
 
   if (!add) {
-    console.log(date_time);
     date_time_split = date_time.split('T');
     time = date_time_split[1].slice(0,5);
   }

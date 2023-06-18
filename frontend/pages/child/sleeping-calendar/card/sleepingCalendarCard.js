@@ -7,7 +7,6 @@ import { editSleepingEvent } from '/frontend/server/sleeping/updateSleepingEvent
 
 import Routes from '/frontend/utils/Routes.js';
 
-// import mocked_week_sleep from '../__mock__week-sleep.json' assert { type: 'json' };
 
 const { add, path } = Routes.children.sleepingCalendar;
 
@@ -19,7 +18,6 @@ const event = await getSleepingEventById(id);
 const onSave = async (formData) => {
   // api call
   const sleepingInput = Object.fromEntries(formData);
-  // console.log(sleepingInput);
   const data = await editSleepingEvent(id, sleepingInput);
 
   if(!data.success) {

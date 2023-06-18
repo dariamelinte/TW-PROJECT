@@ -11,7 +11,6 @@ export default function Calendar({ week, entryType, onClick }) {
     let yyyy = today.getFullYear();
 
     today = yyyy + '-' + mm + '-' + dd;
-    console.log(today);
 
     const inputStartDate = document.createElement('input');
     inputStartDate.setAttribute('type', 'date');
@@ -57,9 +56,6 @@ export default function Calendar({ week, entryType, onClick }) {
 
     calendar.appendChild(timePeriod);
     
-    // calendar.appendChild(newMeal);
-
-    console.log(week);
     
     let inputStart;
     let inputEnd;
@@ -71,15 +67,11 @@ export default function Calendar({ week, entryType, onClick }) {
         inputStart = this.value;
         inputEndDate.setAttribute('min', inputStart);
         startDate = new Date(inputStart);
-        console.log("START");
-        console.log(inputStart); //e.g. 2015-11-13
       });
       document.getElementById('end-date').addEventListener("change", function() {
         inputEnd = this.value;
         inputStartDate.setAttribute('max', inputEnd);
         endDate = new Date(inputEnd);
-        console.log("END");
-        console.log(inputEnd); //e.g. 2015-11-13
       });
     
     }, "1000");
@@ -92,37 +84,28 @@ export default function Calendar({ week, entryType, onClick }) {
     applyButton.addEventListener('click', () => {
       daysContainer.innerHTML = "";
       for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
-        console.log(new Date(d));
         const stringDate = d.toString();
-        console.log(stringDate);
         window[stringDate] = [];
       }
       week.forEach((event) => {
-        console.log(event);
         let dateOfEvent;
         if (entryType === "food") {
           const { date_time } = event;
-          console.log(date_time);
     
           const date_time_split = date_time.split('T');
-          console.log(date_time_split[0]);
 
           dateOfEvent = new Date(date_time_split[0]);
-          console.log(dateOfEvent);
         } else {
           const { date } = event;
           dateOfEvent = new Date(date);
-          console.log(dateOfEvent);
         }
 
         if ( dateOfEvent >= startDate && dateOfEvent <= endDate){
-          console.log("yas queen");
           window[dateOfEvent].push(event);
         }
   
       });
       for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
-        console.log(window[d]);
 
         daysContainer.appendChild(Day({ 'dayOfEvent': d, 'entries': window[d], entryType, onClick }));
       }

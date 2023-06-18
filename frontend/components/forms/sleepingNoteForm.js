@@ -35,7 +35,6 @@ export default function SleepingNoteForm({ sleepingNote = INITIAL_SLEEPING_NOTE,
     e?.preventDefault();
 
     const data = await deleteSleepingEvent(id);
-    console.log(data.success);
     if (!data.success) {
       showError(data.message);
       return;

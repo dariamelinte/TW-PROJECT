@@ -4,7 +4,6 @@ import Routes from '/frontend/utils/Routes.js';
 import { entryTypes } from "/frontend/utils/selectsOptions.js";
 
 import { getSleepingEvents } from '/frontend/server/sleeping/getSleepingEvents.js';
-// import mock_week_sleep from './__mock__week-sleep.json' assert { type: "json" };
 
 const { title, add: addRoute, card: cardRoute } = Routes.children.sleepingCalendar;
 

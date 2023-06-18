@@ -17,7 +17,6 @@ const event = await getFeedingEventById(id);
 const onSave = async (formData) => {
   // api call
   const feedingInput = Object.fromEntries(formData);
-  // console.log(feedingInput);
   const data = await editFeedingEvent(id, feedingInput);
 
   if(!data.success) {

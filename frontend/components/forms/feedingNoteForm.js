@@ -28,23 +28,12 @@ export default function FeedingNoteForm({ feedingNote = INITIAL_FEEDING_NOTE, ad
     }
     
     window.location.href = Routes.children.feedingCalendar.path(childId);
-    // console.log("CHECK1");
-    // console.log(form);
-    // console.log(formData);
-    
-
-    // //send the data to the server
-    // await onSave(formData);
-
-    // // console.log("date: ", formData.get("date"));
-    // // console.log("description: ", formData.get("description"));
   }
 
   const deleteData = async (e) => {
     e?.preventDefault();
 
     const data = await deleteFeedingEvent(id);
-    console.log(data.success);
     if (!data.success) {
       showError(data.message);
       return;
