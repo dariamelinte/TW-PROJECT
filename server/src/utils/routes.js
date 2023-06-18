@@ -197,6 +197,15 @@ const routes = {
         method === routes.auth.logout.method
       )
     },
+
+    changePassword: {
+      url: (id) => `/auth/change-password?id=${id}`,
+      method: methods.POST,
+      validate: (url, method, id) => (
+        url === routes.auth.changePassword.url(id) &&
+        method === routes.auth.changePassword.method
+      )
+    },
   },
 
   user: {

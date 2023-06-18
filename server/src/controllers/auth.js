@@ -229,3 +229,57 @@ exports.logout = async (pool, user = {}) => {
     };
   }
 };
+
+exports.changePassword = async (pool, id, credentials = {}) => {
+  const emptyPassword = !(credentials.password && credentials.password.trim().length);
+  const emptyNewPassword = !(credentials.newPassword && credentials.newPassword.trim().length);
+
+  if (emptyPassword || emptyNewPassword) {
+    return {
+      statusCode: StatusCodes.BAD_REQUEST,
+      data: {
+        success: false,
+        message: 'Missing field: password, newPassword.'
+      }
+    };
+  }
+
+  try {
+    const { success, result: user } = await userEntity.getById(pool, id);
+
+    if (!success || !user || !isHashMatching(credentials.password, user.password)) {
+      return {
+        statusCode: StatusCodes.UNAUTHORIZED,
+        data: {
+          success: false,
+          message: 'The password is incorrect.'
+        }
+      };
+    }
+
+    const { success: successUpdate } = await userEntity.updatePassword(
+      pool,
+      id,
+      hashString(credentials.newPassword)
+    );
+
+    if (!successUpdate) throw Error();
+
+    return {
+      statusCode: StatusCodes.OK,
+      data: {
+        success: true,
+        message: 'Password updated successfuly.'
+      }
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: {
+        success: false,
+        message: 'Something went wrong, please try again.'
+      }
+    };
+  }
+};

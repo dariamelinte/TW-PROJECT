@@ -1,12 +1,14 @@
 const { StatusCodes } = require('http-status-codes');
+const querystring = require('querystring');
 
 const { headers } = require('../utils/headers');
-const { routes } = require('../utils/routes');
-const { register, login, forgotPassword, logout } = require('../controllers/auth');
+const { routes, getQueryString } = require('../utils/routes');
+const { register, login, forgotPassword, logout, changePassword } = require('../controllers/auth');
 
 async function authRouter(res, pool) {
   try {
     const { url, method, body } = res.locals;
+    const { id } = querystring.parse(getQueryString(url));
 
     let resStatusCode = StatusCodes.NOT_FOUND;
     let resData = {
@@ -29,6 +31,10 @@ async function authRouter(res, pool) {
       resData = data;
     } else if (routes.auth.logout.validate(url, method)) {
       const { statusCode, data } = await logout(pool, body);
+      resStatusCode = statusCode;
+      resData = data;
+    } else if (routes.auth.changePassword.validate(url, method, id)) {
+      const { statusCode, data } = await changePassword(pool, id, body);
       resStatusCode = statusCode;
       resData = data;
     }

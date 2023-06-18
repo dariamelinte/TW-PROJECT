@@ -3,19 +3,19 @@ import { showError, showMessage } from '/frontend/utils/showMessages.js';
 
 import { updateMyProfile } from '/frontend/server/my-profile/updateMyProfile.js';
 
-export default function MyAccountForm({ account = {} }) {
+export default function ChangePasswordForm({ account = {} }) {
     const { id, firstName, lastName, email, dateOfBirth, gender, nationality } = account;
     console.log({ firstName, lastName, email, dateOfBirth, gender, nationality })
-    const myAccountForm = document.createElement('form');
+    const ChangePasswordForm = document.createElement('form');
   
     const onSave = async (event) => {
       event.preventDefault();
   
       const form = document.querySelector('form');
       const formData = new FormData(form);
-      const myAccountInput = Object.fromEntries(formData);
+      const ChangePasswordInput = Object.fromEntries(formData);
 
-      const data = await updateMyProfile(id, myAccountInput);
+      const data = await updateMyProfile(id, ChangePasswordInput);
 
       if (!data.success) {
         showError(data.message);
@@ -32,8 +32,8 @@ export default function MyAccountForm({ account = {} }) {
       return `<option value="${key}">${value}</option>`;
     });
   
-    myAccountForm.className="rounded";
-    myAccountForm.innerHTML = `
+    ChangePasswordForm.className="rounded";
+    ChangePasswordForm.innerHTML = `
       <div class="flex row justify-center">
         <div class="flex column justify-center mr-2">
             <div class="flex column justify-center">
@@ -109,6 +109,6 @@ export default function MyAccountForm({ account = {} }) {
       <div id="message"></div>
     `;
 
-    myAccountForm.querySelector('button[type="submit"]').addEventListener('click', onSave);
-    return myAccountForm;
+    ChangePasswordForm.querySelector('button[type="submit"]').addEventListener('click', onSave);
+    return ChangePasswordForm;
   }
