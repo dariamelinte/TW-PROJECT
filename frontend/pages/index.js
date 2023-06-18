@@ -1,8 +1,19 @@
 import Header from '../components/header.js';
 import VerticalList from '../components/verticalList.js';
 import ChildrenList from '../components/children/childrenList.js';
+
 import { getFamilyChildren } from "../server/child/getFamilyChildren.js";
+
+import { getCookie } from '../utils/cookie.js';
+import { COOKIE_NAME } from '../utils/constants.js';
+import { isJwtExpired, parseJwt } from '../utils/jwt.js';
 import Routes from '../utils/Routes.js';
+
+const jwt = getCookie(COOKIE_NAME);
+
+if (!jwt || isJwtExpired(jwt)) {
+  window.location.href = Routes.login.path();
+}
 
 // if the childId param is present, then the user is on a child page
 const childId = new URLSearchParams(window.location.search).get('childId');

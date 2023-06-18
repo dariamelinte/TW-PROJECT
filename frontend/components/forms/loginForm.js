@@ -1,22 +1,29 @@
-import Routes from "../../utils/Routes.js";
+import { login } from '../../server/auth/login.js';
+import { COOKIE_NAME } from '../../utils/constants.js';
+import Routes from '../../utils/Routes.js';
+import { showError } from '/frontend/utils/showMessages.js';
 
 export default function LoginForm() {
   const form = document.createElement('form');
-  form.className = "w-20"
+  form.className = 'w-20';
 
-  function login(event) {
+  const onLogin = async (event) => {
     event.preventDefault();
 
-    
     const form = document.querySelector('form');
     const formData = new FormData(form);
-    
-    //TODO: send the data to the server
-    console.log(formData.get('email'));
-    console.log(formData.get('password'));
+    const loginInput = Object.fromEntries(formData);
 
+    const data = await login(loginInput);
+
+    if (!data.success) {
+      showError(data.message);
+      return;
+    }
+
+    document.cookie = `${COOKIE_NAME}=${data.result.jwt}; path=/;`;
     window.location.href = Routes.home.path();
-  }
+  };
 
   form.innerHTML = `
       <div class="flex column w-full justify-center">
@@ -25,17 +32,18 @@ export default function LoginForm() {
       </div>
       
       <div class="flex column w-full justify-center">
-        <label for="password">Password</label>
-        <input name="password" id="password" placeholder="Password" type="password" />
+        <label for="password">Parola</label>
+        <input name="password" id="password" placeholder="Parola" type="password" />
       </div>
 
-      <a class="mt-2" href="${Routes.register.path()}">Add your family</a>
-      <a href="${Routes.forgotPassword.path()}">Forgot password?</a>
+      <a class="mt-2" href="${Routes.register.path()}">Inregistreaza-te</a>
+      <a href="${Routes.forgotPassword.path()}">Parola uitata?</a>
 
-      <button id="login" class="mt-3">Login</button>
+      <button class="principal mt-3" type="submit">Login</button>
+      <div id="error"></div>
     `;
 
-    form.querySelector('button').addEventListener('click', login);
+  form.querySelector('button').addEventListener('click', onLogin);
 
   return form;
 }

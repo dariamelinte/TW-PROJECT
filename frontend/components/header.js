@@ -1,4 +1,5 @@
 import Routes from "../utils/Routes.js";
+import { COOKIE_NAME } from "../utils/constants.js";
 
 export default function Header(title) {
   const header = document.createElement('nav');
@@ -24,6 +25,8 @@ export default function Header(title) {
   
   const logoutButton = header.querySelector('button');
   logoutButton.addEventListener('click', () => {
+    // Make the cookie invalid
+    document.cookie = `${COOKIE_NAME}=; path=/;`;
     window.location.href = Routes.login.path();
   }); 
 
