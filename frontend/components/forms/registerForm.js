@@ -1,6 +1,6 @@
 import { register } from "../../server/auth/register.js"
 import Routes from "../../utils/Routes.js";
-import showError from "../../utils/showError.js";
+import { showError } from '/frontend/utils/showMessages.js';
 
 export default function RegisterForm() {
   const form = document.createElement('form');

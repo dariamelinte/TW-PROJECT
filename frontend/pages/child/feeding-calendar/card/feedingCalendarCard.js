@@ -1,30 +1,31 @@
 import Header from '/frontend/components/header.js';
 import FeedingNoteForm from '/frontend/components/forms/feedingNoteForm.js';
+import { showError } from '/frontend/utils/showMessages.js';
+
+import { getFeedingEventById } from '/frontend/server/feeding/getFeedingEventById.js';
+import { editFeedingEvent } from '/frontend/server/feeding/updateFeedingEvent.js';
 
 import Routes from '/frontend/utils/Routes.js';
 
-import mocked_week_feeding from '../__mock__week-feeding.json' assert { type: 'json' };
-
 const { add, path } = Routes.children.feedingCalendar;
 
-const childId = parseInt(new URLSearchParams(window.location.search).get('childId'));
-const cardId = parseInt(new URLSearchParams(window.location.search).get('cardId'));
+const childId = new URLSearchParams(window.location.search).get('childId');
+const id = new URLSearchParams(window.location.search).get('cardId');
 
-const onSave = () => {
-  // TO DO: api call
-  window.location.href = path(childId);
+const event = await getFeedingEventById(id);
+
+const onSave = async (formData) => {
+  // api call
+  const feedingInput = Object.fromEntries(formData);
+  const data = await editFeedingEvent(id, feedingInput);
+
+  if(!data.success) {
+    showError(data.message);
+    return;
+  }
+
+  window.location.href = path(childId, id);
 } 
 
-let feedingNote = {}
-Object.values(mocked_week_feeding).forEach(day => {
-  const findResult = day.find(entry => entry.id === cardId);
-
-  if (findResult) {
-    feedingNote = findResult;
-  }
-});
-
-console.log(feedingNote);
-
 document.body.appendChild(Header(add.title));
-document.body.appendChild(FeedingNoteForm({ feedingNote, onSave }));
+document.body.appendChild(FeedingNoteForm({childId, feedingNote: event, onSave }));

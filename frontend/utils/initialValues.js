@@ -32,13 +32,14 @@ export const INITIAL_MEDICAL_ENTRY = {
 };
 
 export const INITIAL_FEEDING_NOTE = {
-  hour: '',
-  info: ''
+  date_time: '',
+  note: ''
 };
 
 export const INITIAL_SLEEPING_NOTE = {
-  firstHour: '',
-  secondHour: '',
-  sleepPeriod: '',
-  sleepType: ''
+  date: '',
+  start_time: '',
+  end_time: '',
+  sleepType: '',
+  note: ''
 };

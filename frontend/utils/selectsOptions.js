@@ -20,13 +20,28 @@ export const severityTypes = {
 };
 
 export const weekTypes = {
-  "monday": "Luni",
-  "tuesday": "Marti",
-  "wednesday": "Miercuri",
-  "thursday": "Joi",
-  "friday": "Vineri",
-  "saturday": "Sambata",
-  "sunday": "Duminica",
+  "Mon": "Luni",
+  "Tue": "Marti",
+  "Wed": "Miercuri",
+  "Thu": "Joi",
+  "Fri": "Vineri",
+  "Sat": "Sambata",
+  "Sun": "Duminica",
+};
+
+export const monthTypes = {
+  "Jan": "Ianuarie",
+  "Feb": "Februarie",
+  "Mar": "Martie",
+  "Apr": "Aprilie",
+  "May": "Mai",
+  "Jun": "Iunie",
+  "Jul": "Iulie",
+  "Aug": "August",
+  "Sep": "Septembrie",
+  "Oct": "Octombrie",
+  "Nov": "Noiembrie",
+  "Dec": "Decembrie",
 };
 
 export const sleepPeriodTypes = {

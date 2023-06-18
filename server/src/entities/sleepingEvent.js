@@ -1,14 +1,15 @@
 exports.insert = async (pool, id, sleepingEvent = {}) => {
   try {
-    const { childId, dateTime, sleepType, note } = sleepingEvent;
+    const { childId, date, start_time, end_time, sleepType, note } = sleepingEvent;
+
     await pool.query(
       `
       INSERT INTO  sleeping_calendar
-        (id, "childId", "dateTime", "sleepType", note)
+        (id, "childId", date, start_time, end_time, "sleepType", note)
       VALUES
-        ($1, $2, $3, $4, $5)
+        ($1, $2, $3, $4, $5, $6, $7)
       `,
-      [id, childId, dateTime, sleepType, note]
+      [id, childId, date, start_time, end_time, sleepType, note]
     );
 
     return {
@@ -25,19 +26,20 @@ exports.insert = async (pool, id, sleepingEvent = {}) => {
 
 exports.update = async (pool, id, sleepingEvent = {}) => {
   try {
-    const { childId, dateTime, sleepType, note, id } = sleepingEvent;
+    const { date, start_time, end_time, sleepType, note } = sleepingEvent;
 
     await pool.query(
       `
       UPDATE sleeping_calendar
       SET
-        "childId" = $1,
-        "dateTime" = $2,
-        "sleepType" = $3,
-        note = $4
-      WHERE id = $5
+        "date" = $1,
+        start_time = $2,
+        end_time = $3,
+        "sleepType" = $4,
+        note = $5
+      WHERE id = $6
       `,
-      [childId, dateTime, sleepType, note, id]
+      [date, start_time, end_time, sleepType, note, id]
     );
 
     return {

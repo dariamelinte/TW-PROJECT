@@ -1,15 +1,15 @@
 exports.insert = async (pool, id, feedingEvent = {}) => {
   try {
-    const { childId, dateTime, note } = feedingEvent;
+    const { childId, date_time, note } = feedingEvent;
 
     await pool.query(
       `
       INSERT INTO  feeding_calendar
-        (id, "childId", "dateTime", note)
+        (id, "childId", date_time, note)
       VALUES
         ($1, $2, $3, $4)
       `,
-      [id, childId, dateTime, note]
+      [id, childId, date_time, note]
     );
 
     return {
@@ -26,18 +26,17 @@ exports.insert = async (pool, id, feedingEvent = {}) => {
 
 exports.update = async (pool, id, feedingEvent = {}) => {
   try {
-    const { childId, dateTime, note } = feedingEvent;
+    const { date_time, note } = feedingEvent;
 
     await pool.query(
       `
       UPDATE feeding_calendar
       SET
-        "childId" = $1,
-        "dateTime" = $2,
-        note = $3
-      WHERE id = $4
+        "date_time" = $1,
+        note = $2
+      WHERE id = $3
       `,
-      [childId, dateTime, note, id]
+      [date_time, note, id]
     );
 
     return {
