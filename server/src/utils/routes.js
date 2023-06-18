@@ -197,7 +197,63 @@ const routes = {
         method === routes.auth.logout.method
       )
     },
-  }
+  },
+
+  user: {
+    create: {
+      url: () => '/users',
+      method: methods.POST,
+      validate: (url, method) => (
+        url === routes.user.create.url() &&
+        method === routes.user.create.method
+      )
+    },
+  
+    update: {
+      url: (id) => `/users?id=${id}`,
+      method: methods.PATCH,
+      validate: (url, method, id) => (
+        url === routes.user.update.url(id) &&
+        method === routes.user.update.method
+      )
+    },
+  
+    delete: {
+      url: (id) => `/users?id=${id}`,
+      method: methods.DELETE,
+      validate: (url, method, id) => (
+        url === routes.user.delete.url(id) &&
+        method === routes.user.delete.method
+      )
+    },
+  
+    getById: {
+      url: (id) => `/users?id=${id}`,
+      method: methods.GET,
+      validate: (url, method, id) => (
+        url === routes.user.getById.url(id) &&
+        method === routes.user.getById.method
+      )
+    },
+  
+    getByFamilyId: {
+      url: (id) => `/users?familyId=${id}`,
+      method: methods.GET,
+      validate: (url, method, id) => (
+        url === routes.user.getByFamilyId.url(id) &&
+        method === routes.user.getByFamilyId.method
+      )
+    },
+  
+    getByEmail: {
+      url: (email) => `/users?email=${email}`,
+      method: methods.GET,
+      validate: (url, method, email) => (
+        url === routes.user.getByEmail.url(email) &&
+        method === routes.user.getByEmail.method
+      )
+    },
+  },
 }
 
 module.exports = {

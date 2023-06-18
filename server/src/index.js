@@ -73,6 +73,8 @@ const server = http.createServer(async (req, res) => {
     return friendRouter(response, pool);
   } else if (request.url?.startsWith('/friend-interactions')) {
     return friendInteractionRouter(response, pool);
+  } else if (request.url?.startsWith('/users')) {
+    return userRouter(response, pool);
   }
 
   response.writeHead(404, headers);

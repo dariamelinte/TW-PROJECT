@@ -1,12 +1,62 @@
 const { StatusCodes } = require('http-status-codes');
-const { headers } = require("../utils/headers");
+const querystring = require('querystring');
 
-async function userRouter (res, pool) {
-  try{
-    // TODO: Implement user router
-    
-    res.writeHead(StatusCodes.OK, headers);
-    res.end(JSON.stringify({ message: 'Hello from user' }));
+const { headers } = require('../utils/headers');
+const { routes, getQueryString } = require('../utils/routes');
+const {
+  getUserByEmail,
+  getUserById,
+  getUsersByFamilyId,
+  createUser,
+  updateUser,
+  deleteUser,
+} = require('../controllers/user');
+
+async function userRouter(res, pool) {
+  try {
+    const { url, method, body } = res.locals;
+    const { id, email, familyId } = querystring.parse(getQueryString(url));
+
+    let resStatusCode = StatusCodes.NOT_FOUND;
+    let resData = {
+      success: false,
+      message: 'Route not found.'
+    };
+
+    if (routes.user.getByEmail.validate(url, method)) {
+      const { statusCode, data } = await getUserByEmail(pool, email);
+
+      resStatusCode = statusCode;
+      resData = data;
+    } else if (routes.user.getById.validate(url, method, id)) {
+      const { statusCode, data } = await getUserById(pool, id);
+
+      resStatusCode = statusCode;
+      resData = data;
+    } else if (routes.user.getByFamilyId.validate(url, method, familyId)) {
+      const { statusCode, data } = await getUsersByFamilyId(pool, familyId);
+
+      resStatusCode = statusCode;
+      resData = data;
+    } else if (routes.user.create.validate(url, method)) {
+      const { statusCode, data } = await createUser(pool, body);
+
+      resStatusCode = statusCode;
+      resData = data;
+    } else if (routes.user.update.validate(url, method, id)) {
+      const { statusCode, data } = await updateUser(pool, id, body);
+
+      resStatusCode = statusCode;
+      resData = data;
+    } else if (routes.user.delete.validate(url, method, id)) {
+      const { statusCode, data } = await deleteUser(pool, id);
+
+      resStatusCode = statusCode;
+      resData = data;
+    }
+
+    res.writeHead(resStatusCode, headers);
+    res.end(JSON.stringify(resData));
 
     return res;
   } catch (err) {
