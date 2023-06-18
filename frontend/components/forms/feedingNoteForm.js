@@ -1,7 +1,7 @@
 import Routes from '/frontend/utils/Routes.js';
 import cleanInput from '/frontend/utils/cleanInput.js';
 import { INITIAL_FEEDING_NOTE } from '/frontend/utils/initialValues.js';
-import showError from '/frontend/utils/showError.js';
+import { showError } from '/frontend/utils/showMessages.js';
 
 import { deleteFeedingEvent } from '/frontend/server/feeding/deleteFeedingEvent.js';
 import { addFeedingEvent } from '/frontend/server/feeding/createFeedingEvent.js';

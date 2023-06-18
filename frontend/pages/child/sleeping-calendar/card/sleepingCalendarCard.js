@@ -1,6 +1,6 @@
 import Header from '/frontend/components/header.js';
 import SleepingNoteForm from '/frontend/components/forms/sleepingNoteForm.js';
-import showError from '/frontend/utils/showError.js';
+import { showError } from '/frontend/utils/showMessages.js';
 
 import { getSleepingEventById } from '/frontend/server/sleeping/getSleepingEventById.js';
 import { editSleepingEvent } from '/frontend/server/sleeping/updateSleepingEvent.js';

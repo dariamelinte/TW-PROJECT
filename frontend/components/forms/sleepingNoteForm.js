@@ -1,7 +1,7 @@
 import Routes from '/frontend/utils/Routes.js';
 import cleanInput from '/frontend/utils/cleanInput.js';
 import { INITIAL_SLEEPING_NOTE } from '/frontend/utils/initialValues.js';
-import showError from '/frontend/utils/showError.js';
+import { showError } from '/frontend/utils/showMessages.js';
 
 import { deleteSleepingEvent } from '/frontend/server/sleeping/deleteSleepingEvent.js';
 import { addSleepingEvent } from '/frontend/server/sleeping/createSleepingEvent.js';
@@ -57,7 +57,7 @@ export default function SleepingNoteForm({ sleepingNote = INITIAL_SLEEPING_NOTE,
 
   form.innerHTML = `
     <div class="flex w-full items-center flex-wrap">
-      <div class="flex flex-1 column justify-center pr-6">
+      <div class="flex flex-1 column justify-center">
         <label for="date">Data:</label>
         <input type="date" name="date" id="date" value="${date}" class="bg-yellow-200 w-full" />
       </div>
@@ -68,7 +68,7 @@ export default function SleepingNoteForm({ sleepingNote = INITIAL_SLEEPING_NOTE,
           <input type="time" name="start_time" id="start_time" value="${start_time}" class="bg-yellow-200 w-full" />
         </div>
 
-        <div class="flex flex-1 column justify-center mr-2">
+        <div class="flex flex-1 column justify-center">
           <label for="end_time">Ora de final</label>
           <input type="time" name="end_time" id="end_time" value="${end_time}" class="bg-yellow-200 w-full" />
         </div>

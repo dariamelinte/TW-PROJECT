@@ -1,6 +1,6 @@
 import Header from '/frontend/components/header.js';
 import FeedingNoteForm from '/frontend/components/forms/feedingNoteForm.js';
-import showError from '/frontend/utils/showError.js';
+import { showError } from '/frontend/utils/showMessages.js';
 
 import { getFeedingEventById } from '/frontend/server/feeding/getFeedingEventById.js';
 import { editFeedingEvent } from '/frontend/server/feeding/updateFeedingEvent.js';
