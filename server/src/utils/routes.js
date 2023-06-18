@@ -47,6 +47,15 @@ const routes = {
         method === routes.child.getById.method
       )
     },
+
+    getById_RSS: {
+      url: (childId) => `/child?id=${childId}&rss=true`,
+      method: methods.GET,
+      validate: (url, method, childId) => (
+        url === routes.child.getById_RSS.url(childId) &&
+        method === routes.child.getById_RSS.method
+      )
+    },
   
     getByFamilyId: {
       url: (familyId) => `/child?familyId=${familyId}`,
@@ -56,6 +65,15 @@ const routes = {
         method === routes.child.getByFamilyId.method
       )
     },
+
+    getByFamilyId_RSS: {
+      url: (familyId) => `/child?familyId=${familyId}&rss=true`,
+      method: methods.GET,
+      validate: (url, method, familyId) => (
+        url === routes.child.getByFamilyId_RSS.url(familyId) &&
+        method === routes.child.getByFamilyId_RSS.method
+      )
+    },
   
     getAll: {
       url: () => "/child/all",
@@ -63,6 +81,15 @@ const routes = {
       validate: (url, method) => (
         url === routes.child.getAll.url() &&
         method === routes.child.getAll.method
+      )
+    },
+
+    getAll_RSS: {
+      url: () => "/child/all?rss=true",
+      method: methods.GET,
+      validate: (url, method) => (
+        url === routes.child.getAll_RSS.url() &&
+        method === routes.child.getAll_RSS.method
       )
     },
   },
@@ -103,6 +130,15 @@ const routes = {
         method === routes.friend.getById.method
       )
     },
+
+    getById_RSS: {
+      url: (friendId) => `/friends?id=${friendId}&rss=true`,
+      method: methods.GET,
+      validate: (url, method, friendId) => (
+        url === routes.friend.getById_RSS.url(friendId) &&
+        method === routes.friend.getById_RSS.method
+      )
+    },
   
     getAll: {
       url: (childId) => `/friends?childId=${childId}`,
@@ -110,6 +146,15 @@ const routes = {
       validate: (url, method, childId) => (
         url === routes.friend.getAll.url(childId) &&
         method === routes.friend.getAll.method
+      )
+    },
+
+    getAll_RSS: {
+      url: (childId) => `/friends?childId=${childId}&rss=true`,
+      method: methods.GET,
+      validate: (url, method, childId) => (
+        url === routes.friend.getAll_RSS.url(childId) &&
+        method === routes.friend.getAll_RSS.method
       )
     },
   },
@@ -150,6 +195,15 @@ const routes = {
         method === routes.friendInteraction.getById.method
       )
     },
+
+    getById_RSS: {
+      url: (id) => `/friend-interactions?id=${id}&rss=true`,
+      method: methods.GET,
+      validate: (url, method, id) => (
+        url === routes.friendInteraction.getById_RSS.url(id) &&
+        method === routes.friendInteraction.getById_RSS.method
+      )
+    },
   
     getByChildId: {
       url: (childId, friendId) => `/friend-interactions?childId=${childId}&friendId=${friendId}`,
@@ -157,6 +211,15 @@ const routes = {
       validate: (url, method, childId, friendId) => (
         url === routes.friendInteraction.getByChildId.url(childId, friendId) &&
         method === routes.friendInteraction.getByChildId.method
+      )
+    },
+
+    getByChildId_RSS: {
+      url: (childId, friendId) => `/friend-interactions?childId=${childId}&friendId=${friendId}&rss=true`,
+      method: methods.GET,
+      validate: (url, method, childId, friendId) => (
+        url === routes.friendInteraction.getByChildId_RSS.url(childId, friendId) &&
+        method === routes.friendInteraction.getByChildId_RSS.method
       )
     },
   },

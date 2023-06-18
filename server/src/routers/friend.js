@@ -27,11 +27,27 @@ async function friendRouter(res, pool) {
 
       resStatusCode = statusCode;
       resData = data;
+
+      // RSS
+    } else if (routes.friend.getAll_RSS.validate(url, method, childId)) {
+      const { statusCode, data } = await getAllFriends(pool, childId);
+      const rssFeed = createRssFeed(data);
+
+      resStatusCode = statusCode;
+      resData = rssFeed;
     } else if (routes.friend.getById.validate(url, method, id)) {
       const { statusCode, data } = await getFriendById(pool, id);
 
       resStatusCode = statusCode;
       resData = data;
+
+      // RSS
+    } else if (routes.friend.getById_RSS.validate(url, method, id)) {
+      const { statusCode, data } = await getFriendById(pool, id);
+      const rssFeed = createRssFeed(data);
+
+      resStatusCode = statusCode;
+      resData = rssFeed;
     } else if (routes.friend.create.validate(url, method, id)) {
       const { statusCode, data } = await createFriend(pool, body);
 
