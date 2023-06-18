@@ -32,7 +32,7 @@ exports.update = async (pool, id, medicalEvent = {}) => {
       `
     UPDATE medical_history
     SET
-      childId = $1,
+      "childId" = $1,
       title = $2,
       note = $3,
       date = $4,

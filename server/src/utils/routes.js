@@ -356,7 +356,54 @@ const routes = {
         method === routes.sleeping.getById.method
       )
     },
-  }
+  },
+
+  medical: {
+    create: {
+      url: () => '/medical-events',
+      method: methods.POST,
+      validate: (url, method) => (
+        url === routes.medical.create.url() &&
+        method === routes.medical.create.method
+      )
+    },
+  
+    update: {
+      url: (id) => `/medical-events?id=${id}`,
+      method: methods.PATCH,
+      validate: (url, method, id) => (
+        url === routes.medical.update.url(id) &&
+        method === routes.medical.update.method
+      )
+    },
+  
+    delete: {
+      url: (id) => `/medical-events?id=${id}`,
+      method: methods.DELETE,
+      validate: (url, method, id) => (
+        url === routes.medical.delete.url(id) &&
+        method === routes.medical.delete.method
+      )
+    },
+  
+    getById: {
+      url: (id) => `/medical-events?id=${id}`,
+      method: methods.GET,
+      validate: (url, method, id) => (
+        url === routes.medical.getById.url(id) &&
+        method === routes.medical.getById.method
+      )
+    },
+  
+    getByChildId: {
+      url: (childId) => `/medical-events?childId=${childId}`,
+      method: methods.GET,
+      validate: (url, method, childId) => (
+        url === routes.medical.getByChildId.url(childId) &&
+        method === routes.medical.getByChildId.method
+      )
+    },
+  },
 }
 
 module.exports = {

@@ -5,7 +5,6 @@ export const getFriend = async (childId) => {
     // TODO: send jwt to validate permission
     const data = await fetch(`${SERVER_URL}/friends?childId=${childId}`);
     const { success, result } = await data.json() || {};
-    console.log(success);
     if (success) {
       return result;
     }
