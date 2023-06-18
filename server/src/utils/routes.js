@@ -404,6 +404,53 @@ const routes = {
       )
     },
   },
+
+  multimedia: {
+    create: {
+      url: () => '/multimedia',
+      method: methods.POST,
+      validate: (url, method) => (
+        url === routes.multimedia.create.url() &&
+        method === routes.multimedia.create.method
+      )
+    },
+  
+    update: {
+      url: (id) => `/multimedia?id=${id}`,
+      method: methods.PATCH,
+      validate: (url, method, id) => (
+        url === routes.multimedia.update.url(id) &&
+        method === routes.multimedia.update.method
+      )
+    },
+  
+    delete: {
+      url: (id) => `/multimedia?id=${id}`,
+      method: methods.DELETE,
+      validate: (url, method, id) => (
+        url === routes.multimedia.delete.url(id) &&
+        method === routes.multimedia.delete.method
+      )
+    },
+  
+    getById: {
+      url: (id) => `/multimedia?id=${id}`,
+      method: methods.GET,
+      validate: (url, method, id) => (
+        url === routes.multimedia.getById.url(id) &&
+        method === routes.multimedia.getById.method
+      )
+    },
+  
+    getByChildId: {
+      url: (childId) => `/multimediachildId=${childId}`,
+      method: methods.GET,
+      validate: (url, method, childId) => (
+        url === routes.multimedia.getByChildId.url(childId) &&
+        method === routes.multimedia.getByChildId.method
+      )
+    },
+  },
 }
 
 module.exports = {

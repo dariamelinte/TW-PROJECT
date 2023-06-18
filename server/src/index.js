@@ -12,6 +12,7 @@ const feedingRouter = require('./routers/feeding');
 const sleepingRouter = require('./routers/sleeping');
 const friendInteractionRouter = require('./routers/friendInteraction');
 const medicalRouter = require('./routers/medical');
+const multimediaRouter = require('./routers/multimedia');
 const { headers } = require('./utils/headers');
 
 dotenv.config();
@@ -84,6 +85,8 @@ const server = http.createServer(async (req, res) => {
     return sleepingRouter(response, pool);
   } else if (request.url?.startsWith('/medical-events')) {
     return medicalRouter(response, pool);
+  } else if (request.url?.startsWith('/multimedia')) {
+    return multimediaRouter(response, pool);
   }
 
   response.writeHead(404, headers);

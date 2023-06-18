@@ -1,131 +1,172 @@
-import { randomUUID } from 'crypto';
+const { randomUUID } = require('crypto');
+const { StatusCodes } = require('http-status-codes');
 
-exports.saveMultimediaResource = async (multimediaResource, pool) => {
+const multimediaEntity = require('../entities/multimediaResource');
+
+exports.createMultimedia = async (pool, multimedia = {}) => {
   try {
-    const { childId, date, note, path } = multimediaResource;
-    const result = await pool.query(
-      `
-      INSERT INTO  multimedia_resources
-        (id, childId, date, note, path)
-      VALUES
-        ($1, $2, $3, $4, $5)
-      `,
-      [randomUUID(), childId, date, note, path]
-    );
+    const id = randomUUID();
+  
+    const { success: successCreate } = await multimediaEntity.insert(pool, id, multimedia);
+    const { success, result } = await multimediaEntity.getById(pool, id);
+
+    if (!successCreate || !success) {
+      throw Error();
+    }
+
     return {
-      success: true,
-      message: 'Saved multimedia resource successfully.',
-      result
+      statusCode: StatusCodes.CREATED,
+      data: {
+        success,
+        message: 'Created multimedia resource successfuly.',
+        result
+      }
     };
   } catch (error) {
     console.error(error);
+
     return {
-      success: true,
-      message: 'Could not save multimedia resource.',
-      error
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: {
+        success: false,
+        message: 'Could not create new multimedia resource.',
+        error
+      }
     };
   }
 };
 
-exports.updateMultimediaResource = async (multimediaResource, pool) => {
+exports.updateMultimedia = async (pool, id, multimedia = {}) => {
   try {
-    const { childId, date, note, path, id } = multimediaResource;
-    const result = await pool.query(
-      `
-    UPDATE multimedia_resources
-    SET
-      childId = $1,
-      date = $2,
-      note = $3,
-      path = $4
-    WHERE id = $5
-      `,
-      [childId, date, note, path, id]
-    );
+    if (!id) {
+      return {
+        statusCode: StatusCodes.BAD_REQUEST,
+        data: {
+          success: false,
+          message: 'Please provide the missing fields: id',
+        }
+      };
+    }
+
+    const { result: old } = await multimediaEntity.getById(pool, id);
+    const { success: successUpdate } = await multimediaEntity.update(pool, id, {
+      childId: multimedia.childId || old.childId,
+      title: multimedia.title || old.title,
+      note: multimedia.note || old.note,
+      date: multimedia.date || old.date,
+      severity: multimedia.severity || old.severity,
+    });
+
+    const { success, result } = await multimediaEntity.getById(pool, id);
+
+    if (!successUpdate || !success) {
+      throw Error();
+    }
 
     return {
-      success: true,
-      message: 'Updated multimedia resource successfully.',
-      result
+      statusCode: StatusCodes.ACCEPTED,
+      data: {
+        success: true,
+        message: 'Updated multimedia resource successfuly.',
+        result
+      }
     };
   } catch (error) {
     console.error(error);
     return {
-      success: true,
-      message: 'Could not update multimedia resource.',
-      error
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: {
+        success: false,
+        message: 'Could not update multimedia resource.',
+        error
+      }
     };
   }
 };
 
-exports.deleteMultimediaResource = async (id, pool) => {
+exports.deleteMultimedia = async (pool, id) => {
   try {
-    const result = await pool.query(
-      `
-      DELETE FROM multimedia_resources
-      WHERE id = $1
-      `,
-      [id]
-    );
+    await multimediaEntity.delete(pool, id);
+    const { result } = await multimediaEntity.getById(pool, id);
+
+    if (result) {
+      throw Error();
+    }
+
     return {
-      success: true,
-      message: 'Deleted multimedia resource successfully.',
-      result
+      statusCode: StatusCodes.OK,
+      data: {
+        success: true,
+        message: 'Deleted multimedia resource successfuly.'
+      }
     };
   } catch (error) {
     console.error(error);
     return {
-      success: true,
-      message: 'Could not delete multimedia resource.',
-      error
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      data: {
+        success: false,
+        message: 'Could not delete multimedia resource.',
+        error
+      }
     };
   }
 };
 
-exports.getMultimediaResourceById = async (id, pool) => {
+exports.getMultimediaById = async (pool, id) => {
   try {
-    const result = await pool.query(
-      `
-      SELECT * FROM multimedia_resources
-      WHERE id = $1
-      `,
-      [id]
-    );
+    const { success, result } = await multimediaEntity.getById(pool, id);
+
+    if (!success) {
+      throw Error();
+    }
+
     return {
-      success: true,
-      message: 'Found multimedia resource.',
-      result: result?.rows?.[0]
+      statusCode: StatusCodes.OK,
+      data: {
+        success: true,
+        result,
+        message: 'Multimedia resource found.'
+      }
     };
   } catch (error) {
     console.error(error);
+
     return {
-      success: true,
-      message: 'Could not find multimedia resource.',
-      error
+      statusCode: StatusCodes.NOT_FOUND,
+      data: {
+        success: false,
+        message: 'Multimedia resource not found.',
+        error: String(error)
+      }
     };
   }
 };
 
-exports.findMultimediaResourceByChildId = async (childId, pool) => {
+exports.getMultimediaByChildId = async (pool, childId, friendId) => {
   try {
-    const result = await pool.query(
-      `
-        SELECT * FROM multimedia_resources
-        WHERE childId = $1
-        `,
-      [childId]
-    );
+    const { success, result } = await multimediaEntity.getByChildId(pool, childId, friendId);
+
+    if (!success) {
+      throw Error();
+    }
     return {
-      success: true,
-      message: 'Found multimedia resources.',
-      result: result?.rows
+      statusCode: StatusCodes.OK,
+      data: {
+        success: true,
+        result,
+        message: 'Multimedia resources found.'
+      }
     };
   } catch (error) {
     console.error(error);
     return {
-      success: true,
-      message: 'Could not find multimedia resources.',
-      error
+      statusCode: StatusCodes.NOT_FOUND,
+      data: {
+        success: false,
+        message: 'Multimedia resources not found.',
+        error: String(error)
+      }
     };
   }
 };
