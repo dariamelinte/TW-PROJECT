@@ -45,6 +45,8 @@ export default function FeedingNoteForm({ feedingNote = INITIAL_FEEDING_NOTE, ad
   const form = document.createElement('form');
   form.className = 'mt-9 w-25';
 
+  const removeButton = !add ? `<button class="secondary my-2" type="button">Remove activity</button>` : '';
+
   form.innerHTML = `
     <div class="flex column justify-center w-full">
       <label for="hour">Data si ora</label>
@@ -64,12 +66,12 @@ export default function FeedingNoteForm({ feedingNote = INITIAL_FEEDING_NOTE, ad
     </div>
 
     <button class="principal mt-3" type="submit">Submit</button>
-    <button class="secondary my-2" type="button">Delete meal</button>
+    ${removeButton}
     <div id="error"></div>
   `;
 
   form.querySelector('button[type="submit"]').addEventListener('click', saveData);
-  form.querySelector('button[type="button"]').addEventListener('click', deleteData);
+  !add && form.querySelector('button[type="button"]').addEventListener('click', deleteData);
 
   return form;
 }

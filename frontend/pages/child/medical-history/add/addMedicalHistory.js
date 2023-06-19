@@ -37,4 +37,4 @@ const onSave = async (formData) => {
 
 
 document.body.appendChild(Header(add.title));
-document.body.appendChild(MedicalEntryForm({ medicalEntry: INITIAL_MEDICAL_ENTRY, onSave }));
+document.body.appendChild(MedicalEntryForm({ medicalEntry: INITIAL_MEDICAL_ENTRY, onSave, add: true }));
