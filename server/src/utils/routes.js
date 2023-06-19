@@ -307,6 +307,15 @@ const routes = {
         method === routes.user.getById.method
       )
     },
+
+    getById_RSS: {
+      url: (id) => `/users?id=${id}&rss=true`,
+      method: methods.GET,
+      validate: (url, method, id) => (
+        url === routes.user.getById_RSS.url(id) &&
+        method === routes.user.getById_RSS.method
+      )
+    },
   
     getByFamilyId: {
       url: (id) => `/users?familyId=${id}`,
@@ -316,6 +325,15 @@ const routes = {
         method === routes.user.getByFamilyId.method
       )
     },
+
+    getByFamilyId_RSS: {
+      url: (id) => `/users?familyId=${id}&rss=true`,
+      method: methods.GET,
+      validate: (url, method, id) => (
+        url === routes.user.getByFamilyId_RSS.url(id) &&
+        method === routes.user.getByFamilyId_RSS.method
+      )
+    },
   
     getByEmail: {
       url: (email) => `/users?email=${email}`,
@@ -323,6 +341,15 @@ const routes = {
       validate: (url, method, email) => (
         url === routes.user.getByEmail.url(email) &&
         method === routes.user.getByEmail.method
+      )
+    },
+
+    getByEmail_RSS: {
+      url: (email) => `/users?email=${email}&rss=true`,
+      method: methods.GET,
+      validate: (url, method, email) => (
+        url === routes.user.getByEmail_RSS.url(email) &&
+        method === routes.user.getByEmail_RSS.method
       )
     },
   },
@@ -364,12 +391,30 @@ const routes = {
       )
     },
 
+    getAll_RSS: {
+      url: (childId) => `/feeding-calendar?childId=${childId}&rss=true`,
+      method: methods.GET,
+      validate: (url, method, childId) => (
+        url === routes.feeding.getAll_RSS.url(childId) &&
+        method === routes.feeding.getAll_RSS.method
+      )
+    },
+
     getById: {
       url: (id) => `/feeding-calendar?id=${id}`,
       method: methods.GET,
       validate: (url, method, id) => (
         url === routes.feeding.getById.url(id) &&
         method === routes.feeding.getById.method
+      )
+    },
+
+    getById_RSS: {
+      url: (id) => `/feeding-calendar?id=${id}&rss=true`,
+      method: methods.GET,
+      validate: (url, method, id) => (
+        url === routes.feeding.getById_RSS.url(id) &&
+        method === routes.feeding.getById_RSS.method
       )
     },
   },
@@ -411,12 +456,30 @@ const routes = {
       )
     },
 
+    getAll_RSS: {
+      url: (childId) => `/sleeping-calendar?childId=${childId}&rss=true`,
+      method: methods.GET,
+      validate: (url, method, childId) => (
+        url === routes.sleeping.getAll_RSS.url(childId) &&
+        method === routes.sleeping.getAll_RSS.method
+      )
+    },
+
     getById: {
       url: (id) => `/sleeping-calendar?id=${id}`,
       method: methods.GET,
       validate: (url, method, id) => (
         url === routes.sleeping.getById.url(id) &&
         method === routes.sleeping.getById.method
+      )
+    },
+
+    getById_RSS: {
+      url: (id) => `/sleeping-calendar?id=${id}&rss=true`,
+      method: methods.GET,
+      validate: (url, method, id) => (
+        url === routes.sleeping.getById_RSS.url(id) &&
+        method === routes.sleeping.getById_RSS.method
       )
     },
   },
@@ -457,6 +520,15 @@ const routes = {
         method === routes.medical.getById.method
       )
     },
+
+    getById_RSS: {
+      url: (id) => `/medical-events?id=${id}&rss=true`,
+      method: methods.GET,
+      validate: (url, method, id) => (
+        url === routes.medical.getById_RSS.url(id) &&
+        method === routes.medical.getById_RSS.method
+      )
+    },
   
     getByChildId: {
       url: (childId) => `/medical-events?childId=${childId}`,
@@ -464,6 +536,15 @@ const routes = {
       validate: (url, method, childId) => (
         url === routes.medical.getByChildId.url(childId) &&
         method === routes.medical.getByChildId.method
+      )
+    },
+
+    getByChildId_RSS: {
+      url: (childId) => `/medical-events?childId=${childId}&rss=true`,
+      method: methods.GET,
+      validate: (url, method, childId) => (
+        url === routes.medical.getByChildId_RSS.url(childId) &&
+        method === routes.medical.getByChildId_RSS.method
       )
     },
   },

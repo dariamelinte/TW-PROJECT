@@ -11,6 +11,8 @@ const {
   getAllFriends
 } = require('../controllers/friend');
 
+const { createRssFeed, rssConversionTypes } = require('../utils/rss');
+
 async function friendRouter(res, pool) {
   try {
     const { url, method, body } = res.locals;
@@ -31,7 +33,7 @@ async function friendRouter(res, pool) {
       // RSS
     } else if (routes.friend.getAll_RSS.validate(url, method, childId)) {
       const { statusCode, data } = await getAllFriends(pool, childId);
-      const rssFeed = createRssFeed(data);
+      const rssFeed = createRssFeed(data, rssConversionTypes.friend.getAll);
 
       resStatusCode = statusCode;
       resData = rssFeed;
@@ -44,7 +46,7 @@ async function friendRouter(res, pool) {
       // RSS
     } else if (routes.friend.getById_RSS.validate(url, method, id)) {
       const { statusCode, data } = await getFriendById(pool, id);
-      const rssFeed = createRssFeed(data);
+      const rssFeed = createRssFeed(data, rssConversionTypes.friend.getById);
 
       resStatusCode = statusCode;
       resData = rssFeed;

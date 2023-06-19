@@ -1,4 +1,4 @@
-const { StatusCodes } = require('http-status-codes');
+    const { StatusCodes } = require('http-status-codes');
 const querystring = require('querystring');
 
 const { headers } = require('../utils/headers');
@@ -11,6 +11,9 @@ const {
     getFeedingEventById,
     deleteFeedingEvent
 } = require('../controllers/feedingEvent');
+
+const { createRssFeed, rssConversionTypes } = require('../utils/rss');
+
 
 async function feedingRouter(res, pool) {
     try{
@@ -25,7 +28,7 @@ async function feedingRouter(res, pool) {
 
         if (routes.feeding.create.validate(url, method, id)) {
             const { statusCode, data } = await createFeedingEvent(pool, body);
-      
+            
             resStatusCode = statusCode;
             resData = data;
         } else if (routes.feeding.getAll.validate(url, method, childId)) {
@@ -33,11 +36,25 @@ async function feedingRouter(res, pool) {
 
             resStatusCode = statusCode;
             resData = data;
+        // RSS
+        } else if (routes.feeding.getAll_RSS.validate(url, method, childId)) {
+            const { statusCode, data } = await getFeedingEvents(pool, childId);
+            const rssFeed = createRssFeed(data, rssConversionTypes.feeding.getAll);
+
+            resStatusCode = statusCode;
+            resData = rssFeed;
         } else if (routes.feeding.getById.validate(url, method, id)) {
             const { statusCode, data } = await getFeedingEventById(pool, id);
 
             resStatusCode = statusCode;
             resData = data;
+        // RSS
+        } else if (routes.feeding.getById_RSS.validate(url, method, id)) {
+            const { statusCode, data } = await getFeedingEventById(pool, id);
+            const rssFeed = createRssFeed(data, rssConversionTypes.feeding.getById);
+
+            resStatusCode = statusCode;
+            resData = rssFeed;
         } else if (routes.feeding.update.validate(url, method, id)) {
             const { statusCode, data } = await updateFeedingEvent(pool, id, body);
             

@@ -15,6 +15,18 @@ const rssConversionTypes = {
     getById: "getById_RSS",
     getByChildId: "getByChildId_RSS",
   },
+  feeding: {
+    getAll: "getAll_RSS",
+    getById: "getById_RSS",
+  },
+  medical: {
+    getAll: "getAll_RSS",
+    getById: "getById_RSS",
+  },
+  sleeping: {
+    getAll: "getAll_RSS",
+    getById: "getById_RSS",
+  }
 };
 
 const recursiveObjectIterator = (obj, feed, field) => {
@@ -74,6 +86,36 @@ const createRssFeed = (data, conversionType) => {
     feed = new rss({
       title: "Friend interaction",
       description: "Friend interaction by child id",
+    });
+  } else if(conversionType === rssConversionTypes.feeding.getAll) {
+    feed = new rss({
+      title: "Feeding events list",
+      description: "Feeding events list",
+    });
+  } else if(conversionType === rssConversionTypes.feeding.getById) {
+    feed = new rss({
+      title: "Feeding event",
+      description: "Feeding event by id",
+    });
+  } else if(conversionType === rssConversionTypes.medical.getAll) {
+    feed = new rss({
+      title: "Medical events list",
+      description: "Medical events list",
+    });
+  } else if(conversionType === rssConversionTypes.medical.getById) {
+    feed = new rss({
+      title: "Medical event",
+      description: "Medical event by id",
+    });
+  } else if(conversionType === rssConversionTypes.sleeping.getAll) {
+    feed = new rss({
+      title: "Sleeping events list",
+      description: "Sleeping events list",
+    });
+  } else if(conversionType === rssConversionTypes.sleeping.getById) {
+    feed = new rss({
+      title: "Sleeping event",
+      description: "Sleeping event by id",
     });
   } else {
     feed = new rss({

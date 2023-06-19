@@ -33,7 +33,7 @@ async function childRouter(res, pool) {
       // RSS
     } else if (routes.child.getAll_RSS.validate(url, method)) {
       const { statusCode, data } = await getChildren(pool);
-      const rssFeed = createRssFeed(data);
+      const rssFeed = createRssFeed(data, rssConversionTypes.child.getAll);
 
       resStatusCode = statusCode;
       resData = rssFeed;
@@ -46,7 +46,7 @@ async function childRouter(res, pool) {
       // RSS
     } else if (routes.child.getById_RSS.validate(url, method, id)) {
       const { statusCode, data } = await getChildById(pool, id);
-      const rssFeed = createRssFeed(data);
+      const rssFeed = createRssFeed(data, rssConversionTypes.child.getById);
 
       resStatusCode = statusCode;
       resData = rssFeed;
@@ -59,7 +59,7 @@ async function childRouter(res, pool) {
       // RSS
     } else if (routes.child.getByFamilyId_RSS.validate(url, method, familyId)) {
       const { statusCode, data } = await getChildrenByFamilyId(pool, familyId);
-      const rssFeed = createRssFeed(data);
+      const rssFeed = createRssFeed(data, rssConversionTypes.child.getByFamilyId);
 
       resStatusCode = statusCode;
       resData = rssFeed;
