@@ -4,8 +4,17 @@ import MedicalEntryForm from '/frontend/components/forms/medicalEntryForm.js';
 import { getMedicalEventById } from '/frontend/server/medicalEvent/getMedicalEventById.js';
 import { editMedicalEvent } from '/frontend/server/medicalEvent/editMedicalEvent.js';
 
-import Routes from '/frontend/utils/Routes.js';
 import { showError } from '/frontend/utils/showMessages.js';
+import { getCookie } from '/frontend/utils/cookie.js';
+import { COOKIE_NAME } from '/frontend/utils/constants.js';
+import { isJwtExpired } from '/frontend/utils/jwt.js';
+import Routes from '/frontend/utils/Routes.js';
+
+const jwt = getCookie(COOKIE_NAME);
+
+if (!jwt || isJwtExpired(jwt)) {
+  window.location.href = Routes.login.path();
+}
 
 const { card, path } = Routes.children.medicalHistory;
 

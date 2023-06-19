@@ -5,7 +5,17 @@ import { showError } from '/frontend/utils/showMessages.js';
 import { getFeedingEventById } from '/frontend/server/feeding/getFeedingEventById.js';
 import { editFeedingEvent } from '/frontend/server/feeding/updateFeedingEvent.js';
 
+import { getCookie } from '/frontend/utils/cookie.js';
+import { COOKIE_NAME } from '/frontend/utils/constants.js';
+import { isJwtExpired } from '/frontend/utils/jwt.js';
 import Routes from '/frontend/utils/Routes.js';
+
+const jwt = getCookie(COOKIE_NAME);
+
+if (!jwt || isJwtExpired(jwt)) {
+  window.location.href = Routes.login.path();
+}
+
 
 const { add, path } = Routes.children.feedingCalendar;
 

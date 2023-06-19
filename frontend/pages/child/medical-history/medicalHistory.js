@@ -3,7 +3,16 @@ import MedicalEntryList from '/frontend/components/medicalEntry/medicalEntryList
 
 import { getMedicalEvents } from '/frontend/server/medicalEvent/getMedicalEvents.js'
 
+import { getCookie } from '/frontend/utils/cookie.js';
+import { COOKIE_NAME } from '/frontend/utils/constants.js';
+import { isJwtExpired } from '/frontend/utils/jwt.js';
 import Routes from '/frontend/utils/Routes.js';
+
+const jwt = getCookie(COOKIE_NAME);
+
+if (!jwt || isJwtExpired(jwt)) {
+  window.location.href = Routes.login.path();
+}
 
 const {
   title,
