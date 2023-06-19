@@ -48,7 +48,7 @@ exports.createUser = async (pool, user = {}) => {
   }
 };
 
-exports.updateUser = async (pool, id, user = {}) => {
+exports.updateUser = async (pool, id, user = {}, authId) => {
   try {
     if (!id) {
       return {
@@ -59,6 +59,8 @@ exports.updateUser = async (pool, id, user = {}) => {
         }
       };
     }
+
+    if (id !== authId) throw Error();
 
     const { result: oldUser } = await userEntity.getById(pool, id);
     const { success: successUpdate } = await userEntity.update(pool, id, {
@@ -97,8 +99,10 @@ exports.updateUser = async (pool, id, user = {}) => {
   }
 };
 
-exports.deleteUser = async (pool, id) => {
+exports.deleteUser = async (pool, id, authId) => {
   try {
+    if (id !== authId) throw Error();
+
     await userEntity.delete(pool, id);
     const { result } = await userEntity.getById(pool, id);
 
@@ -126,8 +130,10 @@ exports.deleteUser = async (pool, id) => {
   }
 };
 
-exports.getUserById = async (pool, id) => {
+exports.getUserById = async (pool, id, authId) => {
   try {
+    if (id !== authId) throw Error();
+
     const { success, result } = await userEntity.getById(pool, id);
 
     if (!success) {
@@ -156,13 +162,13 @@ exports.getUserById = async (pool, id) => {
   }
 };
 
-exports.getUsersByFamilyId = async (pool, familyId) => {
+exports.getUsersByFamilyId = async (pool, familyId, authFamilyId) => {
   try {
+    if (authFamilyId !== familyId) throw Error();
+
     const { success, result } = await userEntity.getByFamilyId(pool, familyId);
 
-    if (!success) {
-      throw Error();
-    }
+    if (!success) throw Error();
 
     return {
       statusCode: StatusCodes.OK,
@@ -186,11 +192,11 @@ exports.getUsersByFamilyId = async (pool, familyId) => {
   }
 };
 
-exports.getUserByEmail = async (pool, email) => {
+exports.getUserByEmail = async (pool, email, authId) => {
   try {
     const { success, result } = await userEntity.getByEmail(pool, email);
 
-    if (!success) {
+    if (!success || result.id !== authId) {
       throw Error();
     }
 
