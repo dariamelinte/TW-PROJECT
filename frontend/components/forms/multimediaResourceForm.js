@@ -1,6 +1,8 @@
 import { showError } from '/frontend/utils/showMessages.js';
 import Routes from '/frontend/utils/Routes.js';
-import { readFileAsBinary, handleFile } from '/frontend/utils/files.js';
+import { handleFile } from '/frontend/utils/files.js';
+
+import { addMultimedia } from '/frontend/server/multimedia/addMultimedia.js';
 
 export default function MultiMediaResourceForm() {
   const form = document.createElement('form');
@@ -22,14 +24,21 @@ export default function MultiMediaResourceForm() {
       return;
     }
 
-    const binaryFile = await handleFile(fileToBeStored);
+    const blob = await handleFile(fileToBeStored);
+    console.log(blob, blob.text())
 
-    if (!binaryFile) {
-      showError("Cannot read file properly.");
-      return;
-    }
+    // if (!binaryFile) {
+    //   showError("Cannot read file properly.");
+    //   return;
+    // }
 
-    console.log(binaryFile);
+    // multimediaInput.binaryFile = binaryFile;
+    // multimediaInput.childId = childId;
+
+    // console.log(multimediaInput);
+    
+    // const result = await addMultimedia(multimediaInput);
+    // console.log(result);
     
     // window.location.href = Routes.children.multimediaResources.path(childId);
   }

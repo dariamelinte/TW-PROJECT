@@ -1,21 +1,23 @@
-export function readFileAsBinary(file) {
+export function readFileAsBlob(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload = function(event) {
-      resolve(event.target.result);
+    reader.onload = function(e) {
+      resolve(new Blob([new Uint8Array(e.target.result)], {type: file.type }));
     };
     reader.onerror = function(error) {
       reject(error);
     };
-    reader.readAsBinaryString(file);
+    reader.readAsArrayBuffer(file);
+    
   });
 }
 
 export async function handleFile(file) {
-  let binaryCode;
+  let blob;
   try {
-    binaryCode = await readFileAsBinary(file);
-    return binaryCode;
+    blob = await readFileAsBlob(file);
+    console.log(blob);
+    return blob;
   } catch (error) {
     console.error('Error reading file:', error);
     return null;

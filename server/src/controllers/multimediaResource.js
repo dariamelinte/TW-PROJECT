@@ -1,12 +1,24 @@
 const { randomUUID } = require('crypto');
 const { StatusCodes } = require('http-status-codes');
+const cloudinary = require('cloudinary').v2;
 
 const multimediaEntity = require('../entities/multimediaResource');
 
 exports.createMultimedia = async (pool, multimedia = {}) => {
+  cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET
+  });
+
   try {
     const id = randomUUID();
-  
+    console.log(multimedia)
+    const { url } = await cloudinary.uploader.upload(
+      `data:application/octet-stream;base64,${multimedia.binaryCode}`
+    ) || {};
+    multimedia.path = url;
+
     const { success: successCreate } = await multimediaEntity.insert(pool, id, multimedia);
     const { success, result } = await multimediaEntity.getById(pool, id);
 
@@ -43,7 +55,7 @@ exports.updateMultimedia = async (pool, id, multimedia = {}) => {
         statusCode: StatusCodes.BAD_REQUEST,
         data: {
           success: false,
-          message: 'Please provide the missing fields: id',
+          message: 'Please provide the missing fields: id'
         }
       };
     }
@@ -54,7 +66,7 @@ exports.updateMultimedia = async (pool, id, multimedia = {}) => {
       title: multimedia.title || old.title,
       note: multimedia.note || old.note,
       date: multimedia.date || old.date,
-      severity: multimedia.severity || old.severity,
+      severity: multimedia.severity || old.severity
     });
 
     const { success, result } = await multimediaEntity.getById(pool, id);
