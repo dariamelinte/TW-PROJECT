@@ -36,4 +36,4 @@ const onSave = async (formData) => {
 } 
 
 document.body.appendChild(Header(card.add.title));
-document.body.appendChild(ActivityForm({ activity: INITIAL_ACTIVITY, onSave, childId }));
+document.body.appendChild(ActivityForm({ activity: INITIAL_ACTIVITY, onSave, childId, add: true }));
