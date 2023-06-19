@@ -12,6 +12,8 @@ const {
   deleteUser,
 } = require('../controllers/user');
 
+const { createRssFeed, rssConversionTypes } = require('../utils/rss');
+
 async function userRouter(res, pool) {
   try {
     const { url, method, body } = res.locals;
@@ -28,16 +30,37 @@ async function userRouter(res, pool) {
 
       resStatusCode = statusCode;
       resData = data;
+      // RSS
+    } else if (routes.user.getByEmail_RSS.validate(url, method)) {
+      const { statusCode, data } = await getUserByEmail(pool, email, userId);
+      const rssFeed = createRssFeed(data, rssConversionTypes.user.getByEmail);
+
+      resStatusCode = statusCode;
+      resData = rssFeed;
     } else if (routes.user.getById.validate(url, method, id)) {
       const { statusCode, data } = await getUserById(pool, id);
 
       resStatusCode = statusCode;
       resData = data;
+      // RSS
+    } else if (routes.user.getById_RSS.validate(url, method, id)) {
+      const { statusCode, data } = await getUserById(pool, id, userId);
+      const rssFeed = createRssFeed(data, rssConversionTypes.user.getById);
+
+      resStatusCode = statusCode;
+      resData = rssFeed;
     } else if (routes.user.getByFamilyId.validate(url, method, familyId)) {
       const { statusCode, data } = await getUsersByFamilyId(pool, familyId);
 
       resStatusCode = statusCode;
       resData = data;
+      // RSS
+    } else if (routes.user.getByFamilyId_RSS.validate(url, method, familyId)) {
+      const { statusCode, data } = await getUsersByFamilyId(pool, familyId, userFamilyId);
+      const rssFeed = createRssFeed(data, rssConversionTypes.user.getByFamilyId);
+
+      resStatusCode = statusCode;
+      resData = rssFeed;
     } else if (routes.user.create.validate(url, method)) {
       const { statusCode, data } = await createUser(pool, body);
 

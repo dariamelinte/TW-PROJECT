@@ -21,3 +21,17 @@ export const getMedicalEvents = async (childId) => {
     return [];
   }
 }
+
+export const getMedicalEventsRSS = async (childId) => {
+  try {
+    const data = await fetch(`${SERVER_URL}/medical-events?childId=${childId}&rss=true`, {
+      headers: {
+        Authorization: `Bearer ${bearerToken}`
+      }
+    });
+    return await data.json();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}

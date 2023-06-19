@@ -12,6 +12,8 @@ const {
     deleteSleepingEvent
 } = require('../controllers/sleepingEvent');
 
+const { createRssFeed, rssConversionTypes } = require('../utils/rss');
+
 async function sleepingRouter(res, pool) {
     try{
         const {url, method, body} = res.locals;
@@ -25,7 +27,7 @@ async function sleepingRouter(res, pool) {
 
         if (routes.sleeping.create.validate(url, method, id)) {
             const { statusCode, data } = await createSleepingEvent(pool, body);
-      
+
             resStatusCode = statusCode;
             resData = data;
         } else if (routes.sleeping.getAll.validate(url, method, childId)) {
@@ -33,11 +35,25 @@ async function sleepingRouter(res, pool) {
 
             resStatusCode = statusCode;
             resData = data;
+            // RSS
+        } else if (routes.sleeping.getAll_RSS.validate(url, method, childId)) {
+            const { statusCode, data } = await getSleepingEvents(pool, childId);
+            const rssFeed = createRssFeed(data, rssConversionTypes.sleeping.getAll);
+
+            resStatusCode = statusCode;
+            resData = rssFeed;
         } else if (routes.sleeping.getById.validate(url, method, id)) {
             const { statusCode, data } = await getSleepingEventById(pool, id);
 
             resStatusCode = statusCode;
             resData = data;
+            // RSS
+        } else if (routes.sleeping.getById_RSS.validate(url, method, id)) {
+            const { statusCode, data } = await getSleepingEventById(pool, id);
+            const rssFeed = createRssFeed(data, rssConversionTypes.sleeping.getById);
+
+            resStatusCode = statusCode;
+            resData = rssFeed;
         } else if (routes.sleeping.update.validate(url, method, id)) {
             const { statusCode, data } = await updateSleepingEvent(pool, id, body);
             

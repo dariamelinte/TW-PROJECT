@@ -11,6 +11,8 @@ const {
   getFriendInteractionByChildId
 } = require('../controllers/friendInteraction');
 
+const { createRssFeed, rssConversionTypes } = require('../utils/rss');
+
 async function friendInteractionRouter(res, pool) {
   try {
     const { url, method, body } = res.locals;
@@ -27,11 +29,27 @@ async function friendInteractionRouter(res, pool) {
 
       resStatusCode = statusCode;
       resData = data;
+
+      // RSS
+    } else if (routes.friendInteraction.getByChildId_RSS.validate(url, method, childId, friendId)) {
+      const { statusCode, data } = await getFriendInteractionByChildId(pool, childId, friendId);
+      const rssFeed = createRssFeed(data, rssConversionTypes.friendInteraction.getByChildId);
+
+      resStatusCode = statusCode;
+      resData = rssFeed;
     } else if (routes.friendInteraction.getById.validate(url, method, id)) {
       const { statusCode, data } = await getFriendInteractionById(pool, id);
 
       resStatusCode = statusCode;
       resData = data;
+
+      // RSS
+    } else if (routes.friendInteraction.getById_RSS.validate(url, method, id)) {
+      const { statusCode, data } = await getFriendInteractionById(pool, id);
+      const rssFeed = createRssFeed(data, rssConversionTypes.friendInteraction.getById);
+
+      resStatusCode = statusCode;
+      resData = rssFeed;
     } else if (routes.friendInteraction.create.validate(url, method, id)) {
       const { statusCode, data } = await createFriendInteraction(pool, body);
 

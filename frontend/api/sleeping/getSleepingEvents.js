@@ -20,3 +20,17 @@ export const getSleepingEvents = async (childId) => {
         return [];
     }
 }
+
+export const getSleepingEventsRSS = async (childId) => {
+    try{
+        const data = await fetch(`${SERVER_URL}/sleeping-calendar?childId=${childId}&rss=true`, {
+            headers: {
+                Authorization: `Bearer ${bearerToken}`
+            }
+        });
+        return await data.json();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }

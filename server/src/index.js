@@ -50,6 +50,8 @@ const server = http.createServer(async (req, res) => {
     return response.end(JSON.stringify({ message: 'Server error' }));
   }
 
+  console.log(request.url);
+
   // Check if the request is for the auth router
   if (request.url?.startsWith('/auth')) {
     return authRouter(response, pool);

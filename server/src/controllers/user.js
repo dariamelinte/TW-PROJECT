@@ -128,7 +128,6 @@ exports.deleteUser = async (pool, id) => {
 
 exports.getUserById = async (pool, id) => {
   try {
-
     const { success, result } = await userEntity.getById(pool, id);
 
     if (!success) {

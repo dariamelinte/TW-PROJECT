@@ -11,6 +11,8 @@ const {
   getMedicalEventByChildId
 } = require('../controllers/medicalEvent');
 
+const { createRssFeed, rssConversionTypes } = require('../utils/rss');
+
 async function medicalEventRouter(res, pool) {
   try {
     const { url, method, body } = res.locals;
@@ -27,11 +29,25 @@ async function medicalEventRouter(res, pool) {
 
       resStatusCode = statusCode;
       resData = data;
+      // RSS
+    } else if (routes.medical.getByChildId_RSS.validate(url, method, childId)) {
+      const { statusCode, data } = await getMedicalEventByChildId(pool, childId);
+      const rssFeed = createRssFeed(data, rssConversionTypes.medical.getByChildId);
+
+      resStatusCode = statusCode;
+      resData = rssFeed;
     } else if (routes.medical.getById.validate(url, method, id)) {
       const { statusCode, data } = await getMedicalEventById(pool, id);
 
       resStatusCode = statusCode;
       resData = data;
+      // RSS
+    } else if (routes.medical.getById_RSS.validate(url, method, id)) {
+      const { statusCode, data } = await getMedicalEventById(pool, id);
+      const rssFeed = createRssFeed(data, rssConversionTypes.medical.getById);
+
+      resStatusCode = statusCode;
+      resData = rssFeed;
     } else if (routes.medical.create.validate(url, method, id)) {
       const { statusCode, data } = await createMedicalEvent(pool, body);
 

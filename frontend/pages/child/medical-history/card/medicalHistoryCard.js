@@ -1,7 +1,7 @@
 import Header from '/frontend/components/header.js';
 import MedicalEntryForm from '/frontend/components/forms/medicalEntryForm.js';
 
-import { getMedicalEventById } from '/frontend/api/medicalEvent/getMedicalEventById.js';
+import { getMedicalEventById, getMedicalEventByIdRSS } from '/frontend/api/medicalEvent/getMedicalEventById.js';
 import { editMedicalEvent } from '/frontend/api/medicalEvent/editMedicalEvent.js';
 
 import { showError } from '/frontend/utils/showMessages.js';
@@ -9,6 +9,8 @@ import { getCookie } from '/frontend/utils/cookie.js';
 import { COOKIE_NAME } from '/frontend/utils/constants.js';
 import { isJwtExpired } from '/frontend/utils/jwt.js';
 import Routes from '/frontend/utils/Routes.js';
+
+import RSSButton from '../../../../components/rssButton.js';
 
 const jwt = getCookie(COOKIE_NAME);
 
@@ -36,6 +38,6 @@ const onSave = async (formData) => {
   window.location.href = path(childId);
 } 
 
-
+document.body.appendChild(RSSButton(() => getMedicalEventByIdRSS(cardId)));
 document.body.appendChild(Header(card.title));
 document.body.appendChild(MedicalEntryForm({ medicalEntry, onSave }));

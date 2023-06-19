@@ -11,11 +11,12 @@ const {
   updateChild,
   deleteChild,
 } = require('../controllers/child');
+const { createRssFeed, rssConversionTypes } = require('../utils/rss');
 
 async function childRouter(res, pool) {
   try {
     const { url, method, body } = res.locals;
-    const { id, familyId } = querystring.parse(getQueryString(url));
+    const { id, familyId, rss } = querystring.parse(getQueryString(url));
 
     let resStatusCode = StatusCodes.NOT_FOUND;
     let resData = {
@@ -27,17 +28,41 @@ async function childRouter(res, pool) {
       const { statusCode, data } = await getChildren(pool);
 
       resStatusCode = statusCode;
-      resData = data;
+      resData = data
+    
+      // RSS
+    } else if (routes.child.getAll_RSS.validate(url, method)) {
+      const { statusCode, data } = await getChildren(pool);
+      const rssFeed = createRssFeed(data, rssConversionTypes.child.getAll);
+
+      resStatusCode = statusCode;
+      resData = rssFeed;
     } else if (routes.child.getById.validate(url, method, id)) {
       const { statusCode, data } = await getChildById(pool, id);
 
       resStatusCode = statusCode;
       resData = data;
+
+      // RSS
+    } else if (routes.child.getById_RSS.validate(url, method, id)) {
+      const { statusCode, data } = await getChildById(pool, id);
+      const rssFeed = createRssFeed(data, rssConversionTypes.child.getById);
+
+      resStatusCode = statusCode;
+      resData = rssFeed;
     } else if (routes.child.getByFamilyId.validate(url, method, familyId)) {
       const { statusCode, data } = await getChildrenByFamilyId(pool, familyId);
 
       resStatusCode = statusCode;
       resData = data;
+
+      // RSS
+    } else if (routes.child.getByFamilyId_RSS.validate(url, method, familyId)) {
+      const { statusCode, data } = await getChildrenByFamilyId(pool, familyId);
+      const rssFeed = createRssFeed(data, rssConversionTypes.child.getByFamilyId);
+
+      resStatusCode = statusCode;
+      resData = rssFeed;
     } else if (routes.child.create.validate(url, method)) {
       const { statusCode, data } = await createChild(pool, body);
 
