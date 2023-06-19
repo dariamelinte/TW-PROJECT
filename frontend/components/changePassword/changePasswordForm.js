@@ -3,7 +3,7 @@ import { COOKIE_NAME } from '/frontend/utils/constants.js';
 import { getCookie } from '/frontend/utils/cookie.js';
 import { parseJwt } from '/frontend/utils/jwt.js';
 
-import { changePassword } from '/frontend/server/myProfile/changePassword.js';
+import { changePassword } from '/frontend/api/myProfile/changePassword.js';
 
 export default function ChangePasswordForm() {
     const { id: userId } = parseJwt(getCookie(COOKIE_NAME)) || {};

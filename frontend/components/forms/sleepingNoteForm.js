@@ -3,9 +3,9 @@ import cleanInput from '/frontend/utils/cleanInput.js';
 import { INITIAL_SLEEPING_NOTE } from '/frontend/utils/initialValues.js';
 import { showError } from '/frontend/utils/showMessages.js';
 
-import { deleteSleepingEvent } from '/frontend/server/sleeping/deleteSleepingEvent.js';
-import { addSleepingEvent } from '/frontend/server/sleeping/createSleepingEvent.js';
-import { editSleepingEvent } from '/frontend/server/sleeping/updateSleepingEvent.js';
+import { deleteSleepingEvent } from '/frontend/api/sleeping/deleteSleepingEvent.js';
+import { addSleepingEvent } from '/frontend/api/sleeping/createSleepingEvent.js';
+import { editSleepingEvent } from '/frontend/api/sleeping/updateSleepingEvent.js';
 
 import { sleepTypes } from '/frontend/utils/selectsOptions.js';
 

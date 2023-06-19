@@ -1,4 +1,4 @@
-import { login } from '../../server/auth/login.js';
+import { login } from '../../api/auth/login.js';
 import { COOKIE_NAME } from '../../utils/constants.js';
 import Routes from '../../utils/Routes.js';
 import { showError } from '/frontend/utils/showMessages.js';

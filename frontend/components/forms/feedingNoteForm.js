@@ -3,9 +3,9 @@ import cleanInput from '/frontend/utils/cleanInput.js';
 import { INITIAL_FEEDING_NOTE } from '/frontend/utils/initialValues.js';
 import { showError } from '/frontend/utils/showMessages.js';
 
-import { deleteFeedingEvent } from '/frontend/server/feeding/deleteFeedingEvent.js';
-import { addFeedingEvent } from '/frontend/server/feeding/createFeedingEvent.js';
-import { editFeedingEvent } from '/frontend/server/feeding/updateFeedingEvent.js';
+import { deleteFeedingEvent } from '/frontend/api/feeding/deleteFeedingEvent.js';
+import { addFeedingEvent } from '/frontend/api/feeding/createFeedingEvent.js';
+import { editFeedingEvent } from '/frontend/api/feeding/updateFeedingEvent.js';
 
 
 export default function FeedingNoteForm({ feedingNote = INITIAL_FEEDING_NOTE, add = false }) {

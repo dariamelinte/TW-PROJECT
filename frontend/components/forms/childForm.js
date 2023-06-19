@@ -1,6 +1,6 @@
-import { addChild } from '/frontend/server/child/addChild.js';
-import { editChild } from '/frontend/server/child/editChild.js';
-import { deleteChild } from '/frontend/server/child/deleteChild.js';
+import { addChild } from '/frontend/api/child/addChild.js';
+import { editChild } from '/frontend/api/child/editChild.js';
+import { deleteChild } from '/frontend/api/child/deleteChild.js';
 
 import cleanInput from '/frontend/utils/cleanInput.js';
 import { COOKIE_NAME } from '/frontend/utils/constants.js';
