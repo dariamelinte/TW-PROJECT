@@ -1,13 +1,14 @@
 import { SERVER_URL, MESSAGES } from "/frontend/utils/constants.js";
+import { bearerToken } from '/frontend/utils/cookie.js';
 
 export const addFeedingEvent = async (feedingInput) => {
     try{
-        //TODO: send jwt to validate permission
         const data = await fetch(`${SERVER_URL}/feeding-calendar`, {
             method: 'POST',
             body: JSON.stringify(feedingInput),
             headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${bearerToken}`
             }
         });
         return await data.json();

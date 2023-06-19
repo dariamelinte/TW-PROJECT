@@ -1,4 +1,5 @@
 import { SERVER_URL, MESSAGES } from '/frontend/utils/constants.js';
+import { bearerToken } from '/frontend/utils/cookie.js';
 
 export const addFriend = async (friendInput) => {
   try {
@@ -7,7 +8,8 @@ export const addFriend = async (friendInput) => {
       method: 'POST',
       body: JSON.stringify(friendInput),
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${bearerToken}`
       }
     });
     return await data.json();

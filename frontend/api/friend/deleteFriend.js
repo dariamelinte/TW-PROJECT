@@ -1,4 +1,5 @@
 import { SERVER_URL, MESSAGES } from '/frontend/utils/constants.js';
+import { bearerToken } from '/frontend/utils/cookie.js';
 
 export const deleteFriend = async (friendId) => {
   try {
@@ -6,7 +7,8 @@ export const deleteFriend = async (friendId) => {
     const data = await fetch(`${SERVER_URL}/friends?id=${friendId}`, {
       method: 'DELETE',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${bearerToken}`
       }
     });
     return await data.json();

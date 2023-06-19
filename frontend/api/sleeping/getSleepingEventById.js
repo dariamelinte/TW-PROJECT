@@ -1,9 +1,13 @@
-import { SERVER_URL, MESSAGES } from "../../utils/constants.js";
+import { SERVER_URL } from "/frontend/utils/constants.js";
+import { bearerToken } from '/frontend/utils/cookie.js';
 
 export const getSleepingEventById = async (id) => {
     try{
-        //TODO: send jwt to validate permission
-        const data = await fetch(`${SERVER_URL}/sleeping-calendar?id=${id}`);
+        const data = await fetch(`${SERVER_URL}/sleeping-calendar?id=${id}`, {
+            headers: {
+                Authorization: `Bearer ${bearerToken}`
+            }
+        });
         const { success, result } = await data.json() || {};
 
         if (success){

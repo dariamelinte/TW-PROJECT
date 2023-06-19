@@ -1,4 +1,5 @@
 import { SERVER_URL, MESSAGES } from '/frontend/utils/constants.js';
+import { getCookie, bearerToken } from '/frontend/utils/cookie.js';
 
 export const updateMyProfile = async (id, input) => {
   try {
@@ -7,7 +8,8 @@ export const updateMyProfile = async (id, input) => {
       method: 'PATCH',
       body: JSON.stringify(input),
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${bearerToken}`
       }
     });
     return await data.json();

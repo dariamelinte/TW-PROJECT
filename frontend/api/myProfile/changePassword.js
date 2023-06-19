@@ -1,4 +1,5 @@
-import { SERVER_URL, MESSAGES } from '../../utils/constants.js';
+import { SERVER_URL, MESSAGES } from '/frontend/utils/constants.js';
+import { bearerToken } from '/frontend/utils/cookie.js';
 
 export const changePassword = async (id, input) => {
   try {
@@ -6,7 +7,8 @@ export const changePassword = async (id, input) => {
       method: 'POST',
       body: JSON.stringify(input),
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${bearerToken}`
       }
     });
     return await data.json();

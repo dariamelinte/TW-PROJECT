@@ -1,9 +1,14 @@
 import { SERVER_URL } from '/frontend/utils/constants.js';
+import { bearerToken } from '/frontend/utils/cookie.js';
 
 export const getFriendInteractions = async (childId, friendId) => {
   try {
     // TODO: send jwt to validate permission
-    const data = await fetch(`${SERVER_URL}/friend-interactions?childId=${childId}&friendId=${friendId}`);
+    const data = await fetch(`${SERVER_URL}/friend-interactions?childId=${childId}&friendId=${friendId}`, {
+      headers: {
+        Authorization: `Bearer ${bearerToken}`
+      }
+    });
     const { success, result } = await data.json() || {};
 
     if (success) {
