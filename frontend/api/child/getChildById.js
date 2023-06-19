@@ -21,3 +21,18 @@ export const getChildById = async (childId) => {
     return {};
   }
 };
+
+export const getChildByIdRSS = async (childId) => {
+  try {
+    const data = await fetch(`${SERVER_URL}/child?id=${childId}&rss=true`, {
+      headers: {
+        Authorization: `Bearer ${bearerToken}`
+      }
+    });
+
+    return await data.json();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}

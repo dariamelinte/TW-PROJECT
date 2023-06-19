@@ -1,12 +1,13 @@
 import Header from '/frontend/components/header.js';
 import ChildrenList from '/frontend/components/children/childrenList.js';
 
-import { getFriend } from '/frontend/api/friend/getFriends.js';
+import { getFriend, getFriendRSS } from '/frontend/api/friend/getFriends.js';
 
 import { getCookie } from '/frontend/utils/cookie.js';
 import { COOKIE_NAME } from '/frontend/utils/constants.js';
 import { isJwtExpired } from '/frontend/utils/jwt.js';
 import Routes from '/frontend/utils/Routes.js';
+import RSSButton from '../../../components/rssButton.js';
 
 const jwt = getCookie(COOKIE_NAME);
 
@@ -28,4 +29,5 @@ const onClickCard = (id, add) => {
   window.location.href = add ? friendRoute.add.path(childId) : friendRoute.path(childId, id)
 }
 
+document.body.appendChild(RSSButton(() => getFriendRSS(childId)));
 document.body.appendChild(ChildrenList({ children: friends, onClick: onClickCard }));

@@ -2,13 +2,14 @@ import Header from '/frontend/components/header.js';
 import FeedingNoteForm from '/frontend/components/forms/feedingNoteForm.js';
 import { showError } from '/frontend/utils/showMessages.js';
 
-import { getFeedingEventById } from '/frontend/api/feeding/getFeedingEventById.js';
+import { getFeedingEventById, getFeedingEventByIdRSS } from '/frontend/api/feeding/getFeedingEventById.js';
 import { editFeedingEvent } from '/frontend/api/feeding/updateFeedingEvent.js';
 
 import { getCookie } from '/frontend/utils/cookie.js';
 import { COOKIE_NAME } from '/frontend/utils/constants.js';
 import { isJwtExpired } from '/frontend/utils/jwt.js';
 import Routes from '/frontend/utils/Routes.js';
+import RSSButton from '../../../../components/rssButton.js';
 
 const jwt = getCookie(COOKIE_NAME);
 
@@ -37,5 +38,6 @@ const onSave = async (formData) => {
   window.location.href = path(childId, id);
 } 
 
+document.body.appendChild(RSSButton(() => getFeedingEventByIdRSS(id)));
 document.body.appendChild(Header(add.title));
 document.body.appendChild(FeedingNoteForm({childId, feedingNote: event, onSave }));

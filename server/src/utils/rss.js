@@ -26,10 +26,16 @@ const rssConversionTypes = {
   sleeping: {
     getAll: "getAll_RSS",
     getById: "getById_RSS",
-  }
+  },
+  user: {
+    getById: "getById_RSS",
+    getByEmail: "getByEmail_RSS",
+  },
 };
 
 const recursiveObjectIterator = (obj, feed, field) => {
+  if(!obj) return;
+
   // If obj is an array, iterate over it
   if(Array.isArray(obj)) {
     obj.forEach((item) => {
@@ -117,6 +123,16 @@ const createRssFeed = (data, conversionType) => {
       title: "Sleeping event",
       description: "Sleeping event by id",
     });
+  } else if(conversionType === rssConversionTypes.user.getById) {
+    feed = new rss({
+      title: "User",
+      description: "User by id",
+    });
+  } else if(conversionType === rssConversionTypes.user.getByEmail) {
+    feed = new rss({
+      title: "User",
+      description: "User by email",
+    });
   } else {
     feed = new rss({
       title: "RSS feed",
@@ -125,6 +141,8 @@ const createRssFeed = (data, conversionType) => {
   }
 
   recursiveObjectIterator(data, feed);
+
+  console.log(feed.xml({ indent: true }));
 
   return feed.xml({ indent: true });
 };

@@ -24,3 +24,19 @@ export const getFamilyChildren = async () => {
     return [];
   }
 }
+
+export const getFamilyChildrenRSS = async () => {
+  try {
+    const userInfo = parseJwt(getCookie(COOKIE_NAME));
+    const data = await fetch(`${SERVER_URL}/child?familyId=${userInfo.familyId}&rss=true`, {
+      headers: {
+        Authorization: `Bearer ${bearerToken}`
+      }
+    });
+
+    return await data.json();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}

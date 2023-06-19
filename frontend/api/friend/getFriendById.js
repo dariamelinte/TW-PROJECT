@@ -21,3 +21,17 @@ export const getFriendById = async (friendId) => {
     return {};
   }
 }
+
+export const getFriendByIdRSS = async (friendId) => {
+  try {
+    const data = await fetch(`${SERVER_URL}/friends?id=${friendId}&rss=true`, {
+      headers: {
+        Authorization: `Bearer ${bearerToken}`
+      }
+    });
+    return await data.json();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}

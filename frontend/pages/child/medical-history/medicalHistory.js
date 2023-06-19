@@ -1,12 +1,14 @@
 import Header from '/frontend/components/header.js';
 import MedicalEntryList from '/frontend/components/medicalEntry/medicalEntryList.js';
 
-import { getMedicalEvents } from '/frontend/api/medicalEvent/getMedicalEvents.js'
+import { getMedicalEvents, getMedicalEventsRSS } from '/frontend/api/medicalEvent/getMedicalEvents.js'
 
 import { getCookie } from '/frontend/utils/cookie.js';
 import { COOKIE_NAME } from '/frontend/utils/constants.js';
 import { isJwtExpired } from '/frontend/utils/jwt.js';
 import Routes from '/frontend/utils/Routes.js';
+
+import RSSButton from '../../../components/rssButton.js';
 
 const jwt = getCookie(COOKIE_NAME);
 
@@ -30,5 +32,7 @@ const medicalEntries = await getMedicalEvents(childId);
 const onClickCard = (id, add) => {
   window.location.href = add ? addPath(childId) : cardPath(childId, id);
 };
+
+document.body.appendChild(RSSButton(() => getMedicalEventsRSS(childId)));
 
 document.body.appendChild(MedicalEntryList({ medicalEntries, onClick: onClickCard }));

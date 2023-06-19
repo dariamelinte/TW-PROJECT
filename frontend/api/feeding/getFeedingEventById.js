@@ -20,3 +20,18 @@ export const getFeedingEventById = async (id) => {
         return [];
     }
 }
+
+export const getFeedingEventByIdRSS = async (id) => {
+    try{
+        const data = await fetch(`${SERVER_URL}/feeding-calendar?id=${id}&rss=true`, {
+            headers: {
+                Authorization: `Bearer ${bearerToken}`
+            }
+        });
+    
+        return await data.json();
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
+}

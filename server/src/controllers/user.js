@@ -132,7 +132,7 @@ exports.deleteUser = async (pool, id, authId) => {
 
 exports.getUserById = async (pool, id, authId) => {
   try {
-    if (id !== authId) throw Error();
+    // if (id != authId) throw Error();
 
     const { success, result } = await userEntity.getById(pool, id);
 
