@@ -4,7 +4,7 @@ import MedicalEntryForm from '/frontend/components/forms/medicalEntryForm.js';
 import { INITIAL_MEDICAL_ENTRY } from '/frontend/utils/initialValues.js';
 import { showError } from '/frontend/utils/showMessages.js';
 
-import { addMedicalEvent } from '/frontend/server/medicalEvent/addMedicalEvent.js';
+import { addMedicalEvent } from '/frontend/api/medicalEvent/addMedicalEvent.js';
 
 import { getCookie } from '/frontend/utils/cookie.js';
 import { COOKIE_NAME } from '/frontend/utils/constants.js';

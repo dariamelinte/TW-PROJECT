@@ -3,7 +3,7 @@ import { severityTypes } from '/frontend/utils/selectsOptions.js';
 import { showError } from '/frontend/utils/showMessages.js';
 import Routes from '/frontend/utils/Routes.js';
 
-import { deleteMedicalEvent } from '/frontend/server/medicalEvent/deleteMedicalEvent.js';
+import { deleteMedicalEvent } from '/frontend/api/medicalEvent/deleteMedicalEvent.js';
 
 export default function MedicalEntryForm({ medicalEntry = INITIAL_MEDICAL_ENTRY, onSave }) {
   const { id, childId, date, title, severity, note } = medicalEntry;

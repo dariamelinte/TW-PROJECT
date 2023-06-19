@@ -1,7 +1,7 @@
 import Header from '/frontend/components/header.js';
 import ChildForm from '/frontend/components/forms/childForm.js';
 
-import { getChildById } from '/frontend/server/child/getChildById.js';
+import { getChildById } from '/frontend/api/child/getChildById.js';
 
 import { getCookie } from '/frontend/utils/cookie.js';
 import { COOKIE_NAME } from '/frontend/utils/constants.js';

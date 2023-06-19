@@ -1,8 +1,8 @@
 import Header from '/frontend/components/header.js';
 import Friendship from '/frontend/components/friendship/friendship.js';
 
-import { getFriendById } from '/frontend/server/friend/getFriendById.js';
-import { getFriendInteractions } from '/frontend/server/friendInteraction/getFriendInteractions.js';
+import { getFriendById } from '/frontend/api/friend/getFriendById.js';
+import { getFriendInteractions } from '/frontend/api/friendInteraction/getFriendInteractions.js';
 
 import { getCookie } from '/frontend/utils/cookie.js';
 import { COOKIE_NAME } from '/frontend/utils/constants.js';

@@ -1,7 +1,7 @@
 import MyAccount from "/frontend/components/myAccount/myAccount.js";
 import Header from '/frontend/components/header.js';
 
-import { getMyProfile } from "/frontend/server/myProfile/getMyProfile.js";
+import { getMyProfile } from "/frontend/api/myProfile/getMyProfile.js";
 
 import { getCookie } from '/frontend/utils/cookie.js';
 import { COOKIE_NAME } from '/frontend/utils/constants.js';

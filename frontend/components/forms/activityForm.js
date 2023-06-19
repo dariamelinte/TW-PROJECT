@@ -1,4 +1,4 @@
-import { deleteFriendInteraction } from '/frontend/server/friendInteraction/deleteFriendInteraction.js';
+import { deleteFriendInteraction } from '/frontend/api/friendInteraction/deleteFriendInteraction.js';
 
 import { INITIAL_ACTIVITY } from '/frontend/utils/initialValues.js';
 import { showError } from '/frontend/utils/showMessages.js';

@@ -1,7 +1,7 @@
 import Header from '/frontend/components/header.js';
 import FriendForm from '/frontend/components/forms/friendForm.js';
 
-import { getFriendById } from '/frontend/server/friend/getFriendById.js';
+import { getFriendById } from '/frontend/api/friend/getFriendById.js';
 
 import { getCookie } from '/frontend/utils/cookie.js';
 import { COOKIE_NAME } from '/frontend/utils/constants.js';

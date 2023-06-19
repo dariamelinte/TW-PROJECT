@@ -2,7 +2,7 @@ import Header from '/frontend/components/header.js';
 import Calendar from "/frontend/components/calendar/calendar.js";
 import { entryTypes } from "/frontend/utils/selectsOptions.js";
 
-import { getFeedingEvents } from '/frontend/server/feeding/getFeedingEvents.js';
+import { getFeedingEvents } from '/frontend/api/feeding/getFeedingEvents.js';
 
 import { getCookie } from '/frontend/utils/cookie.js';
 import { COOKIE_NAME } from '/frontend/utils/constants.js';

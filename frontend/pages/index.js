@@ -2,7 +2,7 @@ import Header from '../components/header.js';
 import VerticalList from '../components/verticalList.js';
 import ChildrenList from '../components/children/childrenList.js';
 
-import { getFamilyChildren } from "../server/child/getFamilyChildren.js";
+import { getFamilyChildren } from "../api/child/getFamilyChildren.js";
 
 import { getCookie } from '../utils/cookie.js';
 import { COOKIE_NAME } from '../utils/constants.js';

@@ -1,8 +1,8 @@
 import Header from '/frontend/components/header.js';
 import MedicalEntryForm from '/frontend/components/forms/medicalEntryForm.js';
 
-import { getMedicalEventById } from '/frontend/server/medicalEvent/getMedicalEventById.js';
-import { editMedicalEvent } from '/frontend/server/medicalEvent/editMedicalEvent.js';
+import { getMedicalEventById } from '/frontend/api/medicalEvent/getMedicalEventById.js';
+import { editMedicalEvent } from '/frontend/api/medicalEvent/editMedicalEvent.js';
 
 import { showError } from '/frontend/utils/showMessages.js';
 import { getCookie } from '/frontend/utils/cookie.js';

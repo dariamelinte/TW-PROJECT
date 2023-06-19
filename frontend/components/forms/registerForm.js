@@ -1,4 +1,4 @@
-import { register } from "../../server/auth/register.js"
+import { register } from "../../api/auth/register.js"
 import Routes from "../../utils/Routes.js";
 import { showError } from '/frontend/utils/showMessages.js';
 

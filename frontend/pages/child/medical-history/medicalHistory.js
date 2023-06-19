@@ -1,7 +1,7 @@
 import Header from '/frontend/components/header.js';
 import MedicalEntryList from '/frontend/components/medicalEntry/medicalEntryList.js';
 
-import { getMedicalEvents } from '/frontend/server/medicalEvent/getMedicalEvents.js'
+import { getMedicalEvents } from '/frontend/api/medicalEvent/getMedicalEvents.js'
 
 import { getCookie } from '/frontend/utils/cookie.js';
 import { COOKIE_NAME } from '/frontend/utils/constants.js';

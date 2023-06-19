@@ -4,9 +4,9 @@ import { INITIAL_FRIEND } from '/frontend/utils/initialValues.js';
 import { friendshipTypes } from '/frontend/utils/selectsOptions.js';
 import { showError } from '/frontend/utils/showMessages.js';
 
-import { addFriend } from '/frontend/server/friend/addFriend.js';
-import { editFriend } from '/frontend/server/friend/editFriend.js';
-import { deleteFriend } from '/frontend/server/friend/deleteFriend.js';
+import { addFriend } from '/frontend/api/friend/addFriend.js';
+import { editFriend } from '/frontend/api/friend/editFriend.js';
+import { deleteFriend } from '/frontend/api/friend/deleteFriend.js';
 
 export default function FriendForm({ friend = INITIAL_FRIEND, add = false }) {
   const {

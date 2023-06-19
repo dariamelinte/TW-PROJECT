@@ -1,6 +1,6 @@
 import Header from '/frontend/components/header.js';
 import ActivityForm from '/frontend/components/forms/activityForm.js';
-import { addFriendInteraction } from '/frontend/server/friendInteraction/addFriendInteraction.js';
+import { addFriendInteraction } from '/frontend/api/friendInteraction/addFriendInteraction.js';
 import { INITIAL_ACTIVITY } from '/frontend/utils/initialValues.js';
 
 import { getCookie } from '/frontend/utils/cookie.js';

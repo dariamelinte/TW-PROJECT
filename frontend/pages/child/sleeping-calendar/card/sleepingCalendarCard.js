@@ -2,8 +2,8 @@ import Header from '/frontend/components/header.js';
 import SleepingNoteForm from '/frontend/components/forms/sleepingNoteForm.js';
 import { showError } from '/frontend/utils/showMessages.js';
 
-import { getSleepingEventById } from '/frontend/server/sleeping/getSleepingEventById.js';
-import { editSleepingEvent } from '/frontend/server/sleeping/updateSleepingEvent.js';
+import { getSleepingEventById } from '/frontend/api/sleeping/getSleepingEventById.js';
+import { editSleepingEvent } from '/frontend/api/sleeping/updateSleepingEvent.js';
 
 import { getCookie } from '/frontend/utils/cookie.js';
 import { COOKIE_NAME } from '/frontend/utils/constants.js';
