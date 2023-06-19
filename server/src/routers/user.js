@@ -16,7 +16,7 @@ const { createRssFeed, rssConversionTypes } = require('../utils/rss');
 
 async function userRouter(res, pool) {
   try {
-    const { url, method, body, id: userId, familyId: userFamilyId } = res.locals;
+    const { url, method, body } = res.locals;
     const { id, email, familyId } = querystring.parse(getQueryString(url));
 
     let resStatusCode = StatusCodes.NOT_FOUND;
@@ -26,7 +26,7 @@ async function userRouter(res, pool) {
     };
 
     if (routes.user.getByEmail.validate(url, method)) {
-      const { statusCode, data } = await getUserByEmail(pool, email, userId);
+      const { statusCode, data } = await getUserByEmail(pool, email);
 
       resStatusCode = statusCode;
       resData = data;
@@ -38,7 +38,7 @@ async function userRouter(res, pool) {
       resStatusCode = statusCode;
       resData = rssFeed;
     } else if (routes.user.getById.validate(url, method, id)) {
-      const { statusCode, data } = await getUserById(pool, id, userId);
+      const { statusCode, data } = await getUserById(pool, id);
 
       resStatusCode = statusCode;
       resData = data;
@@ -50,7 +50,7 @@ async function userRouter(res, pool) {
       resStatusCode = statusCode;
       resData = rssFeed;
     } else if (routes.user.getByFamilyId.validate(url, method, familyId)) {
-      const { statusCode, data } = await getUsersByFamilyId(pool, familyId, userFamilyId);
+      const { statusCode, data } = await getUsersByFamilyId(pool, familyId);
 
       resStatusCode = statusCode;
       resData = data;
@@ -67,12 +67,12 @@ async function userRouter(res, pool) {
       resStatusCode = statusCode;
       resData = data;
     } else if (routes.user.update.validate(url, method, id)) {
-      const { statusCode, data } = await updateUser(pool, id, body, userId);
+      const { statusCode, data } = await updateUser(pool, id, body);
 
       resStatusCode = statusCode;
       resData = data;
     } else if (routes.user.delete.validate(url, method, id)) {
-      const { statusCode, data } = await deleteUser(pool, id, userId);
+      const { statusCode, data } = await deleteUser(pool, id);
 
       resStatusCode = statusCode;
       resData = data;

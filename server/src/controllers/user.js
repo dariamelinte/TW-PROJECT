@@ -48,7 +48,7 @@ exports.createUser = async (pool, user = {}) => {
   }
 };
 
-exports.updateUser = async (pool, id, user = {}, authId) => {
+exports.updateUser = async (pool, id, user = {}) => {
   try {
     if (!id) {
       return {
@@ -59,9 +59,6 @@ exports.updateUser = async (pool, id, user = {}, authId) => {
         }
       };
     }
-
-    if (id !== authId) throw Error();
-
     const { result: oldUser } = await userEntity.getById(pool, id);
     const { success: successUpdate } = await userEntity.update(pool, id, {
       firstName: user.firstName || oldUser.firstName,
@@ -99,9 +96,8 @@ exports.updateUser = async (pool, id, user = {}, authId) => {
   }
 };
 
-exports.deleteUser = async (pool, id, authId) => {
+exports.deleteUser = async (pool, id) => {
   try {
-    if (id !== authId) throw Error();
 
     await userEntity.delete(pool, id);
     const { result } = await userEntity.getById(pool, id);
@@ -130,10 +126,8 @@ exports.deleteUser = async (pool, id, authId) => {
   }
 };
 
-exports.getUserById = async (pool, id, authId) => {
+exports.getUserById = async (pool, id) => {
   try {
-    // if (id != authId) throw Error();
-
     const { success, result } = await userEntity.getById(pool, id);
 
     if (!success) {
@@ -162,10 +156,8 @@ exports.getUserById = async (pool, id, authId) => {
   }
 };
 
-exports.getUsersByFamilyId = async (pool, familyId, authFamilyId) => {
+exports.getUsersByFamilyId = async (pool, familyId) => {
   try {
-    if (authFamilyId !== familyId) throw Error();
-
     const { success, result } = await userEntity.getByFamilyId(pool, familyId);
 
     if (!success) throw Error();
@@ -192,13 +184,9 @@ exports.getUsersByFamilyId = async (pool, familyId, authFamilyId) => {
   }
 };
 
-exports.getUserByEmail = async (pool, email, authId) => {
+exports.getUserByEmail = async (pool, email) => {
   try {
     const { success, result } = await userEntity.getByEmail(pool, email);
-
-    if (!success || result.id !== authId) {
-      throw Error();
-    }
 
     return {
       statusCode: StatusCodes.OK,
