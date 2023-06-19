@@ -4,6 +4,7 @@ import { deleteChild } from '/frontend/api/child/deleteChild.js';
 
 import cleanInput from '/frontend/utils/cleanInput.js';
 import { COOKIE_NAME } from '/frontend/utils/constants.js';
+import { getCookie } from '/frontend/utils/cookie.js';
 import Routes from '/frontend/utils/Routes.js';
 import { genderTypes } from '/frontend/utils/selectsOptions.js';
 import { showError } from '/frontend/utils/showMessages.js';
@@ -18,9 +19,10 @@ export default function ChildForm({ child = {}, add = false }) {
     const childInput = Object.fromEntries(formData);
 
     if (add) {
-      const userInfo = parseJwt(COOKIE_NAME);
+      const userInfo = parseJwt(getCookie(COOKIE_NAME));
+      console.log(userInfo)
       childInput.familyId = userInfo?.familyId;
-  
+
       const data = await addChild(cleanInput(childInput));
       if (!data.success) {
         showError(data.message);
@@ -51,15 +53,7 @@ export default function ChildForm({ child = {}, add = false }) {
     window.location.href = Routes.root;
   };
 
-  const {
-    lastName,
-    firstName,
-    dateOfBirth,
-    gender,
-    nationality,
-    weight,
-    height
-  } = child;
+  const { lastName, firstName, dateOfBirth, gender, nationality, weight, height } = child;
 
   const genderOptions = Object.entries(genderTypes).map(([key, value]) => {
     if (gender === key) {
@@ -71,6 +65,11 @@ export default function ChildForm({ child = {}, add = false }) {
 
   const form = document.createElement('form');
   form.className = 'mt-9 w-20';
+
+  const removeButton = !add
+    ? `
+  <button class="secondary my-2" type="button">Remove child</button>`
+    : '';
 
   form.innerHTML = `
     <div class="flex flex-1 w-full column justify-center">
@@ -123,7 +122,7 @@ export default function ChildForm({ child = {}, add = false }) {
         type="text"
         name="nationality"
         placeholder="Nationalitate" 
-        value="${nationality || ""}"
+        value="${nationality || ''}"
         class="bg-yellow-200"
       />
     </div>
@@ -153,12 +152,12 @@ export default function ChildForm({ child = {}, add = false }) {
       </div>
     </div>
     <button class="principal mt-3" type="submit">Submit</button>
-    <button class="secondary my-2" type="button">Remove child</button>
+    ${removeButton}
     <div id="error"></div>
   `;
 
   form.querySelector('button[type="submit"]').addEventListener('click', saveChild);
-  form.querySelector('button[type="button"]').addEventListener('click', removeChild);
+  !add && form.querySelector('button[type="button"]').addEventListener('click', removeChild);
 
   return form;
 }

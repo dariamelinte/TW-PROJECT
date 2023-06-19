@@ -4,7 +4,12 @@ import { INITIAL_ACTIVITY } from '/frontend/utils/initialValues.js';
 import { showError } from '/frontend/utils/showMessages.js';
 import Routes from '/frontend/utils/Routes.js';
 
-export default function ActivityForm({ childId, activity = INITIAL_ACTIVITY, onSave }) {
+export default function ActivityForm({
+  childId,
+  activity = INITIAL_ACTIVITY,
+  onSave,
+  add = false
+}) {
   const { id, date, title, note, friendId } = activity;
 
   const saveActivity = async (e) => {
@@ -14,7 +19,7 @@ export default function ActivityForm({ childId, activity = INITIAL_ACTIVITY, onS
     const formData = new FormData(form);
 
     await onSave(formData);
-  }
+  };
 
   const removeActivity = async (e) => {
     e?.preventDefault();
@@ -27,6 +32,8 @@ export default function ActivityForm({ childId, activity = INITIAL_ACTIVITY, onS
 
     window.location.href = Routes.children.friendships.friend.path(childId, friendId);
   };
+
+  const removeButton = !add ? `<button class="secondary my-2" type="button">Remove activity</button>` : '';
 
   const form = document.createElement('form');
   form.className = 'mt-9 w-25';
@@ -68,12 +75,12 @@ export default function ActivityForm({ childId, activity = INITIAL_ACTIVITY, onS
     </div>
 
     <button class="principal mt-3" type="submit">Submit</button>
-    <button class="secondary my-2" type="button">Remove activity</button>
+    ${removeButton}
     <div id="error"></div>
   `;
 
   form.querySelector('button[type="submit"]').addEventListener('click', saveActivity);
-  form.querySelector('button[type="button"]').addEventListener('click', removeActivity);
+  !add && form.querySelector('button[type="button"]').addEventListener('click', removeActivity);
 
   return form;
 }

@@ -55,6 +55,8 @@ export default function SleepingNoteForm({ sleepingNote = INITIAL_SLEEPING_NOTE,
   const form = document.createElement('form');
   form.className = 'mt-9 w-25';
 
+  const removeButton = !add ? `<button class="secondary my-2" type="button">Remove activity</button>` : '';
+
   form.innerHTML = `
     <div class="flex w-full items-center flex-wrap">
       <div class="flex flex-1 column justify-center">
@@ -97,12 +99,12 @@ export default function SleepingNoteForm({ sleepingNote = INITIAL_SLEEPING_NOTE,
 
 
     <button class="principal mt-3" type="submit">Submit</button>
-    <button class="secondary my-2" type="button">Delete sleep</button>
+    ${removeButton}
     <div id="error"></div>
   `;
 
   form.querySelector('button[type="submit"]').addEventListener('click', saveData);
-  form.querySelector('button[type="button"]').addEventListener('click', deleteData);
+  !add && form.querySelector('button[type="button"]').addEventListener('click', deleteData);
 
   return form;
 }

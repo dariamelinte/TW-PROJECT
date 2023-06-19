@@ -5,7 +5,11 @@ import Routes from '/frontend/utils/Routes.js';
 
 import { deleteMedicalEvent } from '/frontend/api/medicalEvent/deleteMedicalEvent.js';
 
-export default function MedicalEntryForm({ medicalEntry = INITIAL_MEDICAL_ENTRY, onSave }) {
+export default function MedicalEntryForm({
+  medicalEntry = INITIAL_MEDICAL_ENTRY,
+  onSave,
+  add = false
+}) {
   const { id, childId, date, title, severity, note } = medicalEntry;
 
   const saveEvent = async (e) => {
@@ -15,7 +19,7 @@ export default function MedicalEntryForm({ medicalEntry = INITIAL_MEDICAL_ENTRY,
     const formData = new FormData(form);
 
     await onSave(formData);
-  }
+  };
 
   const removeEvent = async (e) => {
     e?.preventDefault();
@@ -40,6 +44,8 @@ export default function MedicalEntryForm({ medicalEntry = INITIAL_MEDICAL_ENTRY,
   const form = document.createElement('form');
   form.className = 'mt-9 w-25';
 
+  const removeButton = !add ? `<button class="secondary my-2" type="button">Remove activity</button>` : '';
+
   form.innerHTML = `
     <div class="flex column justify-center w-full">
       <label for="date">Data</label>
@@ -55,7 +61,7 @@ export default function MedicalEntryForm({ medicalEntry = INITIAL_MEDICAL_ENTRY,
       <label for="severity">Severitate</label>
       <select class="bg-yellow-200 rounded p-1" name="severity" id="severity">
         <option value="severity">Severitate</option>
-        ${severityOptions.join("")}
+        ${severityOptions.join('')}
       </select> 
     </div>
     
@@ -72,11 +78,11 @@ export default function MedicalEntryForm({ medicalEntry = INITIAL_MEDICAL_ENTRY,
     </div>
 
     <button class="principal mt-3" type="submit">Submit</button>
-    <button class="secondary my-2" type="button">Remove event</button>
+    ${removeButton}
     <div id="error"></div>
   `;
 
   form.querySelector('button[type="submit"]').addEventListener('click', saveEvent);
-  form.querySelector('button[type="button"]').addEventListener('click', removeEvent);
+  !add && form.querySelector('button[type="button"]').addEventListener('click', removeEvent);
   return form;
 }
