@@ -3,9 +3,9 @@ import cleanInput from '/frontend/utils/cleanInput.js';
 import { INITIAL_SLEEPING_NOTE } from '/frontend/utils/initialValues.js';
 import { showError } from '/frontend/utils/showMessages.js';
 
-import { deleteSleepingEvent } from '/frontend/server/sleeping/deleteSleepingEvent.js';
-import { addSleepingEvent } from '/frontend/server/sleeping/createSleepingEvent.js';
-import { editSleepingEvent } from '/frontend/server/sleeping/updateSleepingEvent.js';
+import { deleteSleepingEvent } from '/frontend/api/sleeping/deleteSleepingEvent.js';
+import { addSleepingEvent } from '/frontend/api/sleeping/createSleepingEvent.js';
+import { editSleepingEvent } from '/frontend/api/sleeping/updateSleepingEvent.js';
 
 import { sleepTypes } from '/frontend/utils/selectsOptions.js';
 
@@ -55,6 +55,8 @@ export default function SleepingNoteForm({ sleepingNote = INITIAL_SLEEPING_NOTE,
   const form = document.createElement('form');
   form.className = 'mt-9 w-25';
 
+  const removeButton = !add ? `<button class="secondary my-2" type="button">Remove activity</button>` : '';
+
   form.innerHTML = `
     <div class="flex w-full items-center flex-wrap">
       <div class="flex flex-1 column justify-center">
@@ -97,12 +99,12 @@ export default function SleepingNoteForm({ sleepingNote = INITIAL_SLEEPING_NOTE,
 
 
     <button class="principal mt-3" type="submit">Submit</button>
-    <button class="secondary my-2" type="button">Delete sleep</button>
+    ${removeButton}
     <div id="error"></div>
   `;
 
   form.querySelector('button[type="submit"]').addEventListener('click', saveData);
-  form.querySelector('button[type="button"]').addEventListener('click', deleteData);
+  !add && form.querySelector('button[type="button"]').addEventListener('click', deleteData);
 
   return form;
 }

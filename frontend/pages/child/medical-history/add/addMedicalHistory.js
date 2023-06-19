@@ -1,11 +1,21 @@
 import Header from '/frontend/components/header.js';
 import MedicalEntryForm from '/frontend/components/forms/medicalEntryForm.js';
 
-import Routes from '/frontend/utils/Routes.js';
 import { INITIAL_MEDICAL_ENTRY } from '/frontend/utils/initialValues.js';
 import { showError } from '/frontend/utils/showMessages.js';
 
-import { addMedicalEvent } from '/frontend/server/medicalEvent/addMedicalEvent.js';
+import { addMedicalEvent } from '/frontend/api/medicalEvent/addMedicalEvent.js';
+
+import { getCookie } from '/frontend/utils/cookie.js';
+import { COOKIE_NAME } from '/frontend/utils/constants.js';
+import { isJwtExpired } from '/frontend/utils/jwt.js';
+import Routes from '/frontend/utils/Routes.js';
+
+const jwt = getCookie(COOKIE_NAME);
+
+if (!jwt || isJwtExpired(jwt)) {
+  window.location.href = Routes.login.path();
+}
 
 const { add, path } = Routes.children.medicalHistory;
 
@@ -27,4 +37,4 @@ const onSave = async (formData) => {
 
 
 document.body.appendChild(Header(add.title));
-document.body.appendChild(MedicalEntryForm({ medicalEntry: INITIAL_MEDICAL_ENTRY, onSave }));
+document.body.appendChild(MedicalEntryForm({ medicalEntry: INITIAL_MEDICAL_ENTRY, onSave, add: true }));

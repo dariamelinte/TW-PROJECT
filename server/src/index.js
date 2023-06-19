@@ -56,16 +56,16 @@ const server = http.createServer(async (req, res) => {
   }
 
   // If the request is not for the auth router, check if the user is authorized
-  // const authorized = authorizationMiddleware(request, response);
+  const authorized = authorizationMiddleware(request, response);
 
-  // request = authorized.req;
-  // response = authorized.res;
-  // continueRequest = authorized.continue;
+  request = authorized.req;
+  response = authorized.res;
+  continueRequest = authorized.continue;
 
-  // if (!continueRequest) {
-  //   response.writeHead(401, headers);
-  //   return response.end(JSON.stringify({ message: 'Unauthorized' }));
-  // }
+  if (!continueRequest) {
+    response.writeHead(401, headers);
+    return response.end(JSON.stringify({ message: 'Unauthorized' }));
+  }
 
   // If the user is authorized, check if the request is for each of the routers
   if (request.url?.startsWith('/user')) {

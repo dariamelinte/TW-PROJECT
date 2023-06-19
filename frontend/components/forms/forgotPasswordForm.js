@@ -1,4 +1,4 @@
-import { forgotPassword } from '/frontend/server/auth/forgotPassword.js';
+import { forgotPassword } from '/frontend/api/auth/forgotPassword.js';
 import Routes from '/frontend/utils/Routes.js';
 import { showError, showMessage } from '/frontend/utils/showMessages.js';
 

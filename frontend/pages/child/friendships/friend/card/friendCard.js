@@ -2,8 +2,8 @@ import Header from '/frontend/components/header.js';
 import ActivityForm from '/frontend/components/forms/activityForm.js';
 import { showError } from '/frontend/utils/showMessages.js';
 
-import { getFriendInteractionById } from '/frontend/server/friendInteraction/getFriendInteractionById.js';
-import { editFriendInteraction } from '/frontend/server/friendInteraction/editFriendInteraction.js';
+import { getFriendInteractionById } from '/frontend/api/friendInteraction/getFriendInteractionById.js';
+import { editFriendInteraction } from '/frontend/api/friendInteraction/editFriendInteraction.js';
 
 import { getCookie } from '/frontend/utils/cookie.js';
 import { COOKIE_NAME } from '/frontend/utils/constants.js';

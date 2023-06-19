@@ -1,9 +1,19 @@
 import Header from '/frontend/components/header.js';
 import Calendar from "/frontend/components/calendar/calendar.js";
-import Routes from '/frontend/utils/Routes.js';
 import { entryTypes } from "/frontend/utils/selectsOptions.js";
 
-import { getSleepingEvents } from '/frontend/server/sleeping/getSleepingEvents.js';
+import { getSleepingEvents } from '/frontend/api/sleeping/getSleepingEvents.js';
+
+import { getCookie } from '/frontend/utils/cookie.js';
+import { COOKIE_NAME } from '/frontend/utils/constants.js';
+import { isJwtExpired } from '/frontend/utils/jwt.js';
+import Routes from '/frontend/utils/Routes.js';
+
+const jwt = getCookie(COOKIE_NAME);
+
+if (!jwt || isJwtExpired(jwt)) {
+  window.location.href = Routes.login.path();
+}
 
 const { title, add: addRoute, card: cardRoute } = Routes.children.sleepingCalendar;
 
